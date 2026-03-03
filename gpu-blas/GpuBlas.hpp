@@ -19,9 +19,9 @@ namespace GpuBlas {
     static constexpr size_t factor = 1;
   };
 
-  constexpr size_t DEFAULT_M = 200;
-  constexpr size_t DEFAULT_N = 200;
-  constexpr size_t DEFAULT_K = 400;
+  constexpr size_t DEFAULT_M = 64 * 8;
+  constexpr size_t DEFAULT_N = 64 * 8;
+  constexpr size_t DEFAULT_K = 64 * 8;
 
   template <typename BackendT, typename TypeT>
   class IGemm : public Baseliner::ICase<BackendT> {
@@ -34,9 +34,15 @@ namespace GpuBlas {
     }
 
     void alloc_host() {
-      m_k = DEFAULT_K * this->get_work_size();
-      m_m = DEFAULT_M;
-      m_n = DEFAULT_N;
+      double s = std::pow(static_cast<double>(this->get_work_size()), 1.0 / 3.0);
+      auto snap64 = [](double val) {
+        size_t v = static_cast<size_t>(val);
+        return std::max<size_t>(64, (v / 64) * 64);
+      };
+      m_k = snap64(DEFAULT_K * s);
+      m_m = snap64(DEFAULT_M * s);
+      m_n = snap64(DEFAULT_N * s);
+      std::cout << m_k << " " << m_n << " " << m_m << "\n";
       m_A.resize(m_m * m_k);
       m_B.resize(m_k * m_n);
       m_C.resize(m_m * m_n);
