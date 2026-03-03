@@ -42,7 +42,6 @@ namespace GpuBlas {
       m_k = snap64(DEFAULT_K * s);
       m_m = snap64(DEFAULT_M * s);
       m_n = snap64(DEFAULT_N * s);
-      std::cout << m_k << " " << m_n << " " << m_m << "\n";
       m_A.resize(m_m * m_k);
       m_B.resize(m_k * m_n);
       m_C.resize(m_m * m_n);
