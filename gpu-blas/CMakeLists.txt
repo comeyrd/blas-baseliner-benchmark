@@ -1,0 +1,6 @@
+set(sources main.cpp)
+add_executable(baseliner-blas ${sources})
+if(HAS_CUDA)
+    add_subdirectory(cuda)
+endif()
+target_link_libraries(baseliner-blas PUBLIC baseliner::baseliner ${BLAS_LIBRARIES})

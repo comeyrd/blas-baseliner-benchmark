@@ -1,0 +1,102 @@
+{
+  "version": 3,
+  "configurePresets": [
+    {
+      "name": "base-common",
+      "hidden": true,
+      "description": "Common flags for all backends",
+      "binaryDir": "${sourceDir}/build/${presetName}",
+      "cacheVariables": {
+        "CMAKE_CXX_STANDARD": "17",
+        "CMAKE_CXX_COMPILER": "clang++",
+        "CMAKE_EXE_LINKER_FLAGS": "-fuse-ld=lld",
+        "CMAKE_SHARED_LINKER_FLAGS": "-fuse-ld=lld",
+        "CMAKE_POLICY_DEFAULT_CMP0135": "NEW",
+        "CMAKE_CXX_USE_RESPONSE_FILE_FOR_OBJECTS": "OFF",
+        "CMAKE_CXX_USE_RESPONSE_FILE_FOR_LIBRARIES": "OFF",
+        "CMAKE_CXX_USE_RESPONSE_FILE_FOR_INCLUDES": "OFF",
+        "CMAKE_EXPORT_COMPILE_COMMANDS": "ON"
+      }
+    },
+    {
+      "name": "flags-debug",
+      "hidden": true,
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Debug",
+        "CMAKE_CXX_FLAGS": "-Wall -Wextra -Wpedantic -Wconversion -Wsign-conversion -Wshadow -Wnon-virtual-dtor -Wold-style-cast -Wcast-align -Wunused -Woverloaded-virtual -Wformat=2 -Wimplicit-fallthrough",
+        "CMAKE_CXX_FLAGS_DEBUG": "-g3 -O0 -fno-omit-frame-pointer -D_GLIBCXX_DEBUG -D_GLIBCXX_DEBUG_PEDANTIC"
+      }
+    },
+    {
+      "name": "flags-release",
+      "hidden": true,
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Release",
+        "CMAKE_CXX_FLAGS": "-Wall -Wextra -Wpedantic",
+        "CMAKE_CXX_FLAGS_RELEASE": "-O3 -march=native -DNDEBUG -ffast-math -funroll-loops"
+      }
+    },
+    {
+      "name": "debug-cuda",
+      "inherits": ["base-common", "flags-debug"],
+      "displayName": "Debug CUDA (Clang/NVCC)",
+      "cacheVariables": {
+        "CMAKE_CUDA_HOST_COMPILER": "clang++",
+        "CMAKE_CUDA_COMPILER": "nvcc",
+        "CMAKE_CUDA_FLAGS": "-Werror all-warnings -Wno-deprecated-gpu-targets",
+        "CMAKE_CUDA_FLAGS_DEBUG": "-g -G -O0 -D_GLIBCXX_DEBUG -D_GLIBCXX_DEBUG_PEDANTIC",
+        "CMAKE_CUDA_ARCHITECTURES": "native"
+      }
+    },
+    {
+      "name": "release-cuda",
+      "inherits": ["base-common", "flags-release"],
+      "displayName": "Release CUDA (Clang/NVCC)",
+      "cacheVariables": {
+        "CMAKE_CUDA_HOST_COMPILER": "clang++",
+        "CMAKE_CUDA_COMPILER": "nvcc",
+        "CMAKE_CUDA_FLAGS": "-Werror all-warnings -Wno-deprecated-gpu-targets",
+        "CMAKE_CUDA_FLAGS_RELEASE": "-O3 -DNDEBUG --use_fast_math --extra-device-vectorization",
+        "CMAKE_CUDA_ARCHITECTURES": "native"
+      }
+    },
+    {
+      "name": "debug-hip",
+      "inherits": ["base-common", "flags-debug"],
+      "displayName": "Debug HIP (ROCm)",
+      "cacheVariables": {
+        "CMAKE_HIP_COMPILER": "clang++",
+        "CMAKE_HIP_ARCHITECTURES": "native",
+        "CMAKE_HIP_FLAGS_DEBUG": "-g -O0 -D_GLIBCXX_DEBUG -D_GLIBCXX_DEBUG_PEDANTIC"
+      }
+    },
+    {
+      "name": "release-hip",
+      "inherits": ["base-common", "flags-release"],
+      "displayName": "Release HIP (ROCm)",
+      "cacheVariables": {
+        "CMAKE_HIP_COMPILER": "clang++",
+        "CMAKE_HIP_ARCHITECTURES": "native",
+        "CMAKE_HIP_FLAGS_RELEASE": "-O3 -DNDEBUG"
+      }
+    }
+  ],
+  "buildPresets": [
+    {
+      "name": "debug-cuda",
+      "configurePreset": "debug-cuda"
+    },
+    {
+      "name": "debug-hip",
+      "configurePreset": "debug-hip"
+    },
+    {
+      "name": "release-cuda",
+      "configurePreset": "release-cuda"
+    },
+    {
+      "name": "release-hip",
+      "configurePreset": "release-hip"
+    }
+  ]
+}
