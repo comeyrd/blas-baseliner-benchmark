@@ -1,0 +1,25 @@
+{
+  "baseliner_version": "0.8.0",
+  "presets": [
+    {
+      "implementation": "Stat",
+      "preset_name": "default",
+      "options": [
+        "Median",
+        "DevicePowerUtilizationVector",
+        "DeviceTemperatureVector",
+        "ClockFrequencyVector"
+      ]
+    },
+    {
+      "implementation": "cuda",
+      "preset_name": "default",
+      "options": {
+        "Backend": {
+          "device": "3"
+        }
+      }
+    }
+  ],
+  "recipes": []
+}
