@@ -1,26 +1,26 @@
 {
- "baseliner_version": "0.8.0",
- "presets": [
-  {
-   "implementation": "Stat",
-   "preset_name": "default",
-   "options": [
-    "Median",
-    "DevicePowerUtilizationVector",
-    "DeviceTemperatureVector",
-    "ClockFrequencyVector"
-   ]
-  },
-  {
-   "implementation": "hip",
-   "preset_name": "default",
-   "description": "Default preset",
-   "options": {
-    "Backend": {
-     "device": "0"
+  "baseliner_version": "0.9.0",
+  "presets": [
+    {
+      "implementation": "Stat",
+      "preset_name": "default",
+      "options": [
+        "Median",
+        "DevicePowerUtilizationVector",
+        "DeviceTemperatureVector",
+        "ClockFrequencyVector"
+      ]
+    },
+    {
+      "implementation": "hip",
+      "preset_name": "default",
+      "description": "Default preset",
+      "options": {
+        "Backend": {
+          "device": "0"
+        }
+      }
     }
-   }
-  }
- ],
- "recipes": []
+  ],
+  "recipes": []
 }
