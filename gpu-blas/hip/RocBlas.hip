@@ -46,28 +46,28 @@ namespace Baseliner::Conversion {
 
 namespace GpuBlas {
   template <>
-  void HipGemm<float>::run_case(std::shared_ptr<typename backend::stream_t> stream) {
+  void HipGemm<float>::run_workload(std::shared_ptr<typename backend::stream_t> stream) {
     CHECK_ROCBLAS(rocblas_sgemm(this->handle, rocblas_operation::rocblas_operation_none,
                                 rocblas_operation::rocblas_operation_none, this->m_m, this->m_n, this->m_k,
                                 &this->m_alpha, this->m_d_A, this->m_m, this->m_d_B, this->m_k, &this->m_beta,
                                 this->m_d_C, this->m_m));
   };
   template <>
-  void HipGemm<double>::run_case(std::shared_ptr<typename backend::stream_t> stream) {
+  void HipGemm<double>::run_workload(std::shared_ptr<typename backend::stream_t> stream) {
     CHECK_ROCBLAS(rocblas_dgemm(this->handle, rocblas_operation::rocblas_operation_none,
                                 rocblas_operation::rocblas_operation_none, this->m_m, this->m_n, this->m_k,
                                 &this->m_alpha, this->m_d_A, this->m_m, this->m_d_B, this->m_k, &this->m_beta,
                                 this->m_d_C, this->m_m));
   };
   template <>
-  void HipGemm<rocblas_float_complex>::run_case(std::shared_ptr<typename backend::stream_t> stream) {
+  void HipGemm<rocblas_float_complex>::run_workload(std::shared_ptr<typename backend::stream_t> stream) {
     CHECK_ROCBLAS(rocblas_cgemm(this->handle, rocblas_operation::rocblas_operation_none,
                                 rocblas_operation::rocblas_operation_none, this->m_m, this->m_n, this->m_k,
                                 &this->m_alpha, this->m_d_A, this->m_m, this->m_d_B, this->m_k, &this->m_beta,
                                 this->m_d_C, this->m_m));
   };
   template <>
-  void HipGemm<rocblas_double_complex>::run_case(std::shared_ptr<typename backend::stream_t> stream) {
+  void HipGemm<rocblas_double_complex>::run_workload(std::shared_ptr<typename backend::stream_t> stream) {
     CHECK_ROCBLAS(rocblas_zgemm(this->handle, rocblas_operation::rocblas_operation_none,
                                 rocblas_operation::rocblas_operation_none, this->m_m, this->m_n, this->m_k,
                                 &this->m_alpha, this->m_d_A, this->m_m, this->m_d_B, this->m_k, &this->m_beta,
@@ -79,10 +79,10 @@ namespace GpuBlas {
     using dgemm = HipGemm<double>;
     using cgemm = HipGemm<rocblas_float_complex>;
     using zgemm = HipGemm<rocblas_double_complex>;
-    BASELINER_REGISTER_CASE(sgemm);
-    BASELINER_REGISTER_CASE(dgemm);
-    BASELINER_REGISTER_CASE(cgemm);
-    BASELINER_REGISTER_CASE(zgemm);
+    BASELINER_REGISTER_WORKLOAD(sgemm);
+    BASELINER_REGISTER_WORKLOAD(dgemm);
+    BASELINER_REGISTER_WORKLOAD(cgemm);
+    BASELINER_REGISTER_WORKLOAD(zgemm);
   } // namespace
 
 } // namespace GpuBlas

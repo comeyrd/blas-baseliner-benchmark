@@ -34,7 +34,7 @@ include(FetchContent)
 FetchContent_Declare(
   baseliner
   GIT_REPOSITORY https://github.com/comeyrd/gpu-kernel-baseliner.git
-  GIT_TAG        v0.9.0
+  GIT_TAG        develop
 )
 
 FetchContent_MakeAvailable(baseliner)

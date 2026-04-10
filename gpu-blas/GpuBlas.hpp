@@ -1,7 +1,7 @@
 #ifndef GPU_BLAS_HPP
 #define GPU_BLAS_HPP
 #include "Random.hpp"
-#include <baseliner/Case.hpp>
+#include <baseliner/core/Workload.hpp>
 #include <cstddef>
 #include <memory>
 #include <vector>
@@ -24,12 +24,12 @@ namespace GpuBlas {
   constexpr size_t DEFAULT_K = 64 * 8;
 
   template <typename BackendT, typename TypeT>
-  class IGemm : public Baseliner::ICase<BackendT> {
+  class IGemm : public Baseliner::IWorkload<BackendT> {
   public:
     auto name() -> std::string override {
       return "Gemm" + std::string(typeid(TypeT).name());
     };
-    auto validate_case() -> bool override {
+    auto validate_workload() -> bool override {
       return true;
     }
 
@@ -60,7 +60,7 @@ namespace GpuBlas {
       return (2ULL * m_m * m_n + m_k * m_m + m_k * m_n) * sizeof(TypeT);
     }
     void register_options() override {
-      Baseliner::ICase<BackendT>::register_options();
+      Baseliner::IWorkload<BackendT>::register_options();
       this->add_option("Gemm", "m", "The number of rows of matrix A and C", m_m);
       this->add_option("Gemm", "k", "The number of columns of matrix A and rows of matric B", m_k);
       this->add_option("Gemm", "n", "The number of columns of matrix B and C", m_n);

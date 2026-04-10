@@ -2,7 +2,7 @@
 #define GPU_BLAS_HIP_BLAS_HPP
 #include "../GpuBlas.hpp"
 #include "RocBlasHelper.hpp"
-#include <baseliner/hardware/hip/HipBackend.hpp>
+#include <baseliner/core/hardware/hip/HipBackend.hpp>
 #include <rocblas/rocblas.h>
 namespace GpuBlas {
 
@@ -24,10 +24,10 @@ namespace GpuBlas {
       CHECK_HIP(hipMemcpyAsync(this->m_d_B, this->m_B.data(), this->m_k * this->m_n * sizeof(TypeT),
                                hipMemcpyHostToDevice, *stream));
     };
-    void reset_case(std::shared_ptr<typename backend::stream_t> stream) override {
+    void reset_workload(std::shared_ptr<typename backend::stream_t> stream) override {
       CHECK_HIP(hipMemsetAsync(this->m_d_C, 0, this->m_m * this->m_n * sizeof(TypeT)));
     };
-    void run_case(std::shared_ptr<typename backend::stream_t> stream) override;
+    void run_workload(std::shared_ptr<typename backend::stream_t> stream) override;
     void teardown(std::shared_ptr<typename backend::stream_t> stream) override {
       CHECK_HIP(hipMemcpyAsync(this->m_C.data(), this->m_d_C, this->m_m * this->m_n * sizeof(TypeT),
                                hipMemcpyDeviceToHost, *stream));
