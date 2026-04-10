@@ -3,7 +3,7 @@
 #include "../GpuBlas.hpp"
 #include "CublasHelper.hpp"
 #include "cublas_v2.h"
-#include <baseliner/hardware/cuda/CudaBackend.hpp>
+#include <baseliner/core/hardware/cuda/CudaBackend.hpp>
 namespace GpuBlas {
 
   // TODO Support Half Precision
@@ -24,10 +24,10 @@ namespace GpuBlas {
       CHECK_CUDA(cudaMemcpyAsync(this->m_d_B, this->m_B.data(), this->m_k * this->m_n * sizeof(TypeT),
                                  cudaMemcpyHostToDevice, *stream));
     };
-    void reset_case(std::shared_ptr<typename backend::stream_t> stream) override {
+    void reset_workload(std::shared_ptr<typename backend::stream_t> stream) override {
       CHECK_CUDA(cudaMemsetAsync(this->m_d_C, 0, this->m_m * this->m_n * sizeof(TypeT)));
     };
-    void run_case(std::shared_ptr<typename backend::stream_t> stream) override;
+    void run_workload(std::shared_ptr<typename backend::stream_t> stream) override;
     void teardown(std::shared_ptr<typename backend::stream_t> stream) override {
       CHECK_CUDA(cudaMemcpyAsync(this->m_C.data(), this->m_d_C, this->m_m * this->m_n * sizeof(TypeT),
                                  cudaMemcpyDeviceToHost, *stream));
