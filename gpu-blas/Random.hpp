@@ -22,5 +22,26 @@ namespace GpuBlas::Random {
     auto source = [&]() { return dis(engine); };
     std::generate(vec.begin(), vec.end(), [&]() { return Traits::create(source); });
   };
+
+  enum class FillPolicy {
+    None,
+    Random,
+    Zero
+  };
+
+  template <typename TypeT>
+  void apply_fill(std::vector<TypeT> &buf, FillPolicy policy, int seed) {
+    switch (policy) {
+    case FillPolicy::None:
+      break;
+    case FillPolicy::Random:
+      Random::random_fill_vector(buf, seed);
+      break;
+    case FillPolicy::Zero:
+      std::fill(buf.begin(), buf.end(), static_cast<TypeT>(0));
+      break;
+    }
+  }
+
 } // namespace GpuBlas::Random
 #endif // GPU_BLAS_RANDOM_HPP

@@ -1,45 +1,71 @@
-#include "CudaBlas.hpp"
+#include "../BlasShapes.hpp"
+#include "CudaBlasWorkload.hpp"
 #include "cublas_v2.h"
 #include "types.hpp"
 #include <baseliner/core/Conversions.hpp>
 #include <baseliner/registry/RegisteringMacros.hpp>
+
 namespace GpuBlas {
+
+  using namespace Shapes;
+
   template <>
-  void CudaGemm<float>::run_workload(std::shared_ptr<typename backend::stream_t> stream) {
-    CHECK_CUBLAS(cublasSgemm(this->handle, cublasOperation_t::CUBLAS_OP_N, cublasOperation_t::CUBLAS_OP_N, this->m_m,
-                             this->m_n, this->m_k, &this->m_alpha, this->m_d_A, this->m_m, this->m_d_B, this->m_k,
-                             &this->m_beta, this->m_d_C, this->m_m));
-  };
+  void CublasGemm<float>::run_workload(std::shared_ptr<typename backend::stream_t> stream) {
+    using Shape = GemmShape<TypeConfig<float>>;
+
+    CHECK_CUBLAS(cublasSgemm(this->m_handle, CUBLAS_OP_N, CUBLAS_OP_N, this->m_dims.m, this->m_dims.n, this->m_dims.k,
+                             &this->m_args.alpha, m_buffers.template device_ptr<Shape::A>(), this->m_dims.m,
+                             m_buffers.template device_ptr<Shape::B>(), this->m_dims.k, &this->m_args.beta,
+                             m_buffers.template device_ptr<Shape::C>(), this->m_dims.m));
+  }
+
   template <>
-  void CudaGemm<double>::run_workload(std::shared_ptr<typename backend::stream_t> stream) {
-    CHECK_CUBLAS(cublasDgemm(this->handle, cublasOperation_t::CUBLAS_OP_N, cublasOperation_t::CUBLAS_OP_N, this->m_m,
-                             this->m_n, this->m_k, &this->m_alpha, this->m_d_A, this->m_m, this->m_d_B, this->m_k,
-                             &this->m_beta, this->m_d_C, this->m_m));
-  };
+  void CublasGemm<double>::run_workload(std::shared_ptr<typename backend::stream_t> stream) {
+    using Shape = GemmShape<TypeConfig<double>>;
+
+    CHECK_CUBLAS(cublasDgemm(this->m_handle, CUBLAS_OP_N, CUBLAS_OP_N, this->m_dims.m, this->m_dims.n, this->m_dims.k,
+                             &this->m_args.alpha, m_buffers.template device_ptr<Shape::A>(), this->m_dims.m,
+                             m_buffers.template device_ptr<Shape::B>(), this->m_dims.k, &this->m_args.beta,
+                             m_buffers.template device_ptr<Shape::C>(), this->m_dims.m));
+  }
+
   template <>
-  void CudaGemm<cuComplex>::run_workload(std::shared_ptr<typename backend::stream_t> stream) {
-    CHECK_CUBLAS(cublasCgemm(this->handle, cublasOperation_t::CUBLAS_OP_N, cublasOperation_t::CUBLAS_OP_N, this->m_m,
-                             this->m_n, this->m_k, &this->m_alpha, this->m_d_A, this->m_m, this->m_d_B, this->m_k,
-                             &this->m_beta, this->m_d_C, this->m_m));
-  };
+  void CublasGemm<cuComplex>::run_workload(std::shared_ptr<typename backend::stream_t> stream) {
+    using Shape = GemmShape<TypeConfig<cuComplex>>;
+
+    CHECK_CUBLAS(cublasCgemm(this->m_handle, CUBLAS_OP_N, CUBLAS_OP_N, this->m_dims.m, this->m_dims.n, this->m_dims.k,
+                             &this->m_args.alpha, m_buffers.template device_ptr<Shape::A>(), this->m_dims.m,
+                             m_buffers.template device_ptr<Shape::B>(), this->m_dims.k, &this->m_args.beta,
+                             m_buffers.template device_ptr<Shape::C>(), this->m_dims.m));
+  }
+
   template <>
-  void CudaGemm<cuDoubleComplex>::run_workload(std::shared_ptr<typename backend::stream_t> stream) {
-    CHECK_CUBLAS(cublasZgemm(this->handle, cublasOperation_t::CUBLAS_OP_N, cublasOperation_t::CUBLAS_OP_N, this->m_m,
-                             this->m_n, this->m_k, &this->m_alpha, this->m_d_A, this->m_m, this->m_d_B, this->m_k,
-                             &this->m_beta, this->m_d_C, this->m_m));
-  };
+  void CublasGemm<cuDoubleComplex>::run_workload(std::shared_ptr<typename backend::stream_t> stream) {
+    using Shape = GemmShape<TypeConfig<cuDoubleComplex>>;
+
+    CHECK_CUBLAS(cublasZgemm(this->m_handle, CUBLAS_OP_N, CUBLAS_OP_N, this->m_dims.m, this->m_dims.n, this->m_dims.k,
+                             &this->m_args.alpha, m_buffers.template device_ptr<Shape::A>(), this->m_dims.m,
+                             m_buffers.template device_ptr<Shape::B>(), this->m_dims.k, &this->m_args.beta,
+                             m_buffers.template device_ptr<Shape::C>(), this->m_dims.m));
+  }
+
   template <>
-  void CudaGemm<__half>::run_workload(std::shared_ptr<typename backend::stream_t> stream) {
-    CHECK_CUBLAS(cublasHgemm(this->handle, cublasOperation_t::CUBLAS_OP_N, cublasOperation_t::CUBLAS_OP_N, this->m_m,
-                             this->m_n, this->m_k, &this->m_alpha, this->m_d_A, this->m_m, this->m_d_B, this->m_k,
-                             &this->m_beta, this->m_d_C, this->m_m));
-  };
+  void CublasGemm<__half>::run_workload(std::shared_ptr<typename backend::stream_t> stream) {
+    using Shape = GemmShape<TypeConfig<__half>>;
+
+    CHECK_CUBLAS(cublasHgemm(this->m_handle, CUBLAS_OP_N, CUBLAS_OP_N, this->m_dims.m, this->m_dims.n, this->m_dims.k,
+                             &this->m_args.alpha, m_buffers.template device_ptr<Shape::A>(), this->m_dims.m,
+                             m_buffers.template device_ptr<Shape::B>(), this->m_dims.k, &this->m_args.beta,
+                             m_buffers.template device_ptr<Shape::C>(), this->m_dims.m));
+  }
+
   namespace {
-    using sgemm = CudaGemm<float>;
-    using dgemm = CudaGemm<double>;
-    using cgemm = CudaGemm<cuComplex>;
-    using zgemm = CudaGemm<cuDoubleComplex>;
-    using hgemm = CudaGemm<__half>;
+    using sgemm = CublasGemm<float>;
+    using dgemm = CublasGemm<double>;
+    using cgemm = CublasGemm<cuComplex>;
+    using zgemm = CublasGemm<cuDoubleComplex>;
+    using hgemm = CublasGemm<__half>;
+
     BASELINER_REGISTER_WORKLOAD(sgemm);
     BASELINER_REGISTER_WORKLOAD(dgemm);
     BASELINER_REGISTER_WORKLOAD(cgemm);

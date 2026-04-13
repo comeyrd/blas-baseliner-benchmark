@@ -1,18 +1,21 @@
-#include "../GpuBlas.hpp"
 #include "../Random.hpp"
+#include "../Types.hpp"
 #include "cublas_v2.h"
 #include <baseliner/core/AxeSweeping.hpp>
 #include <baseliner/core/Conversions.hpp>
 
 namespace GpuBlas {
-  template <>
-  struct TypeOperations<cuComplex> {
-    static constexpr size_t factor = 4;
-  };
-  template <>
-  struct TypeOperations<cuDoubleComplex> {
-    static constexpr size_t factor = 4;
-  };
+
+  namespace Types {
+    template <>
+    struct TypeOperations<cuComplex> {
+      static constexpr size_t factor = 4;
+    };
+    template <>
+    struct TypeOperations<cuDoubleComplex> {
+      static constexpr size_t factor = 4;
+    };
+  } // namespace Types
   namespace Random {
 
     template <>
