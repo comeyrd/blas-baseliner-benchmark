@@ -1,0 +1,341 @@
+{
+  "type": "object",
+  "properties": {
+    "baseliner_version": {
+      "type": "string"
+    },
+    "presets": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "object",
+        "additionalProperties": {
+          "type": "object",
+          "properties": {
+            "description": {
+              "type": "string"
+            },
+            "options": {
+              "type": "object",
+              "additionalProperties": {
+                "type": "object",
+                "additionalProperties": {
+                  "type": "object",
+                  "properties": {
+                    "description": {
+                      "type": "string"
+                    },
+                    "value": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "value"
+                  ],
+                  "additionalProperties": false
+                }
+              }
+            }
+          },
+          "required": [
+            "options"
+          ],
+          "additionalProperties": false
+        }
+      }
+    },
+    "stats_presets": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "object",
+        "properties": {
+          "description": {
+            "type": "string"
+          },
+          "stat_names": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "stat_options": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "object",
+              "additionalProperties": {
+                "type": "object",
+                "properties": {
+                  "description": {
+                    "type": "string"
+                  },
+                  "value": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "value"
+                ],
+                "additionalProperties": false
+              }
+            }
+          }
+        },
+        "required": [
+          "stat_names",
+          "stat_options"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "recipes": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "object",
+        "properties": {
+          "description": {
+            "type": "string"
+          },
+          "benchmark": {
+            "type": "object",
+            "properties": {
+              "impl": {
+                "type": "string"
+              },
+              "preset": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "impl"
+            ],
+            "additionalProperties": false
+          },
+          "stopping": {
+            "type": "object",
+            "properties": {
+              "impl": {
+                "type": "string"
+              },
+              "preset": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "impl"
+            ],
+            "additionalProperties": false
+          },
+          "stats": {
+            "type": "object",
+            "properties": {
+              "preset": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "preset"
+            ],
+            "additionalProperties": false
+          },
+          "sweep": {
+            "type": "object",
+            "properties": {
+              "strategy": {
+                "type": "string",
+                "enum": [
+                  "FullGrid"
+                ]
+              },
+              "axes": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "interface": {
+                      "type": "string"
+                    },
+                    "option": {
+                      "type": "string"
+                    },
+                    "hint": {
+                      "type": "object",
+                      "properties": {
+                        "policy": {
+                          "type": "string",
+                          "enum": [
+                            "PowersOfTwo",
+                            "LinearRange",
+                            "Enumerated"
+                          ]
+                        },
+                        "min": {
+                          "type": "string"
+                        },
+                        "max": {
+                          "type": "string"
+                        },
+                        "step": {
+                          "type": "string"
+                        },
+                        "enumerated": {
+                          "type": "array",
+                          "items": {
+                            "type": "string"
+                          }
+                        }
+                      },
+                      "required": [
+                        "policy",
+                        "min",
+                        "max",
+                        "step",
+                        "enumerated"
+                      ],
+                      "additionalProperties": false
+                    }
+                  },
+                  "required": [
+                    "interface",
+                    "option"
+                  ],
+                  "additionalProperties": false
+                }
+              }
+            },
+            "required": [
+              "strategy",
+              "axes"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "required": [
+          "description"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "campaigns": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "recipe": {
+            "type": "string"
+          },
+          "workloads": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "impl": {
+                  "type": "string"
+                },
+                "preset": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "impl"
+              ],
+              "additionalProperties": false
+            }
+          },
+          "backends": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "impl": {
+                  "type": "string"
+                },
+                "preset": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "impl"
+              ],
+              "additionalProperties": false
+            }
+          },
+          "overrides": {
+            "type": "object",
+            "properties": {
+              "benchmark": {
+                "type": "object",
+                "properties": {
+                  "impl": {
+                    "type": "string"
+                  },
+                  "preset": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "impl"
+                ],
+                "additionalProperties": false
+              },
+              "stopping": {
+                "type": "object",
+                "properties": {
+                  "impl": {
+                    "type": "string"
+                  },
+                  "preset": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "impl"
+                ],
+                "additionalProperties": false
+              },
+              "stats": {
+                "type": "object",
+                "properties": {
+                  "preset": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "preset"
+                ],
+                "additionalProperties": false
+              }
+            },
+            "additionalProperties": false
+          },
+          "on_incompatible": {
+            "type": "string",
+            "enum": [
+              "Skip",
+              "Error"
+            ]
+          }
+        },
+        "required": [
+          "name",
+          "recipe",
+          "workloads",
+          "backends",
+          "on_incompatible"
+        ],
+        "additionalProperties": false
+      }
+    }
+  },
+  "required": [
+    "baseliner_version",
+    "presets",
+    "stats_presets",
+    "recipes",
+    "campaigns"
+  ],
+  "additionalProperties": false,
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Baseliner Protocol Schema"
+}

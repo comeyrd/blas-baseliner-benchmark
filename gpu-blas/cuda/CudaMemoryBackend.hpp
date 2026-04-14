@@ -11,10 +11,10 @@ namespace GpuBlas {
       CHECK_CUDA(cudaFree(ptr));
     };
     void memcpy_to_device(void *dst, const void *src, size_t bytes, std::shared_ptr<stream_t> &stream) override {
-      CHECK_CUDA(cudaMemcpyAsync(&dst, &src, bytes, cudaMemcpyHostToDevice, *stream));
+      CHECK_CUDA(cudaMemcpyAsync(dst, src, bytes, cudaMemcpyHostToDevice, *stream));
     };
     void memcpy_to_host(void *dst, const void *src, size_t bytes, std::shared_ptr<stream_t> &stream) override {
-      CHECK_CUDA(cudaMemcpyAsync(&dst, &src, bytes, cudaMemcpyDeviceToHost, *stream));
+      CHECK_CUDA(cudaMemcpyAsync(dst, src, bytes, cudaMemcpyDeviceToHost, *stream));
     };
     void memset(void *ptr, int value, size_t bytes, std::shared_ptr<stream_t> &stream) override {
       CHECK_CUDA(cudaMemsetAsync(ptr, value, bytes, *stream));
