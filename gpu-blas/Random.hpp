@@ -1,5 +1,6 @@
 #ifndef GPU_BLAS_RANDOM_HPP
 #define GPU_BLAS_RANDOM_HPP
+#include "Types.hpp"
 #include <functional>
 #include <random>
 #include <vector>
@@ -38,7 +39,7 @@ namespace GpuBlas::Random {
       Random::random_fill_vector(buf, seed);
       break;
     case FillPolicy::Zero:
-      std::fill(buf.begin(), buf.end(), static_cast<TypeT>(0));
+      std::fill(buf.begin(), buf.end(), Types::ScalarInit<TypeT>::zero());
       break;
     }
   }

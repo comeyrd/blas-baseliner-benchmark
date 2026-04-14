@@ -1,6 +1,8 @@
 #ifndef BLAS_BASELINER_BLASSHAPES_HPP
 #define BLAS_BASELINER_BLASSHAPES_HPP
 #include "Random.hpp"
+#include "Types.hpp"
+#include <baseliner/core/Options.hpp>
 #include <vector>
 namespace GpuBlas::Shapes {
 
@@ -11,75 +13,86 @@ namespace GpuBlas::Shapes {
     bool is_output; // Is output set to true : copied back at teardown & reset to 0
   };
 
-  struct GemmDims {
-    size_t m, n, k;
+  template <typename T>
+  struct GemmDims : public Baseliner::IOption {
+    T m, n, k;
+
+    GemmDims() = default;
+    GemmDims(T m_, T n_, T k_)
+        : m(m_),
+          n(n_),
+          k(k_) {};
+    void register_options() override {
+      this->add_option("GemmDims", "m", "Rows of A and C", m);
+      this->add_option("GemmDims", "k", "Cols of A / rows of B", k);
+      this->add_option("GemmDims", "n", "Cols of B and C", n);
+    }
   };
 
   template <typename T>
-  struct GemmArgs {
-    T alpha{static_cast<T>(1)};
-    T beta{static_cast<T>(0)};
+  struct GemmArgs : Baseliner::IOption {
+    T alpha = Types::ScalarInit<T>::one();
+    T beta = Types::ScalarInit<T>::zero();
 
-    template <typename WorkloadT>
-    void register_options(WorkloadT &w) {
-      w.add_option("Gemm", "alpha", "Scaling factor for A*B", alpha);
-      w.add_option("Gemm", "beta", "Scaling factor for C", beta);
+    void register_options() override {
+      this->add_option("GemmArgs", "alpha", "Scaling factor for A*B", alpha);
+      this->add_option("GemmArgs", "beta", "Scaling factor for C", beta);
     }
   };
 
-  template <typename InputTemplate, typename ComputeTemlplate = InputTemplate, typename OutputTemplate = InputTemplate>
+  template <typename InputTemplate, typename ComputeTemplate = InputTemplate, typename OutputTemplate = InputTemplate>
   struct TypeConfig {
     using InputT = InputTemplate;
-    using ComputeT = ComputeTemlplate;
+    using ComputeT = ComputeTemplate;
     using OutputT = OutputTemplate;
   };
 
-  template <typename TypeConfigT>
+  template <typename TypeConfigTemplate, typename DimTypes>
   struct GemmShape {
+    using TypeConfigT = TypeConfigTemplate;
     using InputT = typename TypeConfigT::InputT;
     using OutputT = typename TypeConfigT::OutputT;
     using ComputeT = typename TypeConfigT::ComputeT;
-    enum Slot : size_t {
+    enum Inputs : size_t {
       A = 0,
       B = 1,
-      C = 2
+    };
+    enum Outputs : size_t {
+      C = 0,
     };
 
-    template <size_t I>
-    using BufferT = std::conditional_t<I == C, OutputT, InputT>;
-
-    using DimsT = GemmDims;
+    using DimsT = GemmDims<DimTypes>;
     using ArgsT = GemmArgs<ComputeT>;
     static constexpr std::string_view group = "Gemm";
-    static constexpr size_t buffer_count = 3;
-    static constexpr std::array<bool, 3> is_output = {false, false, true};
-    static constexpr std::array<Random::FillPolicy, 3> fill_policies = {
-        Random::FillPolicy::Random, Random::FillPolicy::Random, Random::FillPolicy::Zero};
+    static constexpr size_t input_counts = 2;
+    static constexpr std::array<Random::FillPolicy, 2> input_fill_policies = {Random::FillPolicy::Random,
+                                                                              Random::FillPolicy::Random};
+    static constexpr size_t output_counts = 1;
+    static constexpr std::array<Random::FillPolicy, 1> output_fill_policies = {Random::FillPolicy::Zero};
 
     static DimsT scale(size_t work_size) {
       double s = std::pow(static_cast<double>(work_size), 1.0 / 3.0);
-      auto snap64 = [](double val) {
+      auto snap64 = [](double val) -> size_t {
         size_t v = static_cast<size_t>(val);
         return std::max<size_t>(64, (v / 64) * 64);
       };
-      return {snap64(512 * s), snap64(512 * s), snap64(512 * s)};
+      return DimsT(snap64(512 * s), snap64(512 * s), snap64(512 * s));
     };
 
-    static std::array<size_t, 3> buffer_sizes(const GemmDims &d) {
-      return {d.m * d.k, d.k * d.n, d.m * d.n};
+    static std::array<size_t, 2> input_buffer_sizes(const DimsT &d) {
+      return {{static_cast<size_t>(d.m) * d.k, static_cast<size_t>(d.k) * d.n}};
     }
-    static size_t flop_count(const GemmDims &d) {
-      return 2 * d.m * d.n * d.k;
+
+    static std::array<size_t, 1> output_buffer_sizes(const DimsT &d) {
+      return {{static_cast<size_t>(d.m) * d.n}};
     }
-    static size_t byte_count(const GemmDims &d) {
+
+    static size_t flop_count(const DimsT &d) {
+      return 2ULL * d.m * d.n * d.k;
+    }
+    static size_t byte_count(const DimsT &d) {
       return (d.m * d.k + d.k * d.n) * sizeof(InputT) // A + B
              + (d.m * d.n) * sizeof(OutputT);         // C
-    }
-    template <typename WorkloadT>
-    static void register_options(WorkloadT &w, GemmDims &d) {
-      w.add_option(group, "m", "Rows of A and C", d.m);
-      w.add_option(group, "k", "Cols of A / rows of B", d.k);
-      w.add_option(group, "n", "Cols of B and C", d.n);
     }
   };
 
