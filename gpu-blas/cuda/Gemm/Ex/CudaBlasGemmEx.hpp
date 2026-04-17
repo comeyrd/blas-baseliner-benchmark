@@ -1,12 +1,9 @@
 #pragma once
-#include "../../BlasShapes.hpp"
-#include "../CudaBlasWorkload.hpp"
-#include "../types.hpp"
-#include "CudaBlasGemm.hpp"
 #include "cublas_v2.h"
 #include <baseliner/core/Conversions.hpp>
 #include <baseliner/registry/RegisteringMacros.hpp>
 #include <cuda_runtime.h>
+#include <gpu-blas/cuda/Gemm/CudaBlasGemm.hpp>
 
 namespace GpuBlas {
   template <typename TypeConfigT, typename DimType>
@@ -16,7 +13,7 @@ namespace GpuBlas {
     using Base = CuBlasWorkload<ShapeT>;
     using backend = typename Base::backend;
 
-    virtual void run_workload(std::shared_ptr<typename backend::stream_t> stream) override {
+    virtual std::monostate run_workload(std::shared_ptr<typename backend::stream_t> stream) override {
       using Config = typename ShapeT::TypeConfigT;
       using InputT = typename Config::InputT;
       using ComputeT = typename Config::ComputeT;
@@ -41,6 +38,7 @@ namespace GpuBlas {
                                      this->m_dims.k, &this->m_args.beta, this->m_buffers.out_device(ShapeT::Outputs::C),
                                      cType, this->m_dims.m, computeType, this->algo));
       }
+      return {};
     }
 
     void register_options() override {

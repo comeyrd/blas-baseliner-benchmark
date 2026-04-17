@@ -1,8 +1,8 @@
 #ifndef BLAS_BASELINER_IBLASWORKLOAD_HPP
 #define BLAS_BASELINER_IBLASWORKLOAD_HPP
-#include "Random.hpp"
-#include "Types.hpp"
 #include <baseliner/core/Workload.hpp>
+#include <gpu-blas/Random.hpp>
+#include <gpu-blas/Types.hpp>
 namespace GpuBlas {
 
   template <typename ShapeT>
@@ -10,9 +10,9 @@ namespace GpuBlas {
     static constexpr size_t I_ = ShapeT::input_counts;
     static constexpr size_t O_ = ShapeT::output_counts;
 
-    std::array<void *, I_> input_device{};
+    std::array<typename ShapeT::InputT *, I_> input_device{};
     std::array<std::vector<typename ShapeT::InputT>, I_> input_host;
-    std::array<void *, O_> output_device{};
+    std::array<typename ShapeT::OutputT *, O_> output_device{};
     std::array<std::vector<typename ShapeT::OutputT>, O_> output_host;
 
     auto in_device(size_t i) -> typename ShapeT::InputT * {
@@ -44,7 +44,7 @@ namespace GpuBlas {
 
     virtual void alloc_handle() = 0;
     virtual void free_handle() = 0;
-    void alloc_host() {
+    virtual void alloc_host() {
       m_dims = ShapeT::scale(this->get_work_size());
       auto input_sz = ShapeT::input_buffer_sizes(m_dims);
       for (size_t i = 0; i < I_; ++i) {
@@ -63,13 +63,13 @@ namespace GpuBlas {
       this->alloc_handle();
       auto input_sz = ShapeT::input_buffer_sizes(m_dims);
       for (size_t i = 0; i < I_; ++i) {
-        m_memory.malloc(m_buffers.input_device[i], input_sz[i] * sizeof(InputT), stream);
+        m_memory.malloc(&m_buffers.input_device[i], input_sz[i] * sizeof(InputT), stream);
         m_memory.memcpy_to_device(m_buffers.input_device[i], m_buffers.input_host[i].data(),
                                   input_sz[i] * sizeof(InputT), stream);
       }
       auto output_sz = ShapeT::output_buffer_sizes(m_dims);
       for (size_t i = 0; i < O_; i++) {
-        m_memory.malloc(m_buffers.output_device[i], output_sz[i] * sizeof(OutputT), stream);
+        m_memory.malloc(&m_buffers.output_device[i], output_sz[i] * sizeof(OutputT), stream);
         m_memory.memcpy_to_device(m_buffers.output_device[i], m_buffers.output_host[i].data(),
                                   output_sz[i] * sizeof(OutputT), stream);
       }
@@ -94,7 +94,7 @@ namespace GpuBlas {
       this->free_host();
     }
 
-    void free_host() {
+    virtual void free_host() {
       for (size_t i = 0; i < I_; ++i) {
         m_buffers.input_host[i].clear();
       }

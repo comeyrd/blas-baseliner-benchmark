@@ -1,2 +1,5 @@
-target_sources(baseliner-blas PRIVATE
-   CublasHelper.cu Gemm.cu GemmEx.cu)
+add_subdirectory(3m)
+add_subdirectory(Batched)
+add_subdirectory(Ex)
+add_subdirectory(Regular)
+add_subdirectory(Strided)

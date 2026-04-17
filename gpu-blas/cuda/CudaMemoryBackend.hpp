@@ -1,13 +1,12 @@
 #ifndef BLAS_BASELINER_CUDAMEMORYBACKEND_HPP
 #define BLAS_BASELINER_CUDAMEMORYBACKEND_HPP
-#include "../IMemoryBackend.hpp"
+
 #include <baseliner/core/hardware/cuda/CudaBackend.hpp>
+#include <gpu-blas/IMemoryBackend.hpp>
 namespace GpuBlas {
   struct CudaMemoryBackend : public IMemoryBackend<Baseliner::Hardware::CudaBackend> {
-    void malloc(void *&ptr, size_t bytes, std::shared_ptr<stream_t> &stream) override {
-      CHECK_CUDA(cudaMallocAsync(&ptr, bytes, *stream));
-    };
-    void free(void *&ptr) override {
+
+    void free(void *ptr) override {
       CHECK_CUDA(cudaFree(ptr));
     };
     void memcpy_to_device(void *dst, const void *src, size_t bytes, std::shared_ptr<stream_t> &stream) override {
@@ -21,6 +20,11 @@ namespace GpuBlas {
     };
     CudaMemoryBackend() = default;
     ~CudaMemoryBackend() = default;
+
+  protected:
+    void _malloc(void **ptr, size_t bytes, std::shared_ptr<stream_t> &stream) override {
+      CHECK_CUDA(cudaMallocAsync(ptr, bytes, *stream));
+    };
   };
 } // namespace GpuBlas
 
