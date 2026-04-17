@@ -1,2 +1,3 @@
 target_sources(baseliner-blas PRIVATE
-   RocBlasHelper.hip RocBlas.hip)
+   RocBlasHelper.hip)
+add_subdirectory(Gemm)
