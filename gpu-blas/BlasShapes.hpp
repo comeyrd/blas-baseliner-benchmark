@@ -1,18 +1,20 @@
 #ifndef BLAS_BASELINER_BLASSHAPES_HPP
 #define BLAS_BASELINER_BLASSHAPES_HPP
-#include "Random.hpp"
-#include "Types.hpp"
 #include <baseliner/core/Options.hpp>
-#include <vector>
+#include <functional>
+#include <gpu-blas/Random.hpp>
+#include <gpu-blas/Types.hpp>
+
 namespace GpuBlas::Shapes {
 
-  template <typename TypeT>
-  struct BufferSlot {
-    std::vector<TypeT> data;
-    Random::FillPolicy fill;
-    bool is_output; // Is output set to true : copied back at teardown & reset to 0
+  template <typename InputTemplate, typename ComputeTemplate = InputTemplate, typename OutputTemplate = InputTemplate>
+  struct TypeConfig {
+    using InputT = InputTemplate;
+    using ComputeT = ComputeTemplate;
+    using OutputT = OutputTemplate;
   };
 
+  // StandardGemm
   template <typename T>
   struct GemmDims : public Baseliner::IOption {
     T m, n, k;
@@ -38,13 +40,6 @@ namespace GpuBlas::Shapes {
       this->add_option("GemmArgs", "alpha", "Scaling factor for A*B", alpha);
       this->add_option("GemmArgs", "beta", "Scaling factor for C", beta);
     }
-  };
-
-  template <typename InputTemplate, typename ComputeTemplate = InputTemplate, typename OutputTemplate = InputTemplate>
-  struct TypeConfig {
-    using InputT = InputTemplate;
-    using ComputeT = ComputeTemplate;
-    using OutputT = OutputTemplate;
   };
 
   template <typename TypeConfigTemplate, typename DimTypes>
