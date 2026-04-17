@@ -79,9 +79,13 @@ namespace GpuBlas {
       for (size_t i = 0; i < O_; i++) {
         this->m_memory.memcpy_to_host(this->m_buffers.output_host[i].data(), this->m_buffers.output_device[i],
                                       output_sz[i] * m_batch_count * sizeof(OutputT), stream);
+      }
+      BackendT::synchronize(stream);
+      for (size_t i = 0; i < O_; i++) {
         this->m_memory.free(this->m_buffers.output_device[i]);
       }
       this->free_handle();
+      this->inner_validate();
       this->free_host();
     }
 
@@ -101,6 +105,50 @@ namespace GpuBlas {
     auto get_stride_out(size_t i) const -> long long int {
       auto output_sz = ShapeT::output_buffer_sizes(this->m_dims);
       return static_cast<long long int>(output_sz[i]);
+    }
+    virtual void inner_validate() override {
+      this->m_valid = true;
+
+      for (size_t i = 0; i < O_; i++) {
+        auto &out = this->m_buffers.output_host[i];
+        if (out.empty())
+          continue;
+
+        const uint8_t *out_ptr = reinterpret_cast<const uint8_t *>(out.data());
+        size_t out_bytes = out.size() * sizeof(OutputT);
+        size_t check_bytes = std::min(out_bytes, size_t(256));
+
+        uint64_t out_hash = 0;
+        for (size_t j = 0; j < check_bytes; ++j) {
+          out_hash += out_ptr[j];
+        }
+
+        if (out_hash == 0) {
+          this->m_valid = false;
+          std::cout << "Wall of zeros\n";
+          return;
+        }
+
+        for (size_t j = 0; j < I_; ++j) {
+          auto &in = this->m_buffers.input_host[j];
+          const uint8_t *in_ptr = reinterpret_cast<const uint8_t *>(in.data());
+          size_t in_bytes = in.size() * sizeof(InputT);
+
+          if (in_bytes < check_bytes)
+            continue;
+
+          uint64_t in_hash = 0;
+          for (size_t k = 0; k < check_bytes; ++k) {
+            in_hash += in_ptr[k];
+          }
+
+          if (out_hash == in_hash) {
+            std::cout << "here\n";
+            this->m_valid = false;
+            return;
+          }
+        }
+      }
     }
 
   protected:

@@ -39,7 +39,7 @@ namespace GpuBlas {
       return std::string(ShapeT::group) + Types::type_to_string<typename ShapeT::TypeConfigT>();
     }
     auto validate_workload() -> bool override {
-      return true;
+      return m_valid;
     }
 
     virtual void alloc_handle() = 0;
@@ -88,9 +88,13 @@ namespace GpuBlas {
       for (size_t i = 0; i < O_; i++) {
         m_memory.memcpy_to_host(m_buffers.output_host[i].data(), m_buffers.output_device[i],
                                 output_sz[i] * sizeof(OutputT), stream);
+      }
+      BackendT::synchronize(stream);
+      for (size_t i = 0; i < O_; i++) {
         m_memory.free(m_buffers.output_device[i]);
       }
       this->free_handle();
+      this->inner_validate();
       this->free_host();
     }
 
@@ -118,12 +122,59 @@ namespace GpuBlas {
       this->register_consumer(&m_dims);
       this->register_consumer(&m_args);
     }
+    virtual void inner_validate() {
+      m_valid = true;
+
+      for (size_t i = 0; i < O_; i++) {
+        auto &out = m_buffers.output_host[i];
+        if (out.empty())
+          continue;
+
+        const uint8_t *out_ptr = reinterpret_cast<const uint8_t *>(out.data());
+        size_t out_bytes = out.size() * sizeof(typename ShapeT::OutputT);
+        size_t check_bytes = std::min(out_bytes, size_t(256));
+
+        // Check if output is just a block of zeros
+        uint64_t out_hash = 0;
+        for (size_t j = 0; j < check_bytes; ++j) {
+          out_hash += out_ptr[j];
+        }
+
+        if (out_hash == 0) {
+          m_valid = false;
+          std::cout << "Wall of zeros\n";
+          return;
+        }
+
+        // Check if output bytes match any input bytes (shallow copy/stale data)
+        for (size_t j = 0; j < I_; ++j) {
+          auto &in = m_buffers.input_host[j];
+          const uint8_t *in_ptr = reinterpret_cast<const uint8_t *>(in.data());
+          size_t in_bytes = in.size() * sizeof(typename ShapeT::InputT);
+
+          if (in_bytes < check_bytes)
+            continue;
+
+          uint64_t in_hash = 0;
+          for (size_t k = 0; k < check_bytes; ++k) {
+            in_hash += in_ptr[k];
+          }
+
+          if (out_hash == in_hash) {
+            std::cout << "here\n";
+            m_valid = false;
+            return;
+          }
+        }
+      }
+    }
 
   protected:
     MemoryBackendT m_memory{};
     DimsT m_dims{};
     ArgsT m_args{};
     Buffers<ShapeT> m_buffers{};
+    bool m_valid{false};
   };
 } // namespace GpuBlas
 #endif // BLAS_BASELINER_IBLASWORKLOAD_HPP
