@@ -1,10 +1,10 @@
 #ifndef BLAS_BASELINER_CUDA_TYPES_HPP
 #define BLAS_BASELINER_CUDA_TYPES_HPP
-#include "../Random.hpp"
-#include "../Types.hpp"
 #include "cublas_v2.h"
 #include <baseliner/core/AxeSweeping.hpp>
 #include <baseliner/core/Conversions.hpp>
+#include <gpu-blas/Random.hpp>
+#include <gpu-blas/Types.hpp>
 
 namespace GpuBlas {
 
