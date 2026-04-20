@@ -17,12 +17,13 @@ namespace GpuBlas {
       using Config = typename ShapeT::TypeConfigT;
       using InputT = typename Config::InputT;
       using ComputeT = typename Config::ComputeT;
+      using ComputePolicyT = typename Config::ComputePolicyT;
       using OutputT = typename Config::OutputT;
 
       cudaDataType_t aType = CudaTypeTraits<InputT>::type;
       cudaDataType_t bType = CudaTypeTraits<InputT>::type;
       cudaDataType_t cType = CudaTypeTraits<OutputT>::type;
-      cublasComputeType_t computeType = CublasComputeTraits<ComputeT>::type;
+      cublasComputeType_t computeType = CublasComputeTraits<ComputeT, ComputePolicyT>::type;
 
       CHECK_CUBLAS(cublasSetStream(this->m_handle, *stream));
       if constexpr (std::is_same_v<DimType, int>) {
