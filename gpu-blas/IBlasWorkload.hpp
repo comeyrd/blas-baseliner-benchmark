@@ -45,7 +45,7 @@ namespace GpuBlas {
     virtual void alloc_handle() = 0;
     virtual void free_handle() = 0;
     virtual void alloc_host() {
-      m_dims = ShapeT::scale(this->get_work_size());
+      ShapeT::scale(m_dims, this->get_work_size());
       auto input_sz = ShapeT::input_buffer_sizes(m_dims);
       for (size_t i = 0; i < I_; ++i) {
         m_buffers.input_host[i].resize(input_sz[i]);

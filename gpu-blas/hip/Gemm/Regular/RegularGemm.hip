@@ -16,8 +16,8 @@ namespace GpuBlas {
     using cgemm_64 = RegularRocBlasGemm<Shapes::TypeConfig<rocblas_float_complex>, int64_t>;
     using zgemm = RegularRocBlasGemm<Shapes::TypeConfig<rocblas_double_complex>, rocblas_int>;
     using zgemm_64 = RegularRocBlasGemm<Shapes::TypeConfig<rocblas_double_complex>, int64_t>;
-    // using hgemm = RegularRocBlasGemm<Shapes::TypeConfig<rocblas_half>, int>;
-    // using hgemm_64 = RegularRocBlasGemm<Shapes::TypeConfig<rocblas_half>, int64_t>;
+    using hgemm = RegularRocBlasGemm<Shapes::TypeConfig<rocblas_half>, int>;
+    using hgemm_64 = RegularRocBlasGemm<Shapes::TypeConfig<rocblas_half>, int64_t>;
 
     BASELINER_REGISTER_WORKLOAD(sgemm);
     BASELINER_REGISTER_WORKLOAD(sgemm_64);
@@ -27,8 +27,8 @@ namespace GpuBlas {
     BASELINER_REGISTER_WORKLOAD(cgemm_64);
     BASELINER_REGISTER_WORKLOAD(zgemm);
     BASELINER_REGISTER_WORKLOAD(zgemm_64);
-    // BASELINER_REGISTER_WORKLOAD(hgemm);
-    // BASELINER_REGISTER_WORKLOAD(hgemm_64);
+    BASELINER_REGISTER_WORKLOAD(hgemm);
+    BASELINER_REGISTER_WORKLOAD(hgemm_64);
   } // namespace
 
 } // namespace GpuBlas
