@@ -1,6 +1,7 @@
 #ifndef BLAS_BASELINER_CUDA_TYPES_HPP
 #define BLAS_BASELINER_CUDA_TYPES_HPP
 #include "cublas_v2.h"
+#include "gpu-blas/BlasShapes.hpp"
 #include <baseliner/core/AxeSweeping.hpp>
 #include <baseliner/core/Conversions.hpp>
 #include <gpu-blas/Random.hpp>
@@ -39,27 +40,80 @@ namespace GpuBlas {
   struct CudaTypeTraits<int8_t> {
     static constexpr cudaDataType_t type = CUDA_R_8I;
   };
+
   template <>
   struct CudaTypeTraits<int32_t> {
     static constexpr cudaDataType_t type = CUDA_R_32I;
   };
-  template <typename T>
+  struct PedanticMath {};
+  struct Fast16FMath {};
+  struct FastBF16Math {};
+  struct FastTF32Math {};
+  struct EmulatedBF16x9Math {};
+
+  template <typename TypeT, typename PolicyT>
   struct CublasComputeTraits;
+
+  // --- Half Precision (__half) ---
   template <>
-  struct CublasComputeTraits<float> {
-    static constexpr cublasComputeType_t type = CUBLAS_COMPUTE_32F;
-  };
-  template <>
-  struct CublasComputeTraits<double> {
-    static constexpr cublasComputeType_t type = CUBLAS_COMPUTE_64F;
-  };
-  template <>
-  struct CublasComputeTraits<__half> {
+  struct CublasComputeTraits<__half, Shapes::DefaultMath> {
     static constexpr cublasComputeType_t type = CUBLAS_COMPUTE_16F;
   };
   template <>
-  struct CublasComputeTraits<int32_t> {
+  struct CublasComputeTraits<__half, PedanticMath> {
+    static constexpr cublasComputeType_t type = CUBLAS_COMPUTE_16F_PEDANTIC;
+  };
+
+  // --- Integer (int32_t) ---
+  template <>
+  struct CublasComputeTraits<int32_t, Shapes::DefaultMath> {
     static constexpr cublasComputeType_t type = CUBLAS_COMPUTE_32I;
+  };
+  template <>
+  struct CublasComputeTraits<int32_t, PedanticMath> {
+    static constexpr cublasComputeType_t type = CUBLAS_COMPUTE_32I_PEDANTIC;
+  };
+
+  // --- Single Precision (float & cuComplex) ---
+  // Default Policies
+  template <>
+  struct CublasComputeTraits<float, Shapes::DefaultMath> {
+    static constexpr cublasComputeType_t type = CUBLAS_COMPUTE_32F;
+  };
+  template <>
+  struct CublasComputeTraits<cuComplex, Shapes::DefaultMath> {
+    static constexpr cublasComputeType_t type = CUBLAS_COMPUTE_32F;
+  };
+
+  // CUDA-Specific Specialized Policies for FP32
+  template <>
+  struct CublasComputeTraits<float, PedanticMath> {
+    static constexpr cublasComputeType_t type = CUBLAS_COMPUTE_32F_PEDANTIC;
+  };
+  template <>
+  struct CublasComputeTraits<float, Fast16FMath> {
+    static constexpr cublasComputeType_t type = CUBLAS_COMPUTE_32F_FAST_16F;
+  };
+  template <>
+  struct CublasComputeTraits<float, FastBF16Math> {
+    static constexpr cublasComputeType_t type = CUBLAS_COMPUTE_32F_FAST_16BF;
+  };
+  template <>
+  struct CublasComputeTraits<float, FastTF32Math> {
+    static constexpr cublasComputeType_t type = CUBLAS_COMPUTE_32F_FAST_TF32;
+  };
+  // --- Double Precision (double & cuDoubleComplex) ---
+  template <>
+  struct CublasComputeTraits<double, Shapes::DefaultMath> {
+    static constexpr cublasComputeType_t type = CUBLAS_COMPUTE_64F;
+  };
+  template <>
+  struct CublasComputeTraits<cuDoubleComplex, Shapes::DefaultMath> {
+    static constexpr cublasComputeType_t type = CUBLAS_COMPUTE_64F;
+  };
+  template <>
+  struct CublasComputeTraits<double, PedanticMath> {
+    static constexpr cublasComputeType_t type = CUBLAS_COMPUTE_64F_PEDANTIC;
   };
   namespace Types {
     template <>

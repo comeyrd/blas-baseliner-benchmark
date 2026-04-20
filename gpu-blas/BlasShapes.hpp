@@ -6,12 +6,15 @@
 #include <gpu-blas/Types.hpp>
 
 namespace GpuBlas::Shapes {
+  struct DefaultMath {};
 
-  template <typename InputTemplate, typename ComputeTemplate = InputTemplate, typename OutputTemplate = InputTemplate>
+  template <typename InputTemplate, typename ComputeTemplate = InputTemplate, typename OutputTemplate = InputTemplate,
+            typename PolicyTemplate = DefaultMath>
   struct TypeConfig {
     using InputT = InputTemplate;
     using ComputeT = ComputeTemplate;
     using OutputT = OutputTemplate;
+    using ComputePolicyT = PolicyTemplate;
   };
 
   // StandardGemm
