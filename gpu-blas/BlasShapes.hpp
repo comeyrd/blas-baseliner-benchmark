@@ -17,7 +17,9 @@ namespace GpuBlas::Shapes {
   // StandardGemm
   template <typename T>
   struct GemmDims : public Baseliner::IOption {
-    T m, n, k;
+    T m = 512;
+    T n = 512;
+    T k = 512;
 
     GemmDims() = default;
     GemmDims(T m_, T n_, T k_)
@@ -65,13 +67,13 @@ namespace GpuBlas::Shapes {
     static constexpr size_t output_counts = 1;
     static constexpr std::array<Random::FillPolicy, 1> output_fill_policies = {Random::FillPolicy::Zero};
 
-    static DimsT scale(size_t work_size) {
+    static void scale(DimsT &dims, size_t work_size) {
       double s = std::pow(static_cast<double>(work_size), 1.0 / 3.0);
       auto snap64 = [](double val) -> size_t {
         size_t v = static_cast<size_t>(val);
         return std::max<size_t>(64, (v / 64) * 64);
       };
-      return DimsT(snap64(512 * s), snap64(512 * s), snap64(512 * s));
+      dims = DimsT(snap64(dims.m * s), snap64(dims.n * s), snap64(dims.k * s));
     };
 
     static std::array<size_t, 2> input_buffer_sizes(const DimsT &d) {

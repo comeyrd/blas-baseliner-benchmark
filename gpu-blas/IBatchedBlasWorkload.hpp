@@ -28,7 +28,7 @@ namespace GpuBlas {
     }
 
     void alloc_host() override {
-      this->m_dims = ShapeT::scale(this->get_work_size());
+      ShapeT::scale(this->m_dims, this->get_work_size());
       auto input_sz = ShapeT::input_buffer_sizes(this->m_dims);
       for (size_t i = 0; i < I_; ++i) {
         this->m_buffers.input_host[i].resize(input_sz[i] * m_batch_count);

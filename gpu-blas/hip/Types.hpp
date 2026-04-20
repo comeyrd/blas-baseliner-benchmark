@@ -47,11 +47,11 @@ namespace GpuBlas {
     static constexpr rocblas_datatype type = rocblas_datatype_f64_r;
   };
   template <>
-  struct RocblasTypeTraits<__half> {
+  struct RocblasTypeTraits<rocblas_half> {
     static constexpr rocblas_datatype type = rocblas_datatype_f16_r;
   };
   template <>
-  struct RocblasTypeTraits<__hip_bfloat16> {
+  struct RocblasTypeTraits<rocblas_bfloat16> {
     static constexpr rocblas_datatype type = rocblas_datatype_bf16_r;
   };
   template <>
@@ -101,12 +101,35 @@ namespace GpuBlas {
       }
     };
     template <>
-    struct ScalarInit<__half> {
-      static __half one() {
-        return __half{1.0};
+    struct ScalarInit<rocblas_half> {
+      static rocblas_half one() {
+        __half temp{1.0};
+        rocblas_half halfval;
+        memcpy(&halfval.data, &temp, sizeof(uint16_t));
+        return halfval;
       }
-      static __half zero() {
-        return __half{0.0};
+      static rocblas_half zero() {
+        __half temp{0.0};
+        rocblas_half halfval;
+        memcpy(&halfval.data, &temp, sizeof(uint16_t));
+        return halfval;
+      }
+    };
+    template <>
+    struct ScalarInit<rocblas_bfloat16> {
+      static rocblas_bfloat16 one() {
+        __hip_bfloat16 temp{1.0};
+        uint16_t raw = temp;
+        rocblas_bfloat16 halfval;
+        memcpy(&halfval.data, &raw, sizeof(uint16_t));
+        return halfval;
+      }
+      static rocblas_bfloat16 zero() {
+        __hip_bfloat16 temp{1.0};
+        uint16_t raw = temp;
+        rocblas_bfloat16 halfval;
+        memcpy(&halfval.data, &raw, sizeof(uint16_t));
+        return halfval;
       }
     };
     template <>
@@ -148,21 +171,28 @@ namespace GpuBlas {
       }
     };
     template <>
-    struct RandomTraits<__half> {
+    struct RandomTraits<rocblas_half> {
       using ScalarT = float; // Use float for the random math
       template <typename Op>
-      static __half create(Op &&gen) {
+      static rocblas_half create(Op &&gen) {
         float val = gen();
-        return __float2half(val);
+        __half half_val = __float2half(val);
+        rocblas_half roc_half;
+        memcpy(&roc_half.data, &half_val, sizeof(uint16_t));
+        return roc_half;
       }
     };
     template <>
-    struct RandomTraits<__hip_bfloat16> {
+    struct RandomTraits<rocblas_bfloat16> {
       using ScalarT = float; // Use float for the random math
       template <typename Op>
-      static __hip_bfloat16 create(Op &&gen) {
+      static rocblas_bfloat16 create(Op &&gen) {
         float val = gen();
-        return __float2bfloat16(val);
+        __hip_bfloat16 half_val(val);
+        uint16_t raw = half_val;
+        rocblas_bfloat16 roc_half;
+        memcpy(&roc_half.data, &raw, sizeof(uint16_t));
+        return roc_half;
       }
     };
     template <>
@@ -224,15 +254,35 @@ namespace Baseliner::Conversion {
     return xy_from_string<rocblas_double_complex, double>(val);
   };
   template <>
-  inline auto baseliner_from_string<__half>(const std::string &val) -> __half {
+  inline auto baseliner_from_string<rocblas_half>(const std::string &val) -> rocblas_half {
     float f_val = std::stof(val);
-    return __float2half(f_val);
+    auto temp = __float2half(f_val);
+    rocblas_half new_half;
+    memcpy(&new_half.data, &temp, sizeof(uint16_t));
+    return new_half;
   }
 
   template <>
-  inline auto baseliner_to_string<__half>(const __half &val) -> std::string {
-    float f_val;
-    f_val = __half2float(val);
+  inline auto baseliner_to_string<rocblas_half>(const rocblas_half &val) -> std::string {
+    __half half_f_val;
+    memcpy(&half_f_val, &val.data, sizeof(uint16_t));
+    auto f_val = __half2float(half_f_val);
+    return std::to_string(f_val);
+  }
+  template <>
+  inline auto baseliner_from_string<rocblas_bfloat16>(const std::string &val) -> rocblas_bfloat16 {
+    float f_val = std::stof(val);
+    __hip_bfloat16 temp(f_val);
+    uint16_t raw = temp;
+    rocblas_bfloat16 new_half;
+    memcpy(&new_half.data, &raw, sizeof(uint16_t));
+    return new_half;
+  }
+
+  template <>
+  inline auto baseliner_to_string<rocblas_bfloat16>(const rocblas_bfloat16 &val) -> std::string {
+    __hip_bfloat16 bfloat(val.data);
+    float f_val = bfloat;
     return std::to_string(f_val);
   }
 
