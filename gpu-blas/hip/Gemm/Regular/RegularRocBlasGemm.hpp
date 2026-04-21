@@ -51,7 +51,7 @@ namespace GpuBlas {
   class RegularRocBlasGemm : public RocBlasGemm<TypeConfigT, DimType> {
   public:
     using ShapeT = Shapes::GemmShape<TypeConfigT, DimType>;
-    using Base = CuBlasWorkload<ShapeT>;
+    using Base = RocBlasWorkload<ShapeT>;
     using backend = typename Base::backend;
     virtual std::monostate run_workload(std::shared_ptr<typename backend::stream_t> stream) override {
       using T = typename ShapeT::TypeConfigT::InputT;

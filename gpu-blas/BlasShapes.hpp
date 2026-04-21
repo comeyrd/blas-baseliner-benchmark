@@ -87,14 +87,14 @@ namespace GpuBlas {
         return (d.m * d.k + d.k * d.n) * sizeof(InputT) // A + B
                + (d.m * d.n) * sizeof(OutputT);         // C
       }
-      static bool validate(const Buffers<GemmShape> &buffers, const DimsT &dims, const ArgsT &args,
-                           size_t samples = 8) {
+      static bool validate(const Buffers<GemmShape> &buffers, const DimsT &dims, const ArgsT &args, float &mean_error,
+                           size_t samples = 256) {
 
         using Shape = GemmShape<TypeConfigT, DimTypes>;
 
         bool ok = true;
 
-        ok &= GpuBlas::Validation::gemm_spot_check<Shape>(buffers, dims, args, samples);
+        ok &= GpuBlas::Validation::gemm_spot_check<Shape>(buffers, dims, args, mean_error, samples);
 
         return ok;
       }

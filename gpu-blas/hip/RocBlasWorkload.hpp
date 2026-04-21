@@ -15,7 +15,7 @@
 namespace GpuBlas {
 
   template <typename ShapeT>
-  class CuBlasWorkload : public IBlasWorkload<Baseliner::Hardware::HipBackend, ShapeT, HipMemoryBackend> {
+  class RocBlasWorkload : public IBlasWorkload<Baseliner::Hardware::HipBackend, ShapeT, HipMemoryBackend> {
   public:
     using backend = typename IBlasWorkload<Baseliner::Hardware::HipBackend, ShapeT, HipMemoryBackend>::backend;
     void alloc_handle() override {
@@ -30,7 +30,8 @@ namespace GpuBlas {
   };
 
   template <typename ShapeT>
-  class BatchedCuBlasWorkload : public IBatchedBlasWorkload<Baseliner::Hardware::HipBackend, ShapeT, HipMemoryBackend> {
+  class BatchedRocBlasWorkload
+      : public IBatchedBlasWorkload<Baseliner::Hardware::HipBackend, ShapeT, HipMemoryBackend> {
   public:
     using backend = typename IBlasWorkload<Baseliner::Hardware::HipBackend, ShapeT, HipMemoryBackend>::backend;
     void alloc_handle() override {
@@ -45,7 +46,7 @@ namespace GpuBlas {
   };
 
   template <typename ShapeT>
-  class StridedBatchedCuBlasWorkload
+  class StridedBatchedRocBlasWorkload
       : public IStridedBatchedBlasWorkload<Baseliner::Hardware::HipBackend, ShapeT, HipMemoryBackend> {
   public:
     using backend = typename IBlasWorkload<Baseliner::Hardware::HipBackend, ShapeT, HipMemoryBackend>::backend;
