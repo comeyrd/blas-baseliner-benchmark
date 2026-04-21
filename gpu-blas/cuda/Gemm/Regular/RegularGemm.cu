@@ -9,16 +9,16 @@
 
 namespace GpuBlas {
   namespace {
-    using sgemm = RegularCublasGemm<Shapes::TypeConfig<float>, int>;
-    using sgemm_64 = RegularCublasGemm<Shapes::TypeConfig<float>, int64_t>;
-    using dgemm = RegularCublasGemm<Shapes::TypeConfig<double>, int>;
-    using dgemm_64 = RegularCublasGemm<Shapes::TypeConfig<double>, int64_t>;
-    using cgemm = RegularCublasGemm<Shapes::TypeConfig<cuComplex>, int>;
-    using cgemm_64 = RegularCublasGemm<Shapes::TypeConfig<cuComplex>, int64_t>;
-    using zgemm = RegularCublasGemm<Shapes::TypeConfig<cuDoubleComplex>, int>;
-    using zgemm_64 = RegularCublasGemm<Shapes::TypeConfig<cuDoubleComplex>, int64_t>;
-    using hgemm = RegularCublasGemm<Shapes::TypeConfig<__half>, int>;
-    using hgemm_64 = RegularCublasGemm<Shapes::TypeConfig<__half>, int64_t>;
+    using sgemm = RegularCublasGemm<Types::TypeConfig<float>, int>;
+    using sgemm_64 = RegularCublasGemm<Types::TypeConfig<float>, int64_t>;
+    using dgemm = RegularCublasGemm<Types::TypeConfig<double>, int>;
+    using dgemm_64 = RegularCublasGemm<Types::TypeConfig<double>, int64_t>;
+    using cgemm = RegularCublasGemm<Types::TypeConfig<cuComplex>, int>;
+    using cgemm_64 = RegularCublasGemm<Types::TypeConfig<cuComplex>, int64_t>;
+    using zgemm = RegularCublasGemm<Types::TypeConfig<cuDoubleComplex>, int>;
+    using zgemm_64 = RegularCublasGemm<Types::TypeConfig<cuDoubleComplex>, int64_t>;
+    using hgemm = RegularCublasGemm<Types::TypeConfig<__half>, int>;
+    using hgemm_64 = RegularCublasGemm<Types::TypeConfig<__half>, int64_t>;
 
     BASELINER_REGISTER_WORKLOAD(sgemm);
     BASELINER_REGISTER_WORKLOAD(sgemm_64);
