@@ -56,7 +56,7 @@ namespace GpuBlas {
 
   // --- Half Precision (__half) ---
   template <>
-  struct CublasComputeTraits<__half, Shapes::DefaultMath> {
+  struct CublasComputeTraits<__half, Types::DefaultMath> {
     static constexpr cublasComputeType_t type = CUBLAS_COMPUTE_16F;
   };
   template <>
@@ -66,7 +66,7 @@ namespace GpuBlas {
 
   // --- Integer (int32_t) ---
   template <>
-  struct CublasComputeTraits<int32_t, Shapes::DefaultMath> {
+  struct CublasComputeTraits<int32_t, Types::DefaultMath> {
     static constexpr cublasComputeType_t type = CUBLAS_COMPUTE_32I;
   };
   template <>
@@ -77,11 +77,11 @@ namespace GpuBlas {
   // --- Single Precision (float & cuComplex) ---
   // Default Policies
   template <>
-  struct CublasComputeTraits<float, Shapes::DefaultMath> {
+  struct CublasComputeTraits<float, Types::DefaultMath> {
     static constexpr cublasComputeType_t type = CUBLAS_COMPUTE_32F;
   };
   template <>
-  struct CublasComputeTraits<cuComplex, Shapes::DefaultMath> {
+  struct CublasComputeTraits<cuComplex, Types::DefaultMath> {
     static constexpr cublasComputeType_t type = CUBLAS_COMPUTE_32F;
   };
 
@@ -104,11 +104,11 @@ namespace GpuBlas {
   };
   // --- Double Precision (double & cuDoubleComplex) ---
   template <>
-  struct CublasComputeTraits<double, Shapes::DefaultMath> {
+  struct CublasComputeTraits<double, Types::DefaultMath> {
     static constexpr cublasComputeType_t type = CUBLAS_COMPUTE_64F;
   };
   template <>
-  struct CublasComputeTraits<cuDoubleComplex, Shapes::DefaultMath> {
+  struct CublasComputeTraits<cuDoubleComplex, Types::DefaultMath> {
     static constexpr cublasComputeType_t type = CUBLAS_COMPUTE_64F;
   };
   template <>
@@ -171,113 +171,85 @@ namespace GpuBlas {
       }
     };
 
+    template <>
+    struct ReferenceType<__half> {
+      using type = float;
+      static constexpr double tolerance = 1e-3;
+    };
+
+    template <>
+    struct ReferenceType<__nv_bfloat16> {
+      using type = float;
+      static constexpr double tolerance = 1e-3;
+    };
+    template <>
+    struct ReferenceType<cuDoubleComplex> {
+      using type = std::complex<double>;
+      static constexpr double tolerance = 1e-6;
+    };
+    template <>
+    struct ReferenceType<cuFloatComplex> {
+      using type = std::complex<float>;
+      static constexpr double tolerance = 1e-6;
+    };
+
+    template <>
+    inline auto to_reference_type(const cuFloatComplex &val) -> typename ReferenceType<cuFloatComplex>::type {
+      return typename ReferenceType<cuFloatComplex>::type(val.x, val.y);
+    }
+
+    template <>
+    inline auto from_reference_type(const typename ReferenceType<cuFloatComplex>::type &val) -> cuFloatComplex {
+      return cuFloatComplex{val.real(), val.imag()};
+    }
+    template <>
+    inline auto to_reference_type(const cuDoubleComplex &val) -> typename ReferenceType<cuDoubleComplex>::type {
+      return typename ReferenceType<cuDoubleComplex>::type(val.x, val.y);
+    }
+
+    template <>
+    inline auto from_reference_type(const typename ReferenceType<cuDoubleComplex>::type &val) -> cuDoubleComplex {
+      return cuDoubleComplex{val.real(), val.imag()};
+    }
+
   } // namespace Types
-  namespace Random {
-
-    template <>
-    struct RandomTraits<cuComplex> {
-      using ScalarT = float;
-      template <typename Op>
-      static cuComplex create(Op &&gen) {
-        return {gen(), gen()};
-      }
-    };
-    template <>
-    struct RandomTraits<cuDoubleComplex> {
-      using ScalarT = double;
-      template <typename Op>
-      static cuDoubleComplex create(Op &&gen) {
-        return {gen(), gen()};
-      }
-    };
-    template <>
-    struct RandomTraits<__half> {
-      using ScalarT = float; // Use float for the random math
-      template <typename Op>
-      static __half create(Op &&gen) {
-        float val = gen();
-        return __float2half(val);
-      }
-    };
-    template <>
-    struct RandomTraits<__nv_bfloat16> {
-      using ScalarT = float; // Use float for the random math
-      template <typename Op>
-      static __nv_bfloat16 create(Op &&gen) {
-        float val = gen();
-        return __float2bfloat16(val);
-      }
-    };
-    template <>
-    struct RandomTraits<int8_t> {
-      using ScalarT = float; // MUST be a floating point type for std::uniform_real_distribution
-      template <typename Op>
-      static int8_t create(Op &&gen) {
-        return static_cast<int8_t>(gen());
-      }
-    };
-
-    template <>
-    struct RandomTraits<int32_t> {
-      using ScalarT = float; // MUST be a floating point type
-      template <typename Op>
-      static int32_t create(Op &&gen) {
-        return static_cast<int32_t>(gen());
-      }
-    };
-  } // namespace Random
 } // namespace GpuBlas
 
 namespace Baseliner::Conversion {
-
-  template <typename XY>
-  inline auto xy_to_string(const XY &val) -> std::string {
-    return "{" + baseliner_to_string(val.x) + " ," + baseliner_to_string(val.y) + "}";
-  }
-  template <typename XY, typename F>
-  auto xy_from_string(const std::string &val) -> XY {
-    std::string string_v = trim_before_after_whitespace(val);
-
-    if (string_v.size() >= 2 && ((string_v.front() == '{' && string_v.back() == '}'))) {
-      string_v = string_v.substr(1, string_v.size() - 2);
-    }
-    size_t comma_pos = string_v.find(',');
-    if (comma_pos == std::string::npos) {
-      throw std::invalid_argument("Input does not contain a pair separator: " + val);
-    }
-    std::string first_part = trim_before_after_whitespace(string_v.substr(0, comma_pos));
-    std::string second_part = trim_before_after_whitespace(string_v.substr(comma_pos + 1));
-
-    return {baseliner_from_string<F>(first_part), baseliner_from_string<F>(second_part)};
-  }
-  template <>
-  inline auto baseliner_to_string<cuComplex>(const cuComplex &val) -> std::string {
-    return xy_to_string(val);
-  };
-  template <>
-  inline auto baseliner_from_string<cuComplex>(const std::string &val) -> cuComplex {
-    return xy_from_string<cuComplex, float>(val);
-  };
-  template <>
-  inline auto baseliner_to_string<cuDoubleComplex>(const cuDoubleComplex &val) -> std::string {
-    return xy_to_string(val);
-  };
-  template <>
-  inline auto baseliner_from_string<cuDoubleComplex>(const std::string &val) -> cuDoubleComplex {
-    return xy_from_string<cuDoubleComplex, double>(val);
-  };
   template <>
   inline auto baseliner_from_string<__half>(const std::string &val) -> __half {
-    float f_val = std::stof(val);
-    return __half{__float2half(f_val)};
+    return GpuBlas::Types::from_string<__half>(val);
+  }
+  template <>
+  inline auto baseliner_to_string<__half>(const __half &val) -> std::string {
+    return GpuBlas::Types::to_string(val);
+  }
+  template <>
+  inline auto baseliner_from_string<cuDoubleComplex>(const std::string &val) -> cuDoubleComplex {
+    return GpuBlas::Types::from_string<cuDoubleComplex>(val);
+  }
+  template <>
+  inline auto baseliner_to_string<cuDoubleComplex>(const cuDoubleComplex &val) -> std::string {
+    return GpuBlas::Types::to_string(val);
+  }
+  template <>
+  inline auto baseliner_from_string<cuFloatComplex>(const std::string &val) -> cuFloatComplex {
+    return GpuBlas::Types::from_string<cuFloatComplex>(val);
+  }
+  template <>
+  inline auto baseliner_to_string<cuFloatComplex>(const cuFloatComplex &val) -> std::string {
+    return GpuBlas::Types::to_string(val);
   }
 
   template <>
-  inline auto baseliner_to_string<__half>(const __half &val) -> std::string {
-    float f_val;
-    f_val = __half2float(val);
-    return std::to_string(f_val);
+  inline auto baseliner_from_string<nv_bfloat16>(const std::string &val) -> nv_bfloat16 {
+    return GpuBlas::Types::from_string<nv_bfloat16>(val);
   }
+  template <>
+  inline auto baseliner_to_string<nv_bfloat16>(const nv_bfloat16 &val) -> std::string {
+    return GpuBlas::Types::to_string(val);
+  }
+
   template <>
   inline auto baseliner_to_string<cublasGemmAlgo_t>(const cublasGemmAlgo_t &val) -> std::string {
     switch (val) {

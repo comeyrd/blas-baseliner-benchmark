@@ -8,16 +8,16 @@
 
 namespace GpuBlas {
   namespace {
-    using stridedbatchedsgemm = StridedBatchedCublasGemm<Shapes::TypeConfig<float>, int>;
-    using stridedbatchedsgemm_64 = StridedBatchedCublasGemm<Shapes::TypeConfig<float>, int64_t>;
-    using stridedbatcheddgemm = StridedBatchedCublasGemm<Shapes::TypeConfig<double>, int>;
-    using stridedbatcheddgemm_64 = StridedBatchedCublasGemm<Shapes::TypeConfig<double>, int64_t>;
-    using stridedbatchedcgemm = StridedBatchedCublasGemm<Shapes::TypeConfig<cuComplex>, int>;
-    using stridedbatchedcgemm_64 = StridedBatchedCublasGemm<Shapes::TypeConfig<cuComplex>, int64_t>;
-    using stridedbatchedzgemm = StridedBatchedCublasGemm<Shapes::TypeConfig<cuDoubleComplex>, int>;
-    using stridedbatchedzgemm_64 = StridedBatchedCublasGemm<Shapes::TypeConfig<cuDoubleComplex>, int64_t>;
-    using stridedbatchedhgemm = StridedBatchedCublasGemm<Shapes::TypeConfig<__half>, int>;
-    using stridedbatchedhgemm_64 = StridedBatchedCublasGemm<Shapes::TypeConfig<__half>, int64_t>;
+    using stridedbatchedsgemm = StridedBatchedCublasGemm<Types::TypeConfig<float>, int>;
+    using stridedbatchedsgemm_64 = StridedBatchedCublasGemm<Types::TypeConfig<float>, int64_t>;
+    using stridedbatcheddgemm = StridedBatchedCublasGemm<Types::TypeConfig<double>, int>;
+    using stridedbatcheddgemm_64 = StridedBatchedCublasGemm<Types::TypeConfig<double>, int64_t>;
+    using stridedbatchedcgemm = StridedBatchedCublasGemm<Types::TypeConfig<cuComplex>, int>;
+    using stridedbatchedcgemm_64 = StridedBatchedCublasGemm<Types::TypeConfig<cuComplex>, int64_t>;
+    using stridedbatchedzgemm = StridedBatchedCublasGemm<Types::TypeConfig<cuDoubleComplex>, int>;
+    using stridedbatchedzgemm_64 = StridedBatchedCublasGemm<Types::TypeConfig<cuDoubleComplex>, int64_t>;
+    using stridedbatchedhgemm = StridedBatchedCublasGemm<Types::TypeConfig<__half>, int>;
+    using stridedbatchedhgemm_64 = StridedBatchedCublasGemm<Types::TypeConfig<__half>, int64_t>;
 
     BASELINER_REGISTER_WORKLOAD(stridedbatchedsgemm);
     BASELINER_REGISTER_WORKLOAD(stridedbatchedsgemm_64);

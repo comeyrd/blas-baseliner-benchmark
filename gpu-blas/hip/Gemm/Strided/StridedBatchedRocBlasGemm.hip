@@ -8,16 +8,16 @@
 
 namespace GpuBlas {
   namespace {
-    using stridedbatchedsgemm = StridedBatchedRocBlasGemm<Shapes::TypeConfig<float>, int>;
-    using stridedbatchedsgemm_64 = StridedBatchedRocBlasGemm<Shapes::TypeConfig<float>, int64_t>;
-    using stridedbatcheddgemm = StridedBatchedRocBlasGemm<Shapes::TypeConfig<double>, int>;
-    using stridedbatcheddgemm_64 = StridedBatchedRocBlasGemm<Shapes::TypeConfig<double>, int64_t>;
-    using stridedbatchedcgemm = StridedBatchedRocBlasGemm<Shapes::TypeConfig<rocblas_float_complex>, int>;
-    using stridedbatchedcgemm_64 = StridedBatchedRocBlasGemm<Shapes::TypeConfig<rocblas_float_complex>, int64_t>;
-    using stridedbatchedzgemm = StridedBatchedRocBlasGemm<Shapes::TypeConfig<rocblas_double_complex>, int>;
-    using stridedbatchedzgemm_64 = StridedBatchedRocBlasGemm<Shapes::TypeConfig<rocblas_double_complex>, int64_t>;
-    using stridedbatchedhgemm = StridedBatchedRocBlasGemm<Shapes::TypeConfig<rocblas_half>, int>;
-    using stridedbatchedhgemm_64 = StridedBatchedRocBlasGemm<Shapes::TypeConfig<rocblas_half>, int64_t>;
+    using stridedbatchedsgemm = StridedBatchedRocBlasGemm<Types::TypeConfig<float>, int>;
+    using stridedbatchedsgemm_64 = StridedBatchedRocBlasGemm<Types::TypeConfig<float>, int64_t>;
+    using stridedbatcheddgemm = StridedBatchedRocBlasGemm<Types::TypeConfig<double>, int>;
+    using stridedbatcheddgemm_64 = StridedBatchedRocBlasGemm<Types::TypeConfig<double>, int64_t>;
+    using stridedbatchedcgemm = StridedBatchedRocBlasGemm<Types::TypeConfig<rocblas_float_complex>, int>;
+    using stridedbatchedcgemm_64 = StridedBatchedRocBlasGemm<Types::TypeConfig<rocblas_float_complex>, int64_t>;
+    using stridedbatchedzgemm = StridedBatchedRocBlasGemm<Types::TypeConfig<rocblas_double_complex>, int>;
+    using stridedbatchedzgemm_64 = StridedBatchedRocBlasGemm<Types::TypeConfig<rocblas_double_complex>, int64_t>;
+    using stridedbatchedhgemm = StridedBatchedRocBlasGemm<Types::TypeConfig<rocblas_half>, int>;
+    using stridedbatchedhgemm_64 = StridedBatchedRocBlasGemm<Types::TypeConfig<rocblas_half>, int64_t>;
 
     BASELINER_REGISTER_WORKLOAD(stridedbatchedsgemm);
     BASELINER_REGISTER_WORKLOAD(stridedbatchedsgemm_64);

@@ -6,16 +6,16 @@
 
 namespace GpuBlas {
   namespace {
-    using batchedsgemm = BatchedRocBlasGemm<Shapes::TypeConfig<float>, int>;
-    using batchedsgemm_64 = BatchedRocBlasGemm<Shapes::TypeConfig<float>, int64_t>;
-    using batcheddgemm = BatchedRocBlasGemm<Shapes::TypeConfig<double>, int>;
-    using batcheddgemm_64 = BatchedRocBlasGemm<Shapes::TypeConfig<double>, int64_t>;
-    using batchedcgemm = BatchedRocBlasGemm<Shapes::TypeConfig<rocblas_float_complex>, int>;
-    using batchedcgemm_64 = BatchedRocBlasGemm<Shapes::TypeConfig<rocblas_float_complex>, int64_t>;
-    using batchedzgemm = BatchedRocBlasGemm<Shapes::TypeConfig<rocblas_double_complex>, int>;
-    using batchedzgemm_64 = BatchedRocBlasGemm<Shapes::TypeConfig<rocblas_double_complex>, int64_t>;
-    using batchedhgemm = BatchedRocBlasGemm<Shapes::TypeConfig<rocblas_half>, int>;
-    using batchedhgemm_64 = BatchedRocBlasGemm<Shapes::TypeConfig<rocblas_half>, int64_t>;
+    using batchedsgemm = BatchedRocBlasGemm<Types::TypeConfig<float>, int>;
+    using batchedsgemm_64 = BatchedRocBlasGemm<Types::TypeConfig<float>, int64_t>;
+    using batcheddgemm = BatchedRocBlasGemm<Types::TypeConfig<double>, int>;
+    using batcheddgemm_64 = BatchedRocBlasGemm<Types::TypeConfig<double>, int64_t>;
+    using batchedcgemm = BatchedRocBlasGemm<Types::TypeConfig<rocblas_float_complex>, int>;
+    using batchedcgemm_64 = BatchedRocBlasGemm<Types::TypeConfig<rocblas_float_complex>, int64_t>;
+    using batchedzgemm = BatchedRocBlasGemm<Types::TypeConfig<rocblas_double_complex>, int>;
+    using batchedzgemm_64 = BatchedRocBlasGemm<Types::TypeConfig<rocblas_double_complex>, int64_t>;
+    using batchedhgemm = BatchedRocBlasGemm<Types::TypeConfig<rocblas_half>, int>;
+    using batchedhgemm_64 = BatchedRocBlasGemm<Types::TypeConfig<rocblas_half>, int64_t>;
 
     BASELINER_REGISTER_WORKLOAD(batchedsgemm);
     BASELINER_REGISTER_WORKLOAD(batchedsgemm_64);
