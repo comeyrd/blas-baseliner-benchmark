@@ -125,7 +125,7 @@ namespace GpuBlas {
         return halfval;
       }
       static rocblas_bfloat16 zero() {
-        __hip_bfloat16 temp{1.0};
+        __hip_bfloat16 temp{0};
         uint16_t raw = temp;
         rocblas_bfloat16 halfval;
         memcpy(&halfval.data, &raw, sizeof(uint16_t));
@@ -152,138 +152,109 @@ namespace GpuBlas {
     };
 
   } // namespace Types
-  namespace Random {
+  namespace Types {
+    template <>
+    struct ReferenceType<rocblas_half> {
+      using type = float;
+      static constexpr double tolerance = 1e-3;
+    };
+    template <>
+    inline auto to_reference_type(const rocblas_half &val) -> typename ReferenceType<rocblas_half>::type {
+      __half_raw raw;
+      raw.x = val.data;
+      return static_cast<float>(__half(raw));
+    }
 
     template <>
-    struct RandomTraits<rocblas_float_complex> {
-      using ScalarT = float;
-      template <typename Op>
-      static rocblas_float_complex create(Op &&gen) {
-        return {gen(), gen()};
-      }
+    inline auto from_reference_type(const typename ReferenceType<rocblas_half>::type &val) -> rocblas_half {
+      __half hip_val = __float2half_rn(val);
+      rocblas_half ret;
+      ret.data = __half_raw(hip_val).x;
+      return ret;
+    }
+    template <>
+    struct ReferenceType<rocblas_float_complex> {
+      using type = std::complex<float>;
+      static constexpr double tolerance = 1e-3;
     };
     template <>
-    struct RandomTraits<rocblas_double_complex> {
-      using ScalarT = double;
-      template <typename Op>
-      static rocblas_double_complex create(Op &&gen) {
-        return {gen(), gen()};
-      }
-    };
-    template <>
-    struct RandomTraits<rocblas_half> {
-      using ScalarT = float; // Use float for the random math
-      template <typename Op>
-      static rocblas_half create(Op &&gen) {
-        float val = gen();
-        __half half_val = __float2half(val);
-        rocblas_half roc_half;
-        memcpy(&roc_half.data, &half_val, sizeof(uint16_t));
-        return roc_half;
-      }
-    };
-    template <>
-    struct RandomTraits<rocblas_bfloat16> {
-      using ScalarT = float; // Use float for the random math
-      template <typename Op>
-      static rocblas_bfloat16 create(Op &&gen) {
-        float val = gen();
-        __hip_bfloat16 half_val(val);
-        uint16_t raw = half_val;
-        rocblas_bfloat16 roc_half;
-        memcpy(&roc_half.data, &raw, sizeof(uint16_t));
-        return roc_half;
-      }
-    };
-    template <>
-    struct RandomTraits<int8_t> {
-      using ScalarT = float;
-      template <typename Op>
-      static int8_t create(Op &&gen) {
-        return static_cast<int8_t>(gen());
-      }
-    };
+    inline auto to_reference_type(const rocblas_float_complex &val) ->
+        typename ReferenceType<rocblas_float_complex>::type {
+      return typename ReferenceType<rocblas_float_complex>::type(val.real(), val.imag());
+    }
 
     template <>
-    struct RandomTraits<int32_t> {
-      using ScalarT = float;
-      template <typename Op>
-      static int32_t create(Op &&gen) {
-        return static_cast<int32_t>(gen());
-      }
+    inline auto from_reference_type(const typename ReferenceType<rocblas_float_complex>::type &val)
+        -> rocblas_float_complex {
+      return rocblas_float_complex{val.real(), val.imag()};
+    }
+    template <>
+    struct ReferenceType<rocblas_double_complex> {
+      using type = std::complex<double>;
+      static constexpr double tolerance = 1e-3;
     };
-  } // namespace Random
+    template <>
+    inline auto to_reference_type(const rocblas_double_complex &val) ->
+        typename ReferenceType<rocblas_double_complex>::type {
+      return typename ReferenceType<rocblas_double_complex>::type(val.real(), val.imag());
+    }
+
+    template <>
+    inline auto from_reference_type(const typename ReferenceType<rocblas_double_complex>::type &val)
+        -> rocblas_double_complex {
+      return rocblas_double_complex{val.real(), val.imag()};
+    }
+    template <>
+    struct ReferenceType<rocblas_bfloat16> {
+      using type = float;
+      static constexpr double tolerance = 1e-3;
+    };
+    template <>
+    inline auto to_reference_type(const rocblas_bfloat16 &val) -> typename ReferenceType<rocblas_bfloat16>::type {
+      return static_cast<float>(val);
+    }
+
+    template <>
+    inline auto from_reference_type(const typename ReferenceType<rocblas_bfloat16>::type &val) -> rocblas_bfloat16 {
+      return rocblas_bfloat16(val);
+    }
+
+  } // namespace Types
 } // namespace GpuBlas
 
 namespace Baseliner::Conversion {
 
-  template <typename XY>
-  inline auto xy_to_string(const XY &val) -> std::string {
-    return "{" + baseliner_to_string(val.real()) + " ," + baseliner_to_string(val.imag()) + "}";
+  template <>
+  inline auto baseliner_to_string<rocblas_half>(const rocblas_half &val) -> std::string {
+    return GpuBlas::Types::to_string(val);
   }
-  template <typename XY, typename F>
-  auto xy_from_string(const std::string &val) -> XY {
-    std::string string_v = trim_before_after_whitespace(val);
-
-    if (string_v.size() >= 2 && ((string_v.front() == '{' && string_v.back() == '}'))) {
-      string_v = string_v.substr(1, string_v.size() - 2);
-    }
-    size_t comma_pos = string_v.find(',');
-    if (comma_pos == std::string::npos) {
-      throw std::invalid_argument("Input does not contain a pair separator: " + val);
-    }
-    std::string first_part = trim_before_after_whitespace(string_v.substr(0, comma_pos));
-    std::string second_part = trim_before_after_whitespace(string_v.substr(comma_pos + 1));
-
-    return {baseliner_from_string<F>(first_part), baseliner_from_string<F>(second_part)};
+  template <>
+  inline auto baseliner_to_string<rocblas_bfloat16>(const rocblas_bfloat16 &val) -> std::string {
+    return GpuBlas::Types::to_string(val);
+  }
+  template <>
+  inline auto baseliner_to_string<rocblas_double_complex>(const rocblas_double_complex &val) -> std::string {
+    return GpuBlas::Types::to_string(val);
   }
   template <>
   inline auto baseliner_to_string<rocblas_float_complex>(const rocblas_float_complex &val) -> std::string {
-    return xy_to_string(val);
-  };
-  template <>
-  inline auto baseliner_from_string<rocblas_float_complex>(const std::string &val) -> rocblas_float_complex {
-    return xy_from_string<rocblas_float_complex, float>(val);
-  };
-  template <>
-  inline auto baseliner_to_string<rocblas_double_complex>(const rocblas_double_complex &val) -> std::string {
-    return xy_to_string(val);
-  };
-  template <>
-  inline auto baseliner_from_string<rocblas_double_complex>(const std::string &val) -> rocblas_double_complex {
-    return xy_from_string<rocblas_double_complex, double>(val);
-  };
+    return GpuBlas::Types::to_string(val);
+  }
   template <>
   inline auto baseliner_from_string<rocblas_half>(const std::string &val) -> rocblas_half {
-    float f_val = std::stof(val);
-    auto temp = __float2half(f_val);
-    rocblas_half new_half;
-    memcpy(&new_half.data, &temp, sizeof(uint16_t));
-    return new_half;
-  }
-
-  template <>
-  inline auto baseliner_to_string<rocblas_half>(const rocblas_half &val) -> std::string {
-    __half half_f_val;
-    memcpy(&half_f_val, &val.data, sizeof(uint16_t));
-    auto f_val = __half2float(half_f_val);
-    return std::to_string(f_val);
+    return GpuBlas::Types::from_string<rocblas_half>(val);
   }
   template <>
   inline auto baseliner_from_string<rocblas_bfloat16>(const std::string &val) -> rocblas_bfloat16 {
-    float f_val = std::stof(val);
-    __hip_bfloat16 temp(f_val);
-    uint16_t raw = temp;
-    rocblas_bfloat16 new_half;
-    memcpy(&new_half.data, &raw, sizeof(uint16_t));
-    return new_half;
+    return GpuBlas::Types::from_string<rocblas_bfloat16>(val);
   }
-
   template <>
-  inline auto baseliner_to_string<rocblas_bfloat16>(const rocblas_bfloat16 &val) -> std::string {
-    __hip_bfloat16 bfloat(val.data);
-    float f_val = bfloat;
-    return std::to_string(f_val);
+  inline auto baseliner_from_string<rocblas_double_complex>(const std::string &val) -> rocblas_double_complex {
+    return GpuBlas::Types::from_string<rocblas_double_complex>(val);
+  }
+  template <>
+  inline auto baseliner_from_string<rocblas_float_complex>(const std::string &val) -> rocblas_float_complex {
+    return GpuBlas::Types::from_string<rocblas_float_complex>(val);
   }
 
   template <>

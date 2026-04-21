@@ -49,10 +49,10 @@ namespace GpuBlas {
   };
 
   template <typename TypeConfigT, typename DimType>
-  class StridedBatchedRocBlasGemm : public StridedBatchedCuBlasWorkload<Shapes::GemmShape<TypeConfigT, DimType>> {
+  class StridedBatchedRocBlasGemm : public StridedBatchedRocBlasWorkload<Shapes::GemmShape<TypeConfigT, DimType>> {
   public:
     using ShapeT = Shapes::GemmShape<TypeConfigT, DimType>;
-    using Base = StridedBatchedCuBlasWorkload<ShapeT>;
+    using Base = StridedBatchedRocBlasWorkload<ShapeT>;
     using backend = typename Base::backend;
 
     void register_options() override {

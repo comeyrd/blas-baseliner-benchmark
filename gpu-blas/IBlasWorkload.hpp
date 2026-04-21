@@ -3,6 +3,7 @@
 #include <baseliner/core/Workload.hpp>
 #include <gpu-blas/BlasShapes.hpp>
 #include <gpu-blas/Random.hpp>
+#include <gpu-blas/Stats.hpp>
 #include <gpu-blas/Types.hpp>
 namespace GpuBlas {
 
@@ -98,6 +99,13 @@ namespace GpuBlas {
       return ShapeT::byte_count(m_dims) * sizeof(InputT);
     }
 
+    void workload_setup_metrics(std::shared_ptr<Baseliner::Stats::StatsEngine> &engine) override {
+      engine->register_metric<MeanError>(m_mean_error);
+    };
+    void workload_update_metrics(std::shared_ptr<Baseliner::Stats::StatsEngine> &engine) override {
+      engine->update_values<MeanError>(m_mean_error);
+    };
+
     void register_options() override {
       Baseliner::IWorkload<BackendT>::register_options();
     }
@@ -106,10 +114,11 @@ namespace GpuBlas {
       this->register_consumer(&m_args);
     }
     virtual void inner_validate() {
-      ShapeT::validate(m_buffers, m_dims, m_args);
+      m_valid = ShapeT::validate(m_buffers, m_dims, m_args, m_mean_error);
     }
 
   protected:
+    float m_mean_error{};
     MemoryBackendT m_memory{};
     DimsT m_dims{};
     ArgsT m_args{};

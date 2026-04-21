@@ -26,6 +26,11 @@ namespace GpuBlas::Types {
     using type = std::complex<TypeT>;
     static constexpr double tolerance = 1e-6;
   };
+  template <>
+  struct ReferenceType<int32_t> {
+    using type = int64_t;
+    static constexpr double tolerance = 0.0;
+  };
 
   template <typename TypeT>
   auto to_reference_type(const TypeT &val) -> typename ReferenceType<TypeT>::type {
