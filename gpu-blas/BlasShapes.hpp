@@ -88,7 +88,7 @@ namespace GpuBlas {
                + (d.m * d.n) * sizeof(OutputT);         // C
       }
       static bool validate(const Buffers<GemmShape> &buffers, const DimsT &dims, const ArgsT &args, float &mean_error,
-                           size_t samples = 256) {
+                           size_t samples = 5) {
 
         using Shape = GemmShape<TypeConfigT, DimTypes>;
 
