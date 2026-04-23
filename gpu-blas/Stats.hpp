@@ -1,5 +1,6 @@
 #pragma once
 #include <baseliner/core/stats/IStats.hpp>
+#include <baseliner/core/stats/StatsType.hpp>
 
 class MeanError : public Baseliner::Stats::Imetric<MeanError, float> {
 public:
@@ -10,7 +11,10 @@ public:
   [[nodiscard]] auto unit() const -> std::string override {
     return "";
   }
-  [[nodiscard]] auto saving_policy() -> Baseliner::Stats::MetricSavingPolicy override {
-    return Baseliner::Stats::MetricSavingPolicy::SAVE;
+  [[nodiscard]] auto saving_policy() const -> Baseliner::Stats::SavingPolicy override {
+    return Baseliner::Stats::SavingPolicy::SAVE;
   }
+  [[nodiscard]] auto granularity() const -> Baseliner::MetricGranularity override {
+    return Baseliner::MetricGranularity::EVERY_BATCH;
+  };
 };
