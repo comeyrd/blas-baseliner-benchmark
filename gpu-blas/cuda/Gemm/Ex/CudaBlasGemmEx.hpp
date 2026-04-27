@@ -1,7 +1,7 @@
 #pragma once
 #include "cublas_v2.h"
-#include <baseliner/core/Conversions.hpp>
 #include <baseliner/registry/RegisteringMacros.hpp>
+#include <baseliner/specs/Conversions.hpp>
 #include <cuda_runtime.h>
 #include <gpu-blas/cuda/Gemm/CudaBlasGemm.hpp>
 

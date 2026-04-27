@@ -1,6 +1,6 @@
 #include "cublas_v2.h"
-#include <baseliner/core/Conversions.hpp>
 #include <baseliner/registry/RegisteringMacros.hpp>
+#include <baseliner/specs/Conversions.hpp>
 #include <cuda_bf16.h> // Required for __nv_bfloat16
 #include <cuda_runtime.h>
 #include <gpu-blas/BlasShapes.hpp>

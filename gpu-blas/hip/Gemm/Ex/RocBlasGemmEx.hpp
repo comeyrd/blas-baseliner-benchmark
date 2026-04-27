@@ -1,7 +1,7 @@
 #pragma once
 #include "rocblas/rocblas.h"
-#include <baseliner/core/Conversions.hpp>
 #include <baseliner/registry/RegisteringMacros.hpp>
+#include <baseliner/specs/Conversions.hpp>
 #include <gpu-blas/hip/Gemm/RocBlasGemm.hpp>
 
 namespace GpuBlas {

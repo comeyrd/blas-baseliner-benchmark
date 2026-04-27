@@ -28,17 +28,13 @@
                       "type": "string"
                     }
                   },
-                  "required": [
-                    "value"
-                  ],
+                  "required": ["value"],
                   "additionalProperties": false
                 }
               }
             }
           },
-          "required": [
-            "options"
-          ],
+          "required": ["options"],
           "additionalProperties": false
         }
       }
@@ -71,18 +67,13 @@
                     "type": "string"
                   }
                 },
-                "required": [
-                  "value"
-                ],
+                "required": ["value"],
                 "additionalProperties": false
               }
             }
           }
         },
-        "required": [
-          "stat_names",
-          "stat_options"
-        ],
+        "required": ["stat_names", "stat_options"],
         "additionalProperties": false
       }
     },
@@ -104,9 +95,7 @@
                 "type": "string"
               }
             },
-            "required": [
-              "impl"
-            ],
+            "required": ["impl"],
             "additionalProperties": false
           },
           "stopping": {
@@ -119,9 +108,7 @@
                 "type": "string"
               }
             },
-            "required": [
-              "impl"
-            ],
+            "required": ["impl"],
             "additionalProperties": false
           },
           "stats": {
@@ -131,9 +118,7 @@
                 "type": "string"
               }
             },
-            "required": [
-              "preset"
-            ],
+            "required": ["preset"],
             "additionalProperties": false
           },
           "sweep": {
@@ -141,9 +126,7 @@
             "properties": {
               "strategy": {
                 "type": "string",
-                "enum": [
-                  "FullGrid"
-                ]
+                "enum": ["FullGrid"]
               },
               "axes": {
                 "type": "array",
@@ -161,11 +144,7 @@
                       "properties": {
                         "policy": {
                           "type": "string",
-                          "enum": [
-                            "PowersOfTwo",
-                            "LinearRange",
-                            "Enumerated"
-                          ]
+                          "enum": ["PowersOfTwo", "LinearRange", "Enumerated"]
                         },
                         "min": {
                           "type": "string"
@@ -193,24 +172,16 @@
                       "additionalProperties": false
                     }
                   },
-                  "required": [
-                    "interface",
-                    "option"
-                  ],
+                  "required": ["interface", "option"],
                   "additionalProperties": false
                 }
               }
             },
-            "required": [
-              "strategy",
-              "axes"
-            ],
+            "required": ["strategy", "axes"],
             "additionalProperties": false
           }
         },
-        "required": [
-          "description"
-        ],
+        "required": ["description"],
         "additionalProperties": false
       }
     },
@@ -237,9 +208,7 @@
                   "type": "string"
                 }
               },
-              "required": [
-                "impl"
-              ],
+              "required": ["impl"],
               "additionalProperties": false
             }
           },
@@ -255,9 +224,7 @@
                   "type": "string"
                 }
               },
-              "required": [
-                "impl"
-              ],
+              "required": ["impl"],
               "additionalProperties": false
             }
           },
@@ -274,9 +241,7 @@
                     "type": "string"
                   }
                 },
-                "required": [
-                  "impl"
-                ],
+                "required": ["impl"],
                 "additionalProperties": false
               },
               "stopping": {
@@ -289,9 +254,7 @@
                     "type": "string"
                   }
                 },
-                "required": [
-                  "impl"
-                ],
+                "required": ["impl"],
                 "additionalProperties": false
               },
               "stats": {
@@ -301,9 +264,7 @@
                     "type": "string"
                   }
                 },
-                "required": [
-                  "preset"
-                ],
+                "required": ["preset"],
                 "additionalProperties": false
               }
             },
@@ -311,10 +272,7 @@
           },
           "on_incompatible": {
             "type": "string",
-            "enum": [
-              "Skip",
-              "Error"
-            ]
+            "enum": ["Skip", "Error"]
           }
         },
         "required": [

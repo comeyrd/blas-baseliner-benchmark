@@ -1,5 +1,5 @@
 #include "RocBlasHelper.hpp"
-#include "baseliner/core/Error.hpp"
+#include "baseliner/specs/Error.hpp"
 #include <iostream>
 #include <ostream>
 #include <rocblas/rocblas.h>
