@@ -1,5 +1,5 @@
 #include "CublasHelper.hpp"
-#include "baseliner/core/Error.hpp"
+#include "baseliner/specs/Error.hpp"
 #include "cublas_v2.h"
 #include <iostream>
 #include <ostream>

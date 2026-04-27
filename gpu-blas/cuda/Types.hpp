@@ -2,8 +2,8 @@
 #define BLAS_BASELINER_CUDA_TYPES_HPP
 #include "cublas_v2.h"
 #include "gpu-blas/BlasShapes.hpp"
-#include <baseliner/core/AxeSweeping.hpp>
-#include <baseliner/core/Conversions.hpp>
+#include <baseliner/specs/AxeSweeping.hpp>
+#include <baseliner/specs/Conversions.hpp>
 #include <gpu-blas/Random.hpp>
 #include <gpu-blas/Types.hpp>
 

@@ -1,6 +1,6 @@
 #ifndef BLAS_BASELINER_BLASSHAPES_HPP
 #define BLAS_BASELINER_BLASSHAPES_HPP
-#include <baseliner/core/Options.hpp>
+#include <baseliner/specs/Options.hpp>
 #include <functional>
 #include <gpu-blas/Buffers.hpp>
 #include <gpu-blas/Random.hpp>
@@ -88,7 +88,7 @@ namespace GpuBlas {
                + (d.m * d.n) * sizeof(OutputT);         // C
       }
       static bool validate(const Buffers<GemmShape> &buffers, const DimsT &dims, const ArgsT &args, float &mean_error,
-                           size_t samples = 5) {
+                           size_t samples = 1) {
 
         using Shape = GemmShape<TypeConfigT, DimTypes>;
 

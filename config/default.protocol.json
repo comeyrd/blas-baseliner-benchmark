@@ -1,0 +1,3142 @@
+{
+  "baseliner_version": "0.9.0",
+  "presets": {
+    "stridedbatchedzgemm": {
+      "default": {
+        "description": "Default preset",
+        "options": {
+          "GemmArgs": {
+            "beta": {
+              "description": "Scaling factor for C",
+              "value": "{0.000000 ,0.000000}"
+            },
+            "alpha": {
+              "description": "Scaling factor for A*B",
+              "value": "{1.000000 ,1.000000}"
+            }
+          },
+          "GemmDims": {
+            "n": {
+              "description": "Cols of B and C",
+              "value": "512"
+            },
+            "k": {
+              "description": "Cols of A / rows of B",
+              "value": "512"
+            },
+            "m": {
+              "description": "Rows of A and C",
+              "value": "512"
+            }
+          },
+          "Batched": {
+            "batch_count": {
+              "description": "Number of batches",
+              "value": "5"
+            }
+          },
+          "Gemm": {
+            "transB": {
+              "description": "The Operation to apply on B",
+              "value": "CUBLAS_OP_N"
+            },
+            "transA": {
+              "description": "The Operation to apply on A",
+              "value": "CUBLAS_OP_N"
+            }
+          },
+          "Workload": {
+            "seed": {
+              "description": "The seed used for the generation of input data",
+              "value": "333"
+            },
+            "work_size": {
+              "description": "The work size to apply, 1 = 32MFlop & 1 = 1MB",
+              "value": "10"
+            }
+          }
+        }
+      }
+    },
+    "stridedbatchedcgemm": {
+      "default": {
+        "description": "Default preset",
+        "options": {
+          "GemmArgs": {
+            "beta": {
+              "description": "Scaling factor for C",
+              "value": "{0.000000 ,0.000000}"
+            },
+            "alpha": {
+              "description": "Scaling factor for A*B",
+              "value": "{1.000000 ,1.000000}"
+            }
+          },
+          "GemmDims": {
+            "n": {
+              "description": "Cols of B and C",
+              "value": "512"
+            },
+            "k": {
+              "description": "Cols of A / rows of B",
+              "value": "512"
+            },
+            "m": {
+              "description": "Rows of A and C",
+              "value": "512"
+            }
+          },
+          "Batched": {
+            "batch_count": {
+              "description": "Number of batches",
+              "value": "5"
+            }
+          },
+          "Gemm": {
+            "transB": {
+              "description": "The Operation to apply on B",
+              "value": "CUBLAS_OP_N"
+            },
+            "transA": {
+              "description": "The Operation to apply on A",
+              "value": "CUBLAS_OP_N"
+            }
+          },
+          "Workload": {
+            "seed": {
+              "description": "The seed used for the generation of input data",
+              "value": "333"
+            },
+            "work_size": {
+              "description": "The work size to apply, 1 = 32MFlop & 1 = 1MB",
+              "value": "10"
+            }
+          }
+        }
+      }
+    },
+    "stridedbatcheddgemm": {
+      "default": {
+        "description": "Default preset",
+        "options": {
+          "GemmArgs": {
+            "beta": {
+              "description": "Scaling factor for C",
+              "value": "0.000000"
+            },
+            "alpha": {
+              "description": "Scaling factor for A*B",
+              "value": "1.000000"
+            }
+          },
+          "GemmDims": {
+            "n": {
+              "description": "Cols of B and C",
+              "value": "512"
+            },
+            "k": {
+              "description": "Cols of A / rows of B",
+              "value": "512"
+            },
+            "m": {
+              "description": "Rows of A and C",
+              "value": "512"
+            }
+          },
+          "Batched": {
+            "batch_count": {
+              "description": "Number of batches",
+              "value": "5"
+            }
+          },
+          "Gemm": {
+            "transB": {
+              "description": "The Operation to apply on B",
+              "value": "CUBLAS_OP_N"
+            },
+            "transA": {
+              "description": "The Operation to apply on A",
+              "value": "CUBLAS_OP_N"
+            }
+          },
+          "Workload": {
+            "seed": {
+              "description": "The seed used for the generation of input data",
+              "value": "333"
+            },
+            "work_size": {
+              "description": "The work size to apply, 1 = 32MFlop & 1 = 1MB",
+              "value": "10"
+            }
+          }
+        }
+      }
+    },
+    "stridedbatchedsgemm": {
+      "default": {
+        "description": "Default preset",
+        "options": {
+          "GemmArgs": {
+            "beta": {
+              "description": "Scaling factor for C",
+              "value": "0.000000"
+            },
+            "alpha": {
+              "description": "Scaling factor for A*B",
+              "value": "1.000000"
+            }
+          },
+          "GemmDims": {
+            "n": {
+              "description": "Cols of B and C",
+              "value": "512"
+            },
+            "k": {
+              "description": "Cols of A / rows of B",
+              "value": "512"
+            },
+            "m": {
+              "description": "Rows of A and C",
+              "value": "512"
+            }
+          },
+          "Batched": {
+            "batch_count": {
+              "description": "Number of batches",
+              "value": "5"
+            }
+          },
+          "Gemm": {
+            "transB": {
+              "description": "The Operation to apply on B",
+              "value": "CUBLAS_OP_N"
+            },
+            "transA": {
+              "description": "The Operation to apply on A",
+              "value": "CUBLAS_OP_N"
+            }
+          },
+          "Workload": {
+            "seed": {
+              "description": "The seed used for the generation of input data",
+              "value": "333"
+            },
+            "work_size": {
+              "description": "The work size to apply, 1 = 32MFlop & 1 = 1MB",
+              "value": "10"
+            }
+          }
+        }
+      }
+    },
+    "cgemm": {
+      "default": {
+        "description": "Default preset",
+        "options": {
+          "GemmArgs": {
+            "beta": {
+              "description": "Scaling factor for C",
+              "value": "{0.000000 ,0.000000}"
+            },
+            "alpha": {
+              "description": "Scaling factor for A*B",
+              "value": "{1.000000 ,1.000000}"
+            }
+          },
+          "GemmDims": {
+            "n": {
+              "description": "Cols of B and C",
+              "value": "512"
+            },
+            "k": {
+              "description": "Cols of A / rows of B",
+              "value": "512"
+            },
+            "m": {
+              "description": "Rows of A and C",
+              "value": "512"
+            }
+          },
+          "Gemm": {
+            "transB": {
+              "description": "The Operation to apply on B",
+              "value": "CUBLAS_OP_N"
+            },
+            "transA": {
+              "description": "The Operation to apply on A",
+              "value": "CUBLAS_OP_N"
+            }
+          },
+          "Workload": {
+            "seed": {
+              "description": "The seed used for the generation of input data",
+              "value": "333"
+            },
+            "work_size": {
+              "description": "The work size to apply, 1 = 32MFlop & 1 = 1MB",
+              "value": "10"
+            }
+          }
+        }
+      }
+    },
+    "stridedbatchedcgemm_64": {
+      "default": {
+        "description": "Default preset",
+        "options": {
+          "GemmArgs": {
+            "beta": {
+              "description": "Scaling factor for C",
+              "value": "{0.000000 ,0.000000}"
+            },
+            "alpha": {
+              "description": "Scaling factor for A*B",
+              "value": "{1.000000 ,1.000000}"
+            }
+          },
+          "GemmDims": {
+            "n": {
+              "description": "Cols of B and C",
+              "value": "512"
+            },
+            "k": {
+              "description": "Cols of A / rows of B",
+              "value": "512"
+            },
+            "m": {
+              "description": "Rows of A and C",
+              "value": "512"
+            }
+          },
+          "Batched": {
+            "batch_count": {
+              "description": "Number of batches",
+              "value": "5"
+            }
+          },
+          "Gemm": {
+            "transB": {
+              "description": "The Operation to apply on B",
+              "value": "CUBLAS_OP_N"
+            },
+            "transA": {
+              "description": "The Operation to apply on A",
+              "value": "CUBLAS_OP_N"
+            }
+          },
+          "Workload": {
+            "seed": {
+              "description": "The seed used for the generation of input data",
+              "value": "333"
+            },
+            "work_size": {
+              "description": "The work size to apply, 1 = 32MFlop & 1 = 1MB",
+              "value": "10"
+            }
+          }
+        }
+      }
+    },
+    "sgemm_64": {
+      "default": {
+        "description": "Default preset",
+        "options": {
+          "GemmArgs": {
+            "beta": {
+              "description": "Scaling factor for C",
+              "value": "0.000000"
+            },
+            "alpha": {
+              "description": "Scaling factor for A*B",
+              "value": "1.000000"
+            }
+          },
+          "GemmDims": {
+            "n": {
+              "description": "Cols of B and C",
+              "value": "512"
+            },
+            "k": {
+              "description": "Cols of A / rows of B",
+              "value": "512"
+            },
+            "m": {
+              "description": "Rows of A and C",
+              "value": "512"
+            }
+          },
+          "Gemm": {
+            "transB": {
+              "description": "The Operation to apply on B",
+              "value": "CUBLAS_OP_N"
+            },
+            "transA": {
+              "description": "The Operation to apply on A",
+              "value": "CUBLAS_OP_N"
+            }
+          },
+          "Workload": {
+            "seed": {
+              "description": "The seed used for the generation of input data",
+              "value": "333"
+            },
+            "work_size": {
+              "description": "The work size to apply, 1 = 32MFlop & 1 = 1MB",
+              "value": "10"
+            }
+          }
+        }
+      }
+    },
+    "dgemm_64": {
+      "default": {
+        "description": "Default preset",
+        "options": {
+          "GemmArgs": {
+            "beta": {
+              "description": "Scaling factor for C",
+              "value": "0.000000"
+            },
+            "alpha": {
+              "description": "Scaling factor for A*B",
+              "value": "1.000000"
+            }
+          },
+          "GemmDims": {
+            "n": {
+              "description": "Cols of B and C",
+              "value": "512"
+            },
+            "k": {
+              "description": "Cols of A / rows of B",
+              "value": "512"
+            },
+            "m": {
+              "description": "Rows of A and C",
+              "value": "512"
+            }
+          },
+          "Gemm": {
+            "transB": {
+              "description": "The Operation to apply on B",
+              "value": "CUBLAS_OP_N"
+            },
+            "transA": {
+              "description": "The Operation to apply on A",
+              "value": "CUBLAS_OP_N"
+            }
+          },
+          "Workload": {
+            "seed": {
+              "description": "The seed used for the generation of input data",
+              "value": "333"
+            },
+            "work_size": {
+              "description": "The work size to apply, 1 = 32MFlop & 1 = 1MB",
+              "value": "10"
+            }
+          }
+        }
+      }
+    },
+    "sgemm": {
+      "default": {
+        "description": "Default preset",
+        "options": {
+          "GemmArgs": {
+            "beta": {
+              "description": "Scaling factor for C",
+              "value": "0.000000"
+            },
+            "alpha": {
+              "description": "Scaling factor for A*B",
+              "value": "1.000000"
+            }
+          },
+          "GemmDims": {
+            "n": {
+              "description": "Cols of B and C",
+              "value": "512"
+            },
+            "k": {
+              "description": "Cols of A / rows of B",
+              "value": "512"
+            },
+            "m": {
+              "description": "Rows of A and C",
+              "value": "512"
+            }
+          },
+          "Gemm": {
+            "transB": {
+              "description": "The Operation to apply on B",
+              "value": "CUBLAS_OP_N"
+            },
+            "transA": {
+              "description": "The Operation to apply on A",
+              "value": "CUBLAS_OP_N"
+            }
+          },
+          "Workload": {
+            "seed": {
+              "description": "The seed used for the generation of input data",
+              "value": "333"
+            },
+            "work_size": {
+              "description": "The work size to apply, 1 = 32MFlop & 1 = 1MB",
+              "value": "10"
+            }
+          }
+        }
+      }
+    },
+    "zgemm_c64_acc": {
+      "default": {
+        "description": "Default preset",
+        "options": {
+          "GemmArgs": {
+            "beta": {
+              "description": "Scaling factor for C",
+              "value": "0.000000"
+            },
+            "alpha": {
+              "description": "Scaling factor for A*B",
+              "value": "1.000000"
+            }
+          },
+          "GemmDims": {
+            "n": {
+              "description": "Cols of B and C",
+              "value": "512"
+            },
+            "k": {
+              "description": "Cols of A / rows of B",
+              "value": "512"
+            },
+            "m": {
+              "description": "Rows of A and C",
+              "value": "512"
+            }
+          },
+          "GemmEx": {
+            "algo": {
+              "description": "What algo should the GemmEx Use ?",
+              "value": "CUBLAS_GEMM_ALGO0"
+            }
+          },
+          "Gemm": {
+            "transB": {
+              "description": "The Operation to apply on B",
+              "value": "CUBLAS_OP_N"
+            },
+            "transA": {
+              "description": "The Operation to apply on A",
+              "value": "CUBLAS_OP_N"
+            }
+          },
+          "Workload": {
+            "seed": {
+              "description": "The seed used for the generation of input data",
+              "value": "333"
+            },
+            "work_size": {
+              "description": "The work size to apply, 1 = 32MFlop & 1 = 1MB",
+              "value": "10"
+            }
+          }
+        }
+      }
+    },
+    "cgemm_64": {
+      "default": {
+        "description": "Default preset",
+        "options": {
+          "GemmArgs": {
+            "beta": {
+              "description": "Scaling factor for C",
+              "value": "{0.000000 ,0.000000}"
+            },
+            "alpha": {
+              "description": "Scaling factor for A*B",
+              "value": "{1.000000 ,1.000000}"
+            }
+          },
+          "GemmDims": {
+            "n": {
+              "description": "Cols of B and C",
+              "value": "512"
+            },
+            "k": {
+              "description": "Cols of A / rows of B",
+              "value": "512"
+            },
+            "m": {
+              "description": "Rows of A and C",
+              "value": "512"
+            }
+          },
+          "Gemm": {
+            "transB": {
+              "description": "The Operation to apply on B",
+              "value": "CUBLAS_OP_N"
+            },
+            "transA": {
+              "description": "The Operation to apply on A",
+              "value": "CUBLAS_OP_N"
+            }
+          },
+          "Workload": {
+            "seed": {
+              "description": "The seed used for the generation of input data",
+              "value": "333"
+            },
+            "work_size": {
+              "description": "The work size to apply, 1 = 32MFlop & 1 = 1MB",
+              "value": "10"
+            }
+          }
+        }
+      }
+    },
+    "dgemm_f64_acc_pedantic": {
+      "default": {
+        "description": "Default preset",
+        "options": {
+          "GemmArgs": {
+            "beta": {
+              "description": "Scaling factor for C",
+              "value": "0.000000"
+            },
+            "alpha": {
+              "description": "Scaling factor for A*B",
+              "value": "1.000000"
+            }
+          },
+          "GemmDims": {
+            "n": {
+              "description": "Cols of B and C",
+              "value": "512"
+            },
+            "k": {
+              "description": "Cols of A / rows of B",
+              "value": "512"
+            },
+            "m": {
+              "description": "Rows of A and C",
+              "value": "512"
+            }
+          },
+          "GemmEx": {
+            "algo": {
+              "description": "What algo should the GemmEx Use ?",
+              "value": "CUBLAS_GEMM_ALGO0"
+            }
+          },
+          "Gemm": {
+            "transB": {
+              "description": "The Operation to apply on B",
+              "value": "CUBLAS_OP_N"
+            },
+            "transA": {
+              "description": "The Operation to apply on A",
+              "value": "CUBLAS_OP_N"
+            }
+          },
+          "Workload": {
+            "seed": {
+              "description": "The seed used for the generation of input data",
+              "value": "333"
+            },
+            "work_size": {
+              "description": "The work size to apply, 1 = 32MFlop & 1 = 1MB",
+              "value": "10"
+            }
+          }
+        }
+      }
+    },
+    "stridedbatchedzgemm_64": {
+      "default": {
+        "description": "Default preset",
+        "options": {
+          "GemmArgs": {
+            "beta": {
+              "description": "Scaling factor for C",
+              "value": "{0.000000 ,0.000000}"
+            },
+            "alpha": {
+              "description": "Scaling factor for A*B",
+              "value": "{1.000000 ,1.000000}"
+            }
+          },
+          "GemmDims": {
+            "n": {
+              "description": "Cols of B and C",
+              "value": "512"
+            },
+            "k": {
+              "description": "Cols of A / rows of B",
+              "value": "512"
+            },
+            "m": {
+              "description": "Rows of A and C",
+              "value": "512"
+            }
+          },
+          "Batched": {
+            "batch_count": {
+              "description": "Number of batches",
+              "value": "5"
+            }
+          },
+          "Gemm": {
+            "transB": {
+              "description": "The Operation to apply on B",
+              "value": "CUBLAS_OP_N"
+            },
+            "transA": {
+              "description": "The Operation to apply on A",
+              "value": "CUBLAS_OP_N"
+            }
+          },
+          "Workload": {
+            "seed": {
+              "description": "The seed used for the generation of input data",
+              "value": "333"
+            },
+            "work_size": {
+              "description": "The work size to apply, 1 = 32MFlop & 1 = 1MB",
+              "value": "10"
+            }
+          }
+        }
+      }
+    },
+    "stridedbatchedsgemm_64": {
+      "default": {
+        "description": "Default preset",
+        "options": {
+          "GemmArgs": {
+            "beta": {
+              "description": "Scaling factor for C",
+              "value": "0.000000"
+            },
+            "alpha": {
+              "description": "Scaling factor for A*B",
+              "value": "1.000000"
+            }
+          },
+          "GemmDims": {
+            "n": {
+              "description": "Cols of B and C",
+              "value": "512"
+            },
+            "k": {
+              "description": "Cols of A / rows of B",
+              "value": "512"
+            },
+            "m": {
+              "description": "Rows of A and C",
+              "value": "512"
+            }
+          },
+          "Batched": {
+            "batch_count": {
+              "description": "Number of batches",
+              "value": "5"
+            }
+          },
+          "Gemm": {
+            "transB": {
+              "description": "The Operation to apply on B",
+              "value": "CUBLAS_OP_N"
+            },
+            "transA": {
+              "description": "The Operation to apply on A",
+              "value": "CUBLAS_OP_N"
+            }
+          },
+          "Workload": {
+            "seed": {
+              "description": "The seed used for the generation of input data",
+              "value": "333"
+            },
+            "work_size": {
+              "description": "The work size to apply, 1 = 32MFlop & 1 = 1MB",
+              "value": "10"
+            }
+          }
+        }
+      }
+    },
+    "zgemm_64": {
+      "default": {
+        "description": "Default preset",
+        "options": {
+          "GemmArgs": {
+            "beta": {
+              "description": "Scaling factor for C",
+              "value": "{0.000000 ,0.000000}"
+            },
+            "alpha": {
+              "description": "Scaling factor for A*B",
+              "value": "{1.000000 ,1.000000}"
+            }
+          },
+          "GemmDims": {
+            "n": {
+              "description": "Cols of B and C",
+              "value": "512"
+            },
+            "k": {
+              "description": "Cols of A / rows of B",
+              "value": "512"
+            },
+            "m": {
+              "description": "Rows of A and C",
+              "value": "512"
+            }
+          },
+          "Gemm": {
+            "transB": {
+              "description": "The Operation to apply on B",
+              "value": "CUBLAS_OP_N"
+            },
+            "transA": {
+              "description": "The Operation to apply on A",
+              "value": "CUBLAS_OP_N"
+            }
+          },
+          "Workload": {
+            "seed": {
+              "description": "The seed used for the generation of input data",
+              "value": "333"
+            },
+            "work_size": {
+              "description": "The work size to apply, 1 = 32MFlop & 1 = 1MB",
+              "value": "10"
+            }
+          }
+        }
+      }
+    },
+    "dgemm_f64_acc": {
+      "default": {
+        "description": "Default preset",
+        "options": {
+          "GemmArgs": {
+            "beta": {
+              "description": "Scaling factor for C",
+              "value": "0.000000"
+            },
+            "alpha": {
+              "description": "Scaling factor for A*B",
+              "value": "1.000000"
+            }
+          },
+          "GemmDims": {
+            "n": {
+              "description": "Cols of B and C",
+              "value": "512"
+            },
+            "k": {
+              "description": "Cols of A / rows of B",
+              "value": "512"
+            },
+            "m": {
+              "description": "Rows of A and C",
+              "value": "512"
+            }
+          },
+          "GemmEx": {
+            "algo": {
+              "description": "What algo should the GemmEx Use ?",
+              "value": "CUBLAS_GEMM_ALGO0"
+            }
+          },
+          "Gemm": {
+            "transB": {
+              "description": "The Operation to apply on B",
+              "value": "CUBLAS_OP_N"
+            },
+            "transA": {
+              "description": "The Operation to apply on A",
+              "value": "CUBLAS_OP_N"
+            }
+          },
+          "Workload": {
+            "seed": {
+              "description": "The seed used for the generation of input data",
+              "value": "333"
+            },
+            "work_size": {
+              "description": "The work size to apply, 1 = 32MFlop & 1 = 1MB",
+              "value": "10"
+            }
+          }
+        }
+      }
+    },
+    "sgemm_f32_acc": {
+      "default": {
+        "description": "Default preset",
+        "options": {
+          "GemmArgs": {
+            "beta": {
+              "description": "Scaling factor for C",
+              "value": "0.000000"
+            },
+            "alpha": {
+              "description": "Scaling factor for A*B",
+              "value": "1.000000"
+            }
+          },
+          "GemmDims": {
+            "n": {
+              "description": "Cols of B and C",
+              "value": "512"
+            },
+            "k": {
+              "description": "Cols of A / rows of B",
+              "value": "512"
+            },
+            "m": {
+              "description": "Rows of A and C",
+              "value": "512"
+            }
+          },
+          "GemmEx": {
+            "algo": {
+              "description": "What algo should the GemmEx Use ?",
+              "value": "CUBLAS_GEMM_ALGO0"
+            }
+          },
+          "Gemm": {
+            "transB": {
+              "description": "The Operation to apply on B",
+              "value": "CUBLAS_OP_N"
+            },
+            "transA": {
+              "description": "The Operation to apply on A",
+              "value": "CUBLAS_OP_N"
+            }
+          },
+          "Workload": {
+            "seed": {
+              "description": "The seed used for the generation of input data",
+              "value": "333"
+            },
+            "work_size": {
+              "description": "The work size to apply, 1 = 32MFlop & 1 = 1MB",
+              "value": "10"
+            }
+          }
+        }
+      }
+    },
+    "hgemm": {
+      "default": {
+        "description": "Default preset",
+        "options": {
+          "GemmArgs": {
+            "beta": {
+              "description": "Scaling factor for C",
+              "value": "0.000000"
+            },
+            "alpha": {
+              "description": "Scaling factor for A*B",
+              "value": "1.000000"
+            }
+          },
+          "GemmDims": {
+            "n": {
+              "description": "Cols of B and C",
+              "value": "512"
+            },
+            "k": {
+              "description": "Cols of A / rows of B",
+              "value": "512"
+            },
+            "m": {
+              "description": "Rows of A and C",
+              "value": "512"
+            }
+          },
+          "Gemm": {
+            "transB": {
+              "description": "The Operation to apply on B",
+              "value": "CUBLAS_OP_N"
+            },
+            "transA": {
+              "description": "The Operation to apply on A",
+              "value": "CUBLAS_OP_N"
+            }
+          },
+          "Workload": {
+            "seed": {
+              "description": "The seed used for the generation of input data",
+              "value": "333"
+            },
+            "work_size": {
+              "description": "The work size to apply, 1 = 32MFlop & 1 = 1MB",
+              "value": "10"
+            }
+          }
+        }
+      }
+    },
+    "Zgemm3m_64": {
+      "default": {
+        "description": "Default preset",
+        "options": {
+          "GemmArgs": {
+            "beta": {
+              "description": "Scaling factor for C",
+              "value": "{0.000000 ,0.000000}"
+            },
+            "alpha": {
+              "description": "Scaling factor for A*B",
+              "value": "{1.000000 ,1.000000}"
+            }
+          },
+          "GemmDims": {
+            "n": {
+              "description": "Cols of B and C",
+              "value": "512"
+            },
+            "k": {
+              "description": "Cols of A / rows of B",
+              "value": "512"
+            },
+            "m": {
+              "description": "Rows of A and C",
+              "value": "512"
+            }
+          },
+          "Gemm": {
+            "transB": {
+              "description": "The Operation to apply on B",
+              "value": "CUBLAS_OP_N"
+            },
+            "transA": {
+              "description": "The Operation to apply on A",
+              "value": "CUBLAS_OP_N"
+            }
+          },
+          "Workload": {
+            "seed": {
+              "description": "The seed used for the generation of input data",
+              "value": "333"
+            },
+            "work_size": {
+              "description": "The work size to apply, 1 = 32MFlop & 1 = 1MB",
+              "value": "10"
+            }
+          }
+        }
+      }
+    },
+    "stridedbatchedhgemm": {
+      "default": {
+        "description": "Default preset",
+        "options": {
+          "GemmArgs": {
+            "beta": {
+              "description": "Scaling factor for C",
+              "value": "0.000000"
+            },
+            "alpha": {
+              "description": "Scaling factor for A*B",
+              "value": "1.000000"
+            }
+          },
+          "GemmDims": {
+            "n": {
+              "description": "Cols of B and C",
+              "value": "512"
+            },
+            "k": {
+              "description": "Cols of A / rows of B",
+              "value": "512"
+            },
+            "m": {
+              "description": "Rows of A and C",
+              "value": "512"
+            }
+          },
+          "Batched": {
+            "batch_count": {
+              "description": "Number of batches",
+              "value": "5"
+            }
+          },
+          "Gemm": {
+            "transB": {
+              "description": "The Operation to apply on B",
+              "value": "CUBLAS_OP_N"
+            },
+            "transA": {
+              "description": "The Operation to apply on A",
+              "value": "CUBLAS_OP_N"
+            }
+          },
+          "Workload": {
+            "seed": {
+              "description": "The seed used for the generation of input data",
+              "value": "333"
+            },
+            "work_size": {
+              "description": "The work size to apply, 1 = 32MFlop & 1 = 1MB",
+              "value": "10"
+            }
+          }
+        }
+      }
+    },
+    "batchedsgemm_64": {
+      "default": {
+        "description": "Default preset",
+        "options": {
+          "GemmArgs": {
+            "beta": {
+              "description": "Scaling factor for C",
+              "value": "0.000000"
+            },
+            "alpha": {
+              "description": "Scaling factor for A*B",
+              "value": "1.000000"
+            }
+          },
+          "GemmDims": {
+            "n": {
+              "description": "Cols of B and C",
+              "value": "512"
+            },
+            "k": {
+              "description": "Cols of A / rows of B",
+              "value": "512"
+            },
+            "m": {
+              "description": "Rows of A and C",
+              "value": "512"
+            }
+          },
+          "Batched": {
+            "batch_count": {
+              "description": "Number of batches",
+              "value": "5"
+            }
+          },
+          "Gemm": {
+            "transB": {
+              "description": "The Operation to apply on B",
+              "value": "CUBLAS_OP_N"
+            },
+            "transA": {
+              "description": "The Operation to apply on A",
+              "value": "CUBLAS_OP_N"
+            }
+          },
+          "Workload": {
+            "seed": {
+              "description": "The seed used for the generation of input data",
+              "value": "333"
+            },
+            "work_size": {
+              "description": "The work size to apply, 1 = 32MFlop & 1 = 1MB",
+              "value": "10"
+            }
+          }
+        }
+      }
+    },
+    "Zgemm3m": {
+      "default": {
+        "description": "Default preset",
+        "options": {
+          "GemmArgs": {
+            "beta": {
+              "description": "Scaling factor for C",
+              "value": "{0.000000 ,0.000000}"
+            },
+            "alpha": {
+              "description": "Scaling factor for A*B",
+              "value": "{1.000000 ,1.000000}"
+            }
+          },
+          "GemmDims": {
+            "n": {
+              "description": "Cols of B and C",
+              "value": "512"
+            },
+            "k": {
+              "description": "Cols of A / rows of B",
+              "value": "512"
+            },
+            "m": {
+              "description": "Rows of A and C",
+              "value": "512"
+            }
+          },
+          "Gemm": {
+            "transB": {
+              "description": "The Operation to apply on B",
+              "value": "CUBLAS_OP_N"
+            },
+            "transA": {
+              "description": "The Operation to apply on A",
+              "value": "CUBLAS_OP_N"
+            }
+          },
+          "Workload": {
+            "seed": {
+              "description": "The seed used for the generation of input data",
+              "value": "333"
+            },
+            "work_size": {
+              "description": "The work size to apply, 1 = 32MFlop & 1 = 1MB",
+              "value": "10"
+            }
+          }
+        }
+      }
+    },
+    "Cgemm3m_64": {
+      "default": {
+        "description": "Default preset",
+        "options": {
+          "GemmArgs": {
+            "beta": {
+              "description": "Scaling factor for C",
+              "value": "{0.000000 ,0.000000}"
+            },
+            "alpha": {
+              "description": "Scaling factor for A*B",
+              "value": "{1.000000 ,1.000000}"
+            }
+          },
+          "GemmDims": {
+            "n": {
+              "description": "Cols of B and C",
+              "value": "512"
+            },
+            "k": {
+              "description": "Cols of A / rows of B",
+              "value": "512"
+            },
+            "m": {
+              "description": "Rows of A and C",
+              "value": "512"
+            }
+          },
+          "Gemm": {
+            "transB": {
+              "description": "The Operation to apply on B",
+              "value": "CUBLAS_OP_N"
+            },
+            "transA": {
+              "description": "The Operation to apply on A",
+              "value": "CUBLAS_OP_N"
+            }
+          },
+          "Workload": {
+            "seed": {
+              "description": "The seed used for the generation of input data",
+              "value": "333"
+            },
+            "work_size": {
+              "description": "The work size to apply, 1 = 32MFlop & 1 = 1MB",
+              "value": "10"
+            }
+          }
+        }
+      }
+    },
+    "Cgemm3m": {
+      "default": {
+        "description": "Default preset",
+        "options": {
+          "GemmArgs": {
+            "beta": {
+              "description": "Scaling factor for C",
+              "value": "{0.000000 ,0.000000}"
+            },
+            "alpha": {
+              "description": "Scaling factor for A*B",
+              "value": "{1.000000 ,1.000000}"
+            }
+          },
+          "GemmDims": {
+            "n": {
+              "description": "Cols of B and C",
+              "value": "512"
+            },
+            "k": {
+              "description": "Cols of A / rows of B",
+              "value": "512"
+            },
+            "m": {
+              "description": "Rows of A and C",
+              "value": "512"
+            }
+          },
+          "Gemm": {
+            "transB": {
+              "description": "The Operation to apply on B",
+              "value": "CUBLAS_OP_N"
+            },
+            "transA": {
+              "description": "The Operation to apply on A",
+              "value": "CUBLAS_OP_N"
+            }
+          },
+          "Workload": {
+            "seed": {
+              "description": "The seed used for the generation of input data",
+              "value": "333"
+            },
+            "work_size": {
+              "description": "The work size to apply, 1 = 32MFlop & 1 = 1MB",
+              "value": "10"
+            }
+          }
+        }
+      }
+    },
+    "stridedbatchedhgemm_64": {
+      "default": {
+        "description": "Default preset",
+        "options": {
+          "GemmArgs": {
+            "beta": {
+              "description": "Scaling factor for C",
+              "value": "0.000000"
+            },
+            "alpha": {
+              "description": "Scaling factor for A*B",
+              "value": "1.000000"
+            }
+          },
+          "GemmDims": {
+            "n": {
+              "description": "Cols of B and C",
+              "value": "512"
+            },
+            "k": {
+              "description": "Cols of A / rows of B",
+              "value": "512"
+            },
+            "m": {
+              "description": "Rows of A and C",
+              "value": "512"
+            }
+          },
+          "Batched": {
+            "batch_count": {
+              "description": "Number of batches",
+              "value": "5"
+            }
+          },
+          "Gemm": {
+            "transB": {
+              "description": "The Operation to apply on B",
+              "value": "CUBLAS_OP_N"
+            },
+            "transA": {
+              "description": "The Operation to apply on A",
+              "value": "CUBLAS_OP_N"
+            }
+          },
+          "Workload": {
+            "seed": {
+              "description": "The seed used for the generation of input data",
+              "value": "333"
+            },
+            "work_size": {
+              "description": "The work size to apply, 1 = 32MFlop & 1 = 1MB",
+              "value": "10"
+            }
+          }
+        }
+      }
+    },
+    "stridedbatcheddgemm_64": {
+      "default": {
+        "description": "Default preset",
+        "options": {
+          "GemmArgs": {
+            "beta": {
+              "description": "Scaling factor for C",
+              "value": "0.000000"
+            },
+            "alpha": {
+              "description": "Scaling factor for A*B",
+              "value": "1.000000"
+            }
+          },
+          "GemmDims": {
+            "n": {
+              "description": "Cols of B and C",
+              "value": "512"
+            },
+            "k": {
+              "description": "Cols of A / rows of B",
+              "value": "512"
+            },
+            "m": {
+              "description": "Rows of A and C",
+              "value": "512"
+            }
+          },
+          "Batched": {
+            "batch_count": {
+              "description": "Number of batches",
+              "value": "5"
+            }
+          },
+          "Gemm": {
+            "transB": {
+              "description": "The Operation to apply on B",
+              "value": "CUBLAS_OP_N"
+            },
+            "transA": {
+              "description": "The Operation to apply on A",
+              "value": "CUBLAS_OP_N"
+            }
+          },
+          "Workload": {
+            "seed": {
+              "description": "The seed used for the generation of input data",
+              "value": "333"
+            },
+            "work_size": {
+              "description": "The work size to apply, 1 = 32MFlop & 1 = 1MB",
+              "value": "10"
+            }
+          }
+        }
+      }
+    },
+    "batcheddgemm": {
+      "default": {
+        "description": "Default preset",
+        "options": {
+          "GemmArgs": {
+            "beta": {
+              "description": "Scaling factor for C",
+              "value": "0.000000"
+            },
+            "alpha": {
+              "description": "Scaling factor for A*B",
+              "value": "1.000000"
+            }
+          },
+          "GemmDims": {
+            "n": {
+              "description": "Cols of B and C",
+              "value": "512"
+            },
+            "k": {
+              "description": "Cols of A / rows of B",
+              "value": "512"
+            },
+            "m": {
+              "description": "Rows of A and C",
+              "value": "512"
+            }
+          },
+          "Batched": {
+            "batch_count": {
+              "description": "Number of batches",
+              "value": "5"
+            }
+          },
+          "Gemm": {
+            "transB": {
+              "description": "The Operation to apply on B",
+              "value": "CUBLAS_OP_N"
+            },
+            "transA": {
+              "description": "The Operation to apply on A",
+              "value": "CUBLAS_OP_N"
+            }
+          },
+          "Workload": {
+            "seed": {
+              "description": "The seed used for the generation of input data",
+              "value": "333"
+            },
+            "work_size": {
+              "description": "The work size to apply, 1 = 32MFlop & 1 = 1MB",
+              "value": "10"
+            }
+          }
+        }
+      }
+    },
+    "hgemm_h16_acc_64": {
+      "default": {
+        "description": "Default preset",
+        "options": {
+          "GemmArgs": {
+            "beta": {
+              "description": "Scaling factor for C",
+              "value": "0.000000"
+            },
+            "alpha": {
+              "description": "Scaling factor for A*B",
+              "value": "1.000000"
+            }
+          },
+          "GemmDims": {
+            "n": {
+              "description": "Cols of B and C",
+              "value": "512"
+            },
+            "k": {
+              "description": "Cols of A / rows of B",
+              "value": "512"
+            },
+            "m": {
+              "description": "Rows of A and C",
+              "value": "512"
+            }
+          },
+          "GemmEx": {
+            "algo": {
+              "description": "What algo should the GemmEx Use ?",
+              "value": "CUBLAS_GEMM_ALGO0"
+            }
+          },
+          "Gemm": {
+            "transB": {
+              "description": "The Operation to apply on B",
+              "value": "CUBLAS_OP_N"
+            },
+            "transA": {
+              "description": "The Operation to apply on A",
+              "value": "CUBLAS_OP_N"
+            }
+          },
+          "Workload": {
+            "seed": {
+              "description": "The seed used for the generation of input data",
+              "value": "333"
+            },
+            "work_size": {
+              "description": "The work size to apply, 1 = 32MFlop & 1 = 1MB",
+              "value": "10"
+            }
+          }
+        }
+      }
+    },
+    "EntropyStoppingCriterion": {
+      "default": {
+        "description": "Default preset",
+        "options": {
+          "EntropySC": {
+            "min_samples": {
+              "description": "Minimum samples before checking entropy",
+              "value": "10"
+            },
+            "min_r2": {
+              "description": "Minimum R-squared for regression stability",
+              "value": "0.360000"
+            },
+            "max_angle": {
+              "description": "Maximum allowed entropy slope angle (deg)",
+              "value": "0.048000"
+            }
+          },
+          "StoppingCriterion": {
+            "max_nb_repetition": {
+              "description": "Maximum number of repetitions",
+              "value": "2000"
+            },
+            "batch_size": {
+              "description": "Numbers of rerun to wait before reevaluating stopping criterion",
+              "value": "1"
+            }
+          }
+        }
+      }
+    },
+    "batchedsgemm": {
+      "default": {
+        "description": "Default preset",
+        "options": {
+          "GemmArgs": {
+            "beta": {
+              "description": "Scaling factor for C",
+              "value": "0.000000"
+            },
+            "alpha": {
+              "description": "Scaling factor for A*B",
+              "value": "1.000000"
+            }
+          },
+          "GemmDims": {
+            "n": {
+              "description": "Cols of B and C",
+              "value": "512"
+            },
+            "k": {
+              "description": "Cols of A / rows of B",
+              "value": "512"
+            },
+            "m": {
+              "description": "Rows of A and C",
+              "value": "512"
+            }
+          },
+          "Batched": {
+            "batch_count": {
+              "description": "Number of batches",
+              "value": "5"
+            }
+          },
+          "Gemm": {
+            "transB": {
+              "description": "The Operation to apply on B",
+              "value": "CUBLAS_OP_N"
+            },
+            "transA": {
+              "description": "The Operation to apply on A",
+              "value": "CUBLAS_OP_N"
+            }
+          },
+          "Workload": {
+            "seed": {
+              "description": "The seed used for the generation of input data",
+              "value": "333"
+            },
+            "work_size": {
+              "description": "The work size to apply, 1 = 32MFlop & 1 = 1MB",
+              "value": "10"
+            }
+          }
+        }
+      }
+    },
+    "igemm_i32_acc": {
+      "default": {
+        "description": "Default preset",
+        "options": {
+          "GemmArgs": {
+            "beta": {
+              "description": "Scaling factor for C",
+              "value": "0"
+            },
+            "alpha": {
+              "description": "Scaling factor for A*B",
+              "value": "1"
+            }
+          },
+          "GemmDims": {
+            "n": {
+              "description": "Cols of B and C",
+              "value": "512"
+            },
+            "k": {
+              "description": "Cols of A / rows of B",
+              "value": "512"
+            },
+            "m": {
+              "description": "Rows of A and C",
+              "value": "512"
+            }
+          },
+          "GemmEx": {
+            "algo": {
+              "description": "What algo should the GemmEx Use ?",
+              "value": "CUBLAS_GEMM_ALGO0"
+            }
+          },
+          "Gemm": {
+            "transB": {
+              "description": "The Operation to apply on B",
+              "value": "CUBLAS_OP_N"
+            },
+            "transA": {
+              "description": "The Operation to apply on A",
+              "value": "CUBLAS_OP_N"
+            }
+          },
+          "Workload": {
+            "seed": {
+              "description": "The seed used for the generation of input data",
+              "value": "333"
+            },
+            "work_size": {
+              "description": "The work size to apply, 1 = 32MFlop & 1 = 1MB",
+              "value": "10"
+            }
+          }
+        }
+      }
+    },
+    "StoppingCriterion": {
+      "default": {
+        "description": "Default preset",
+        "options": {
+          "StoppingCriterion": {
+            "max_nb_repetition": {
+              "description": "Maximum number of repetitions",
+              "value": "500"
+            },
+            "batch_size": {
+              "description": "Numbers of rerun to wait before reevaluating stopping criterion",
+              "value": "1"
+            }
+          }
+        }
+      }
+    },
+    "cuda": {
+      "default": {
+        "description": "Default preset",
+        "options": {
+          "Backend": {
+            "max_clock_value": {
+              "description": "-1 means locking to the base clock, else is locking to a specific frequency",
+              "value": "-1"
+            },
+            "min_clock_value": {
+              "description": "-1 means locking to the base clock, else is locking to a specific frequency",
+              "value": "-1"
+            },
+            "lock_clock": {
+              "description": "If the clocks should be locked",
+              "value": "0"
+            },
+            "device": {
+              "description": "The device number to run on",
+              "value": "3"
+            }
+          }
+        }
+      }
+    },
+    "hgemm_64": {
+      "default": {
+        "description": "Default preset",
+        "options": {
+          "GemmArgs": {
+            "beta": {
+              "description": "Scaling factor for C",
+              "value": "0.000000"
+            },
+            "alpha": {
+              "description": "Scaling factor for A*B",
+              "value": "1.000000"
+            }
+          },
+          "GemmDims": {
+            "n": {
+              "description": "Cols of B and C",
+              "value": "512"
+            },
+            "k": {
+              "description": "Cols of A / rows of B",
+              "value": "512"
+            },
+            "m": {
+              "description": "Rows of A and C",
+              "value": "512"
+            }
+          },
+          "Gemm": {
+            "transB": {
+              "description": "The Operation to apply on B",
+              "value": "CUBLAS_OP_N"
+            },
+            "transA": {
+              "description": "The Operation to apply on A",
+              "value": "CUBLAS_OP_N"
+            }
+          },
+          "Workload": {
+            "seed": {
+              "description": "The seed used for the generation of input data",
+              "value": "333"
+            },
+            "work_size": {
+              "description": "The work size to apply, 1 = 32MFlop & 1 = 1MB",
+              "value": "10"
+            }
+          }
+        }
+      }
+    },
+    "bfgemm_f32_acc": {
+      "default": {
+        "description": "Default preset",
+        "options": {
+          "GemmArgs": {
+            "beta": {
+              "description": "Scaling factor for C",
+              "value": "0.000000"
+            },
+            "alpha": {
+              "description": "Scaling factor for A*B",
+              "value": "1.000000"
+            }
+          },
+          "GemmDims": {
+            "n": {
+              "description": "Cols of B and C",
+              "value": "512"
+            },
+            "k": {
+              "description": "Cols of A / rows of B",
+              "value": "512"
+            },
+            "m": {
+              "description": "Rows of A and C",
+              "value": "512"
+            }
+          },
+          "GemmEx": {
+            "algo": {
+              "description": "What algo should the GemmEx Use ?",
+              "value": "CUBLAS_GEMM_ALGO0"
+            }
+          },
+          "Gemm": {
+            "transB": {
+              "description": "The Operation to apply on B",
+              "value": "CUBLAS_OP_N"
+            },
+            "transA": {
+              "description": "The Operation to apply on A",
+              "value": "CUBLAS_OP_N"
+            }
+          },
+          "Workload": {
+            "seed": {
+              "description": "The seed used for the generation of input data",
+              "value": "333"
+            },
+            "work_size": {
+              "description": "The work size to apply, 1 = 32MFlop & 1 = 1MB",
+              "value": "10"
+            }
+          }
+        }
+      }
+    },
+    "VariationStoppingCriterion": {
+      "default": {
+        "description": "Default preset",
+        "options": {
+          "VariationSC": {
+            "min_duration_ms": {
+              "description": "Minimum duration before stopping (ms)",
+              "value": "1000.000000"
+            },
+            "noise_tolerance": {
+              "description": "Noise tolerance in percent",
+              "value": "1.000000"
+            }
+          },
+          "StoppingCriterion": {
+            "max_nb_repetition": {
+              "description": "Maximum number of repetitions",
+              "value": "2000"
+            },
+            "batch_size": {
+              "description": "Numbers of rerun to wait before reevaluating stopping criterion",
+              "value": "1"
+            }
+          }
+        }
+      }
+    },
+    "dgemm": {
+      "default": {
+        "description": "Default preset",
+        "options": {
+          "GemmArgs": {
+            "beta": {
+              "description": "Scaling factor for C",
+              "value": "0.000000"
+            },
+            "alpha": {
+              "description": "Scaling factor for A*B",
+              "value": "1.000000"
+            }
+          },
+          "GemmDims": {
+            "n": {
+              "description": "Cols of B and C",
+              "value": "512"
+            },
+            "k": {
+              "description": "Cols of A / rows of B",
+              "value": "512"
+            },
+            "m": {
+              "description": "Rows of A and C",
+              "value": "512"
+            }
+          },
+          "Gemm": {
+            "transB": {
+              "description": "The Operation to apply on B",
+              "value": "CUBLAS_OP_N"
+            },
+            "transA": {
+              "description": "The Operation to apply on A",
+              "value": "CUBLAS_OP_N"
+            }
+          },
+          "Workload": {
+            "seed": {
+              "description": "The seed used for the generation of input data",
+              "value": "333"
+            },
+            "work_size": {
+              "description": "The work size to apply, 1 = 32MFlop & 1 = 1MB",
+              "value": "10"
+            }
+          }
+        }
+      }
+    },
+    "sgemm_f32_fast_tf32": {
+      "default": {
+        "description": "Default preset",
+        "options": {
+          "GemmArgs": {
+            "beta": {
+              "description": "Scaling factor for C",
+              "value": "0.000000"
+            },
+            "alpha": {
+              "description": "Scaling factor for A*B",
+              "value": "1.000000"
+            }
+          },
+          "GemmDims": {
+            "n": {
+              "description": "Cols of B and C",
+              "value": "512"
+            },
+            "k": {
+              "description": "Cols of A / rows of B",
+              "value": "512"
+            },
+            "m": {
+              "description": "Rows of A and C",
+              "value": "512"
+            }
+          },
+          "GemmEx": {
+            "algo": {
+              "description": "What algo should the GemmEx Use ?",
+              "value": "CUBLAS_GEMM_ALGO0"
+            }
+          },
+          "Gemm": {
+            "transB": {
+              "description": "The Operation to apply on B",
+              "value": "CUBLAS_OP_N"
+            },
+            "transA": {
+              "description": "The Operation to apply on A",
+              "value": "CUBLAS_OP_N"
+            }
+          },
+          "Workload": {
+            "seed": {
+              "description": "The seed used for the generation of input data",
+              "value": "333"
+            },
+            "work_size": {
+              "description": "The work size to apply, 1 = 32MFlop & 1 = 1MB",
+              "value": "10"
+            }
+          }
+        }
+      }
+    },
+    "Benchmark": {
+      "default": {
+        "description": "Default preset",
+        "options": {
+          "Benchmark": {
+            "max_gpu_temp": {
+              "description": "If warm_cool, the minimum accepted temperature before warming up the GPU",
+              "value": "50.000000"
+            },
+            "warm_cool_timeout": {
+              "description": "How long the benchmark warms or cool before throwing",
+              "value": "3"
+            },
+            "minimal_batch_duration": {
+              "description": "If dynamic batch size is set tu true, how long a batch should minimaly be",
+              "value": "10.000000"
+            },
+            "min_gpu_temp": {
+              "description": "If warm_cool, the minimum accepted temperature before cooling down the GPU",
+              "value": "60.000000"
+            },
+            "batch_size": {
+              "description": "The size of the batch",
+              "value": "25"
+            },
+            "warmup": {
+              "description": "Having a warmup run",
+              "value": "1"
+            },
+            "flush": {
+              "description": "Enables the flushing of the L2 cache",
+              "value": "1"
+            },
+            "block_queue_size": {
+              "description": "The max size of the blocking queue",
+              "value": "64"
+            },
+            "dynamic_batch": {
+              "description": "If the batch size is dynamic",
+              "value": "0"
+            },
+            "warm_cool": {
+              "description": "Does the Benchmark actively warm or cool the GPU",
+              "value": "0"
+            },
+            "block_duration": {
+              "description": "Duration of the blocking kernel (in ms)",
+              "value": "1000.000000"
+            },
+            "block": {
+              "description": "Using a blocking kernel",
+              "value": "0"
+            }
+          }
+        }
+      }
+    },
+    "batchedcgemm": {
+      "default": {
+        "description": "Default preset",
+        "options": {
+          "GemmArgs": {
+            "beta": {
+              "description": "Scaling factor for C",
+              "value": "{0.000000 ,0.000000}"
+            },
+            "alpha": {
+              "description": "Scaling factor for A*B",
+              "value": "{1.000000 ,1.000000}"
+            }
+          },
+          "GemmDims": {
+            "n": {
+              "description": "Cols of B and C",
+              "value": "512"
+            },
+            "k": {
+              "description": "Cols of A / rows of B",
+              "value": "512"
+            },
+            "m": {
+              "description": "Rows of A and C",
+              "value": "512"
+            }
+          },
+          "Batched": {
+            "batch_count": {
+              "description": "Number of batches",
+              "value": "5"
+            }
+          },
+          "Gemm": {
+            "transB": {
+              "description": "The Operation to apply on B",
+              "value": "CUBLAS_OP_N"
+            },
+            "transA": {
+              "description": "The Operation to apply on A",
+              "value": "CUBLAS_OP_N"
+            }
+          },
+          "Workload": {
+            "seed": {
+              "description": "The seed used for the generation of input data",
+              "value": "333"
+            },
+            "work_size": {
+              "description": "The work size to apply, 1 = 32MFlop & 1 = 1MB",
+              "value": "10"
+            }
+          }
+        }
+      }
+    },
+    "batchedcgemm_64": {
+      "default": {
+        "description": "Default preset",
+        "options": {
+          "GemmArgs": {
+            "beta": {
+              "description": "Scaling factor for C",
+              "value": "{0.000000 ,0.000000}"
+            },
+            "alpha": {
+              "description": "Scaling factor for A*B",
+              "value": "{1.000000 ,1.000000}"
+            }
+          },
+          "GemmDims": {
+            "n": {
+              "description": "Cols of B and C",
+              "value": "512"
+            },
+            "k": {
+              "description": "Cols of A / rows of B",
+              "value": "512"
+            },
+            "m": {
+              "description": "Rows of A and C",
+              "value": "512"
+            }
+          },
+          "Batched": {
+            "batch_count": {
+              "description": "Number of batches",
+              "value": "5"
+            }
+          },
+          "Gemm": {
+            "transB": {
+              "description": "The Operation to apply on B",
+              "value": "CUBLAS_OP_N"
+            },
+            "transA": {
+              "description": "The Operation to apply on A",
+              "value": "CUBLAS_OP_N"
+            }
+          },
+          "Workload": {
+            "seed": {
+              "description": "The seed used for the generation of input data",
+              "value": "333"
+            },
+            "work_size": {
+              "description": "The work size to apply, 1 = 32MFlop & 1 = 1MB",
+              "value": "10"
+            }
+          }
+        }
+      }
+    },
+    "hgemm_h16_acc_pedantic": {
+      "default": {
+        "description": "Default preset",
+        "options": {
+          "GemmArgs": {
+            "beta": {
+              "description": "Scaling factor for C",
+              "value": "0.000000"
+            },
+            "alpha": {
+              "description": "Scaling factor for A*B",
+              "value": "1.000000"
+            }
+          },
+          "GemmDims": {
+            "n": {
+              "description": "Cols of B and C",
+              "value": "512"
+            },
+            "k": {
+              "description": "Cols of A / rows of B",
+              "value": "512"
+            },
+            "m": {
+              "description": "Rows of A and C",
+              "value": "512"
+            }
+          },
+          "GemmEx": {
+            "algo": {
+              "description": "What algo should the GemmEx Use ?",
+              "value": "CUBLAS_GEMM_ALGO0"
+            }
+          },
+          "Gemm": {
+            "transB": {
+              "description": "The Operation to apply on B",
+              "value": "CUBLAS_OP_N"
+            },
+            "transA": {
+              "description": "The Operation to apply on A",
+              "value": "CUBLAS_OP_N"
+            }
+          },
+          "Workload": {
+            "seed": {
+              "description": "The seed used for the generation of input data",
+              "value": "333"
+            },
+            "work_size": {
+              "description": "The work size to apply, 1 = 32MFlop & 1 = 1MB",
+              "value": "10"
+            }
+          }
+        }
+      }
+    },
+    "zgemm": {
+      "default": {
+        "description": "Default preset",
+        "options": {
+          "GemmArgs": {
+            "beta": {
+              "description": "Scaling factor for C",
+              "value": "{0.000000 ,0.000000}"
+            },
+            "alpha": {
+              "description": "Scaling factor for A*B",
+              "value": "{1.000000 ,1.000000}"
+            }
+          },
+          "GemmDims": {
+            "n": {
+              "description": "Cols of B and C",
+              "value": "512"
+            },
+            "k": {
+              "description": "Cols of A / rows of B",
+              "value": "512"
+            },
+            "m": {
+              "description": "Rows of A and C",
+              "value": "512"
+            }
+          },
+          "Gemm": {
+            "transB": {
+              "description": "The Operation to apply on B",
+              "value": "CUBLAS_OP_N"
+            },
+            "transA": {
+              "description": "The Operation to apply on A",
+              "value": "CUBLAS_OP_N"
+            }
+          },
+          "Workload": {
+            "seed": {
+              "description": "The seed used for the generation of input data",
+              "value": "333"
+            },
+            "work_size": {
+              "description": "The work size to apply, 1 = 32MFlop & 1 = 1MB",
+              "value": "10"
+            }
+          }
+        }
+      }
+    },
+    "igemm_i32_acc_64": {
+      "default": {
+        "description": "Default preset",
+        "options": {
+          "GemmArgs": {
+            "beta": {
+              "description": "Scaling factor for C",
+              "value": "0"
+            },
+            "alpha": {
+              "description": "Scaling factor for A*B",
+              "value": "1"
+            }
+          },
+          "GemmDims": {
+            "n": {
+              "description": "Cols of B and C",
+              "value": "512"
+            },
+            "k": {
+              "description": "Cols of A / rows of B",
+              "value": "512"
+            },
+            "m": {
+              "description": "Rows of A and C",
+              "value": "512"
+            }
+          },
+          "GemmEx": {
+            "algo": {
+              "description": "What algo should the GemmEx Use ?",
+              "value": "CUBLAS_GEMM_ALGO0"
+            }
+          },
+          "Gemm": {
+            "transB": {
+              "description": "The Operation to apply on B",
+              "value": "CUBLAS_OP_N"
+            },
+            "transA": {
+              "description": "The Operation to apply on A",
+              "value": "CUBLAS_OP_N"
+            }
+          },
+          "Workload": {
+            "seed": {
+              "description": "The seed used for the generation of input data",
+              "value": "333"
+            },
+            "work_size": {
+              "description": "The work size to apply, 1 = 32MFlop & 1 = 1MB",
+              "value": "10"
+            }
+          }
+        }
+      }
+    },
+    "batcheddgemm_64": {
+      "default": {
+        "description": "Default preset",
+        "options": {
+          "GemmArgs": {
+            "beta": {
+              "description": "Scaling factor for C",
+              "value": "0.000000"
+            },
+            "alpha": {
+              "description": "Scaling factor for A*B",
+              "value": "1.000000"
+            }
+          },
+          "GemmDims": {
+            "n": {
+              "description": "Cols of B and C",
+              "value": "512"
+            },
+            "k": {
+              "description": "Cols of A / rows of B",
+              "value": "512"
+            },
+            "m": {
+              "description": "Rows of A and C",
+              "value": "512"
+            }
+          },
+          "Batched": {
+            "batch_count": {
+              "description": "Number of batches",
+              "value": "5"
+            }
+          },
+          "Gemm": {
+            "transB": {
+              "description": "The Operation to apply on B",
+              "value": "CUBLAS_OP_N"
+            },
+            "transA": {
+              "description": "The Operation to apply on A",
+              "value": "CUBLAS_OP_N"
+            }
+          },
+          "Workload": {
+            "seed": {
+              "description": "The seed used for the generation of input data",
+              "value": "333"
+            },
+            "work_size": {
+              "description": "The work size to apply, 1 = 32MFlop & 1 = 1MB",
+              "value": "10"
+            }
+          }
+        }
+      }
+    },
+    "batchedzgemm_64": {
+      "default": {
+        "description": "Default preset",
+        "options": {
+          "GemmArgs": {
+            "beta": {
+              "description": "Scaling factor for C",
+              "value": "{0.000000 ,0.000000}"
+            },
+            "alpha": {
+              "description": "Scaling factor for A*B",
+              "value": "{1.000000 ,1.000000}"
+            }
+          },
+          "GemmDims": {
+            "n": {
+              "description": "Cols of B and C",
+              "value": "512"
+            },
+            "k": {
+              "description": "Cols of A / rows of B",
+              "value": "512"
+            },
+            "m": {
+              "description": "Rows of A and C",
+              "value": "512"
+            }
+          },
+          "Batched": {
+            "batch_count": {
+              "description": "Number of batches",
+              "value": "5"
+            }
+          },
+          "Gemm": {
+            "transB": {
+              "description": "The Operation to apply on B",
+              "value": "CUBLAS_OP_N"
+            },
+            "transA": {
+              "description": "The Operation to apply on A",
+              "value": "CUBLAS_OP_N"
+            }
+          },
+          "Workload": {
+            "seed": {
+              "description": "The seed used for the generation of input data",
+              "value": "333"
+            },
+            "work_size": {
+              "description": "The work size to apply, 1 = 32MFlop & 1 = 1MB",
+              "value": "10"
+            }
+          }
+        }
+      }
+    },
+    "sgemm_f32_fast_16f": {
+      "default": {
+        "description": "Default preset",
+        "options": {
+          "GemmArgs": {
+            "beta": {
+              "description": "Scaling factor for C",
+              "value": "0.000000"
+            },
+            "alpha": {
+              "description": "Scaling factor for A*B",
+              "value": "1.000000"
+            }
+          },
+          "GemmDims": {
+            "n": {
+              "description": "Cols of B and C",
+              "value": "512"
+            },
+            "k": {
+              "description": "Cols of A / rows of B",
+              "value": "512"
+            },
+            "m": {
+              "description": "Rows of A and C",
+              "value": "512"
+            }
+          },
+          "GemmEx": {
+            "algo": {
+              "description": "What algo should the GemmEx Use ?",
+              "value": "CUBLAS_GEMM_ALGO0"
+            }
+          },
+          "Gemm": {
+            "transB": {
+              "description": "The Operation to apply on B",
+              "value": "CUBLAS_OP_N"
+            },
+            "transA": {
+              "description": "The Operation to apply on A",
+              "value": "CUBLAS_OP_N"
+            }
+          },
+          "Workload": {
+            "seed": {
+              "description": "The seed used for the generation of input data",
+              "value": "333"
+            },
+            "work_size": {
+              "description": "The work size to apply, 1 = 32MFlop & 1 = 1MB",
+              "value": "10"
+            }
+          }
+        }
+      }
+    },
+    "batchedhgemm": {
+      "default": {
+        "description": "Default preset",
+        "options": {
+          "GemmArgs": {
+            "beta": {
+              "description": "Scaling factor for C",
+              "value": "0.000000"
+            },
+            "alpha": {
+              "description": "Scaling factor for A*B",
+              "value": "1.000000"
+            }
+          },
+          "GemmDims": {
+            "n": {
+              "description": "Cols of B and C",
+              "value": "512"
+            },
+            "k": {
+              "description": "Cols of A / rows of B",
+              "value": "512"
+            },
+            "m": {
+              "description": "Rows of A and C",
+              "value": "512"
+            }
+          },
+          "Batched": {
+            "batch_count": {
+              "description": "Number of batches",
+              "value": "5"
+            }
+          },
+          "Gemm": {
+            "transB": {
+              "description": "The Operation to apply on B",
+              "value": "CUBLAS_OP_N"
+            },
+            "transA": {
+              "description": "The Operation to apply on A",
+              "value": "CUBLAS_OP_N"
+            }
+          },
+          "Workload": {
+            "seed": {
+              "description": "The seed used for the generation of input data",
+              "value": "333"
+            },
+            "work_size": {
+              "description": "The work size to apply, 1 = 32MFlop & 1 = 1MB",
+              "value": "10"
+            }
+          }
+        }
+      }
+    },
+    "cgemm_c32_acc": {
+      "default": {
+        "description": "Default preset",
+        "options": {
+          "GemmArgs": {
+            "beta": {
+              "description": "Scaling factor for C",
+              "value": "0.000000"
+            },
+            "alpha": {
+              "description": "Scaling factor for A*B",
+              "value": "1.000000"
+            }
+          },
+          "GemmDims": {
+            "n": {
+              "description": "Cols of B and C",
+              "value": "512"
+            },
+            "k": {
+              "description": "Cols of A / rows of B",
+              "value": "512"
+            },
+            "m": {
+              "description": "Rows of A and C",
+              "value": "512"
+            }
+          },
+          "GemmEx": {
+            "algo": {
+              "description": "What algo should the GemmEx Use ?",
+              "value": "CUBLAS_GEMM_ALGO0"
+            }
+          },
+          "Gemm": {
+            "transB": {
+              "description": "The Operation to apply on B",
+              "value": "CUBLAS_OP_N"
+            },
+            "transA": {
+              "description": "The Operation to apply on A",
+              "value": "CUBLAS_OP_N"
+            }
+          },
+          "Workload": {
+            "seed": {
+              "description": "The seed used for the generation of input data",
+              "value": "333"
+            },
+            "work_size": {
+              "description": "The work size to apply, 1 = 32MFlop & 1 = 1MB",
+              "value": "10"
+            }
+          }
+        }
+      }
+    },
+    "batchedhgemm_64": {
+      "default": {
+        "description": "Default preset",
+        "options": {
+          "GemmArgs": {
+            "beta": {
+              "description": "Scaling factor for C",
+              "value": "0.000000"
+            },
+            "alpha": {
+              "description": "Scaling factor for A*B",
+              "value": "1.000000"
+            }
+          },
+          "GemmDims": {
+            "n": {
+              "description": "Cols of B and C",
+              "value": "512"
+            },
+            "k": {
+              "description": "Cols of A / rows of B",
+              "value": "512"
+            },
+            "m": {
+              "description": "Rows of A and C",
+              "value": "512"
+            }
+          },
+          "Batched": {
+            "batch_count": {
+              "description": "Number of batches",
+              "value": "5"
+            }
+          },
+          "Gemm": {
+            "transB": {
+              "description": "The Operation to apply on B",
+              "value": "CUBLAS_OP_N"
+            },
+            "transA": {
+              "description": "The Operation to apply on A",
+              "value": "CUBLAS_OP_N"
+            }
+          },
+          "Workload": {
+            "seed": {
+              "description": "The seed used for the generation of input data",
+              "value": "333"
+            },
+            "work_size": {
+              "description": "The work size to apply, 1 = 32MFlop & 1 = 1MB",
+              "value": "10"
+            }
+          }
+        }
+      }
+    },
+    "batchedzgemm": {
+      "default": {
+        "description": "Default preset",
+        "options": {
+          "GemmArgs": {
+            "beta": {
+              "description": "Scaling factor for C",
+              "value": "{0.000000 ,0.000000}"
+            },
+            "alpha": {
+              "description": "Scaling factor for A*B",
+              "value": "{1.000000 ,1.000000}"
+            }
+          },
+          "GemmDims": {
+            "n": {
+              "description": "Cols of B and C",
+              "value": "512"
+            },
+            "k": {
+              "description": "Cols of A / rows of B",
+              "value": "512"
+            },
+            "m": {
+              "description": "Rows of A and C",
+              "value": "512"
+            }
+          },
+          "Batched": {
+            "batch_count": {
+              "description": "Number of batches",
+              "value": "5"
+            }
+          },
+          "Gemm": {
+            "transB": {
+              "description": "The Operation to apply on B",
+              "value": "CUBLAS_OP_N"
+            },
+            "transA": {
+              "description": "The Operation to apply on A",
+              "value": "CUBLAS_OP_N"
+            }
+          },
+          "Workload": {
+            "seed": {
+              "description": "The seed used for the generation of input data",
+              "value": "333"
+            },
+            "work_size": {
+              "description": "The work size to apply, 1 = 32MFlop & 1 = 1MB",
+              "value": "10"
+            }
+          }
+        }
+      }
+    },
+    "bfgemm_f32_acc_64": {
+      "default": {
+        "description": "Default preset",
+        "options": {
+          "GemmArgs": {
+            "beta": {
+              "description": "Scaling factor for C",
+              "value": "0.000000"
+            },
+            "alpha": {
+              "description": "Scaling factor for A*B",
+              "value": "1.000000"
+            }
+          },
+          "GemmDims": {
+            "n": {
+              "description": "Cols of B and C",
+              "value": "512"
+            },
+            "k": {
+              "description": "Cols of A / rows of B",
+              "value": "512"
+            },
+            "m": {
+              "description": "Rows of A and C",
+              "value": "512"
+            }
+          },
+          "GemmEx": {
+            "algo": {
+              "description": "What algo should the GemmEx Use ?",
+              "value": "CUBLAS_GEMM_ALGO0"
+            }
+          },
+          "Gemm": {
+            "transB": {
+              "description": "The Operation to apply on B",
+              "value": "CUBLAS_OP_N"
+            },
+            "transA": {
+              "description": "The Operation to apply on A",
+              "value": "CUBLAS_OP_N"
+            }
+          },
+          "Workload": {
+            "seed": {
+              "description": "The seed used for the generation of input data",
+              "value": "333"
+            },
+            "work_size": {
+              "description": "The work size to apply, 1 = 32MFlop & 1 = 1MB",
+              "value": "10"
+            }
+          }
+        }
+      }
+    },
+    "ConfidenceIntervalMedianSC": {
+      "default": {
+        "description": "Default preset",
+        "options": {
+          "ConfidenceIntervalSC": {
+            "relative_error_th": {
+              "description": "The threshold at which it will consider converged",
+              "value": "0.001000"
+            },
+            "precision": {
+              "description": "The aimed precision (ms)",
+              "value": "0.001000"
+            }
+          },
+          "StoppingCriterion": {
+            "max_nb_repetition": {
+              "description": "Maximum number of repetitions",
+              "value": "2000"
+            },
+            "batch_size": {
+              "description": "Numbers of rerun to wait before reevaluating stopping criterion",
+              "value": "50"
+            }
+          }
+        }
+      }
+    },
+    "hgemm_h16_acc": {
+      "default": {
+        "description": "Default preset",
+        "options": {
+          "GemmArgs": {
+            "beta": {
+              "description": "Scaling factor for C",
+              "value": "0.000000"
+            },
+            "alpha": {
+              "description": "Scaling factor for A*B",
+              "value": "1.000000"
+            }
+          },
+          "GemmDims": {
+            "n": {
+              "description": "Cols of B and C",
+              "value": "512"
+            },
+            "k": {
+              "description": "Cols of A / rows of B",
+              "value": "512"
+            },
+            "m": {
+              "description": "Rows of A and C",
+              "value": "512"
+            }
+          },
+          "GemmEx": {
+            "algo": {
+              "description": "What algo should the GemmEx Use ?",
+              "value": "CUBLAS_GEMM_ALGO0"
+            }
+          },
+          "Gemm": {
+            "transB": {
+              "description": "The Operation to apply on B",
+              "value": "CUBLAS_OP_N"
+            },
+            "transA": {
+              "description": "The Operation to apply on A",
+              "value": "CUBLAS_OP_N"
+            }
+          },
+          "Workload": {
+            "seed": {
+              "description": "The seed used for the generation of input data",
+              "value": "333"
+            },
+            "work_size": {
+              "description": "The work size to apply, 1 = 32MFlop & 1 = 1MB",
+              "value": "10"
+            }
+          }
+        }
+      }
+    },
+    "bfgemm_f32_out_f32_acc": {
+      "default": {
+        "description": "Default preset",
+        "options": {
+          "GemmArgs": {
+            "beta": {
+              "description": "Scaling factor for C",
+              "value": "0.000000"
+            },
+            "alpha": {
+              "description": "Scaling factor for A*B",
+              "value": "1.000000"
+            }
+          },
+          "GemmDims": {
+            "n": {
+              "description": "Cols of B and C",
+              "value": "512"
+            },
+            "k": {
+              "description": "Cols of A / rows of B",
+              "value": "512"
+            },
+            "m": {
+              "description": "Rows of A and C",
+              "value": "512"
+            }
+          },
+          "GemmEx": {
+            "algo": {
+              "description": "What algo should the GemmEx Use ?",
+              "value": "CUBLAS_GEMM_ALGO0"
+            }
+          },
+          "Gemm": {
+            "transB": {
+              "description": "The Operation to apply on B",
+              "value": "CUBLAS_OP_N"
+            },
+            "transA": {
+              "description": "The Operation to apply on A",
+              "value": "CUBLAS_OP_N"
+            }
+          },
+          "Workload": {
+            "seed": {
+              "description": "The seed used for the generation of input data",
+              "value": "333"
+            },
+            "work_size": {
+              "description": "The work size to apply, 1 = 32MFlop & 1 = 1MB",
+              "value": "10"
+            }
+          }
+        }
+      }
+    },
+    "igemm_f32_out_f32_acc": {
+      "default": {
+        "description": "Default preset",
+        "options": {
+          "GemmArgs": {
+            "beta": {
+              "description": "Scaling factor for C",
+              "value": "0.000000"
+            },
+            "alpha": {
+              "description": "Scaling factor for A*B",
+              "value": "1.000000"
+            }
+          },
+          "GemmDims": {
+            "n": {
+              "description": "Cols of B and C",
+              "value": "512"
+            },
+            "k": {
+              "description": "Cols of A / rows of B",
+              "value": "512"
+            },
+            "m": {
+              "description": "Rows of A and C",
+              "value": "512"
+            }
+          },
+          "GemmEx": {
+            "algo": {
+              "description": "What algo should the GemmEx Use ?",
+              "value": "CUBLAS_GEMM_ALGO0"
+            }
+          },
+          "Gemm": {
+            "transB": {
+              "description": "The Operation to apply on B",
+              "value": "CUBLAS_OP_N"
+            },
+            "transA": {
+              "description": "The Operation to apply on A",
+              "value": "CUBLAS_OP_N"
+            }
+          },
+          "Workload": {
+            "seed": {
+              "description": "The seed used for the generation of input data",
+              "value": "333"
+            },
+            "work_size": {
+              "description": "The work size to apply, 1 = 32MFlop & 1 = 1MB",
+              "value": "10"
+            }
+          }
+        }
+      }
+    }
+  },
+  "stats_presets": {
+    "default": {
+      "description": "Default preset",
+      "stat_names": [
+        "Mean",
+        "HarmonicMean",
+        "ClockFrequencyVector",
+        "DeviceTemperatureVector",
+        "DevicePowerUtilizationVector",
+        "WithoutOutliers"
+      ],
+      "stat_options": {}
+    }
+  },
+  "recipes": {
+    "default": {
+      "description": "Default Recipe",
+      "benchmark": {
+        "impl": "Benchmark",
+        "preset": "default"
+      },
+      "stopping": {
+        "impl": "StoppingCriterion",
+        "preset": "default"
+      },
+      "stats": {
+        "preset": "default"
+      },
+      "sweep": {
+        "strategy": "FullGrid",
+        "axes": [
+          {
+            "interface": "Workload",
+            "option": "work_size",
+            "hint": {
+              "policy": "PowersOfTwo",
+              "min": "1",
+              "max": "16",
+              "step": "1",
+              "enumerated": []
+            }
+          }
+        ]
+      }
+    }
+  },
+  "campaigns": [
+    {
+      "name": "default",
+      "recipe": "default",
+      "workloads": [
+        {
+          "impl": "cgemm",
+          "preset": "default"
+        },
+
+        {
+          "impl": "sgemm_64",
+          "preset": "default"
+        },
+        {
+          "impl": "dgemm_64",
+          "preset": "default"
+        },
+        {
+          "impl": "sgemm",
+          "preset": "default"
+        },
+        {
+          "impl": "zgemm_c64_acc",
+          "preset": "default"
+        },
+        {
+          "impl": "cgemm_64",
+          "preset": "default"
+        },
+        {
+          "impl": "dgemm_f64_acc_pedantic",
+          "preset": "default"
+        },
+
+        {
+          "impl": "zgemm_64",
+          "preset": "default"
+        },
+        {
+          "impl": "dgemm_f64_acc",
+          "preset": "default"
+        },
+        {
+          "impl": "sgemm_f32_acc",
+          "preset": "default"
+        },
+        {
+          "impl": "hgemm",
+          "preset": "default"
+        },
+        {
+          "impl": "Zgemm3m_64",
+          "preset": "default"
+        },
+        {
+          "impl": "Zgemm3m",
+          "preset": "default"
+        },
+        {
+          "impl": "Cgemm3m_64",
+          "preset": "default"
+        },
+        {
+          "impl": "Cgemm3m",
+          "preset": "default"
+        },
+        {
+          "impl": "hgemm_h16_acc_64",
+          "preset": "default"
+        },
+        {
+          "impl": "igemm_i32_acc",
+          "preset": "default"
+        },
+        {
+          "impl": "hgemm_64",
+          "preset": "default"
+        },
+        {
+          "impl": "bfgemm_f32_acc",
+          "preset": "default"
+        },
+        {
+          "impl": "dgemm",
+          "preset": "default"
+        },
+        {
+          "impl": "sgemm_f32_fast_tf32",
+          "preset": "default"
+        },
+        {
+          "impl": "hgemm_h16_acc_pedantic",
+          "preset": "default"
+        },
+        {
+          "impl": "zgemm",
+          "preset": "default"
+        },
+        {
+          "impl": "igemm_i32_acc_64",
+          "preset": "default"
+        },
+        {
+          "impl": "sgemm_f32_fast_16f",
+          "preset": "default"
+        },
+        {
+          "impl": "cgemm_c32_acc",
+          "preset": "default"
+        },
+        {
+          "impl": "bfgemm_f32_acc_64",
+          "preset": "default"
+        },
+        {
+          "impl": "hgemm_h16_acc",
+          "preset": "default"
+        },
+        {
+          "impl": "bfgemm_f32_out_f32_acc",
+          "preset": "default"
+        },
+        {
+          "impl": "igemm_f32_out_f32_acc",
+          "preset": "default"
+        }
+      ],
+      "backends": [
+        {
+          "impl": "cuda",
+          "preset": "default"
+        },
+        {
+          "impl": "hip",
+          "preset": "default"
+        }
+      ],
+      "on_incompatible": "Skip"
+    }
+  ]
+}

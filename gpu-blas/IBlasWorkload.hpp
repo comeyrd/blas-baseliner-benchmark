@@ -1,6 +1,6 @@
 #ifndef BLAS_BASELINER_IBLASWORKLOAD_HPP
 #define BLAS_BASELINER_IBLASWORKLOAD_HPP
-#include <baseliner/core/Workload.hpp>
+#include <baseliner/specs/Workload.hpp>
 #include <gpu-blas/BlasShapes.hpp>
 #include <gpu-blas/Random.hpp>
 #include <gpu-blas/Stats.hpp>
