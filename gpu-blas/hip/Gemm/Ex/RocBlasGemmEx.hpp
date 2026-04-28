@@ -12,6 +12,9 @@ namespace GpuBlas {
     using Base = RocBlasWorkload<ShapeT>;
     using backend = typename Base::backend;
 
+    auto specialization() -> std::string override {
+      return RocBlasGemm<TypeConfigT, DimType>::specialization() + "ex";
+    }
     virtual std::monostate run_workload(std::shared_ptr<typename backend::stream_t> stream) override {
       using Config = typename ShapeT::TypeConfigT;
       using InputT = typename Config::InputT;

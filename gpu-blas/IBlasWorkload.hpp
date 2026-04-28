@@ -19,8 +19,11 @@ namespace GpuBlas {
     static constexpr size_t I_ = ShapeT::input_counts;
     static constexpr size_t O_ = ShapeT::output_counts;
 
-    auto name() -> std::string override {
+    auto algo() -> std::string override {
       return std::string(ShapeT::group);
+    }
+    auto specialization() -> std::string override {
+      return Types::type_config_name<typename ShapeT::TypeConfigT, typename ShapeT::DimTypesT>();
     }
     auto validate_workload() -> bool override {
       return m_valid;

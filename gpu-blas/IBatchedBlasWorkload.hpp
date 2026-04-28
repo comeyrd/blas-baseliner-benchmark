@@ -21,7 +21,9 @@ namespace GpuBlas {
     auto out_device_array(size_t i) -> OutputT ** {
       return output_ptr_arrays[i];
     }
-
+    auto specialization() -> std::string override {
+      return "batched" + IBlasWorkload<BackendT, ShapeT, MemoryBackendT>::specialization();
+    }
     void register_options() override {
       Base::register_options();
       this->add_option("Batched", "batch_count", "Number of batches", m_batch_count);

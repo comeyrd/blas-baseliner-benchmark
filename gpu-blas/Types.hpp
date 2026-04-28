@@ -1,6 +1,6 @@
 #ifndef BLAS_BASELINER_TYPES_HPP
 #define BLAS_BASELINER_TYPES_HPP
-#include "baseliner/core/Conversions.hpp"
+#include <baseliner/core/Conversions.hpp>
 #include <complex>
 #include <string>
 namespace GpuBlas::Types {
@@ -50,6 +50,62 @@ namespace GpuBlas::Types {
     using OutputT = OutputTemplate;
     using ComputePolicyT = PolicyTemplate;
     using ReferenceComputeT = typename ReferenceType<ComputeT>::type;
+  };
+  // Type letter traits
+  template <typename T>
+  struct TypeLetter;
+  template <>
+  struct TypeLetter<float> {
+    static constexpr const char *value = "s";
+  };
+  template <>
+  struct TypeLetter<int> {
+    static constexpr const char *value = "i32";
+  };
+  template <>
+  struct TypeLetter<double> {
+    static constexpr const char *value = "d";
+  };
+  template <>
+  struct TypeLetter<int8_t> {
+    static constexpr const char *value = "i8";
+  };
+  template <>
+  struct TypeLetter<int64_t> {
+    static constexpr const char *value = "i64";
+  };
+
+  // Policy name traits
+  template <typename T>
+  struct PolicyName {
+    static constexpr const char *value = "";
+  }; // default = silent
+  template <>
+  struct PolicyName<DefaultMath> {
+    static constexpr const char *value = "";
+  };
+
+  template <typename TypeConfig, typename DimType>
+  auto type_config_name() -> std::string {
+    using In = typename TypeConfig::InputT;
+    using Compute = typename TypeConfig::ComputeT;
+    using Out = typename TypeConfig::OutputT;
+    using Policy = typename TypeConfig::ComputePolicyT;
+
+    constexpr bool uniform = std::is_same_v<In, Compute> && std::is_same_v<Compute, Out>;
+    constexpr bool isint = std::is_same_v<int, DimType>;
+
+    std::string name;
+    if constexpr (uniform) {
+      name = TypeLetter<In>::value;
+    } else {
+      name = std::string(TypeLetter<In>::value) + TypeLetter<Compute>::value + TypeLetter<Out>::value;
+    }
+    if (!isint) {
+      name += TypeLetter<DimType>::value;
+    }
+    name += PolicyName<Policy>::value;
+    return name;
   };
 
   template <typename TypeT>

@@ -42,6 +42,7 @@ namespace GpuBlas {
 
     template <typename TypeConfigTemplate, typename DimTypes>
     struct GemmShape {
+      using DimTypesT = DimTypes;
       using TypeConfigT = TypeConfigTemplate;
       using InputT = typename TypeConfigT::InputT;
       using OutputT = typename TypeConfigT::OutputT;

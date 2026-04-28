@@ -9,30 +9,6 @@
 #include <hip/hip_bf16.h>
 #include <hip/hip_fp16.h>
 #include <rocblas/rocblas.h>
-/*
-
-typedef enum rocblas_datatype_
-{
-    rocblas_datatype_f16_r   = 150,< 16-bit floating point, real
-    rocblas_datatype_f32_r = 151,      < 32-bit floating point, real
-    rocblas_datatype_f64_r = 152,  < 64-bit floating point, real
-    rocblas_datatype_f16_c = 153,  < 16-bit floating point, complex
-    rocblas_datatype_f32_c = 154,  < 32-bit floating point, complex
-    rocblas_datatype_f64_c = 155,  < 64-bit floating point, complex
-    rocblas_datatype_i8_r = 160,   <  8-bit signed integer, real
-    rocblas_datatype_u8_r = 161,   <  8-bit unsigned integer, real
-    rocblas_datatype_i32_r = 162,  < 32-bit signed integer, real
-    rocblas_datatype_u32_r = 163,  < 32-bit unsigned integer, real
-    rocblas_datatype_i8_c = 164,   <  8-bit signed integer, complex
-    rocblas_datatype_u8_c = 165,   <  8-bit unsigned integer, complex
-    rocblas_datatype_i32_c = 166,  < 32-bit signed integer, complex
-    rocblas_datatype_u32_c = 167,  < 32-bit unsigned integer, complex
-    rocblas_datatype_bf16_r = 168, < 16-bit bfloat, real
-    rocblas_datatype_bf16_c = 169, < 16-bit bfloat, complex
-    rocblas_datatype_invalid = 255,< Invalid datatype value, do not use
-}
-rocblas_datatype;
-*/
 namespace GpuBlas {
 
   template <typename T>
@@ -150,7 +126,22 @@ namespace GpuBlas {
         return int8_t{0};
       }
     };
-
+    template <>
+    struct TypeLetter<rocblas_bfloat16> {
+      static constexpr const char *value = "bf";
+    };
+    template <>
+    struct TypeLetter<rocblas_float_complex> {
+      static constexpr const char *value = "c";
+    };
+    template <>
+    struct TypeLetter<rocblas_double_complex> {
+      static constexpr const char *value = "z";
+    };
+    template <>
+    struct TypeLetter<rocblas_half> {
+      static constexpr const char *value = "h";
+    };
   } // namespace Types
   namespace Types {
     template <>

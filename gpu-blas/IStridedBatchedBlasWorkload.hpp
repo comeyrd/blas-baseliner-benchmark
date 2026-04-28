@@ -17,7 +17,9 @@ namespace GpuBlas {
       Base::register_options();
       this->add_option("Batched", "batch_count", "Number of batches", m_batch_count);
     }
-
+    auto specialization() -> std::string override {
+      return "strided" + IBlasWorkload<BackendT, ShapeT, MemoryBackendT>::specialization();
+    }
     void alloc_host() override {
       ShapeT::scale(this->m_dims, this->get_work_size());
       auto input_sz = ShapeT::input_buffer_sizes(this->m_dims);
