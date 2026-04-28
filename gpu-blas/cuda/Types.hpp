@@ -170,6 +170,22 @@ namespace GpuBlas {
         return int8_t{0};
       }
     };
+    template <>
+    struct TypeLetter<cuComplex> {
+      static constexpr const char *value = "c";
+    };
+    template <>
+    struct TypeLetter<cuDoubleComplex> {
+      static constexpr const char *value = "z";
+    };
+    template <>
+    struct TypeLetter<__half> {
+      static constexpr const char *value = "h";
+    };
+    template <>
+    struct TypeLetter<__nv_bfloat16> {
+      static constexpr const char *value = "bf";
+    };
 
     template <>
     struct ReferenceType<__half> {
