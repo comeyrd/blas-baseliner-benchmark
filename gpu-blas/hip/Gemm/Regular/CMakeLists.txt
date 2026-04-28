@@ -1,1 +1,1 @@
-target_sources(baseliner-blas PRIVATE RegularGemm.hip)
+target_sources(blas_sources INTERFACE RegularGemm.hip)

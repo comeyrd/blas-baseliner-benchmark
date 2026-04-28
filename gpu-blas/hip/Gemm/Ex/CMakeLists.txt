@@ -1,2 +1,2 @@
-target_sources(baseliner-blas PRIVATE
+target_sources(blas_sources INTERFACE
    GemmEx.hip)

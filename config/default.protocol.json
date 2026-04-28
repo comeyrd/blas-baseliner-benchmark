@@ -2979,22 +2979,6 @@
       },
       "stats": {
         "preset": "default"
-      },
-      "sweep": {
-        "strategy": "FullGrid",
-        "axes": [
-          {
-            "interface": "Workload",
-            "option": "work_size",
-            "hint": {
-              "policy": "PowersOfTwo",
-              "min": "1",
-              "max": "16",
-              "step": "1",
-              "enumerated": []
-            }
-          }
-        ]
       }
     }
   },

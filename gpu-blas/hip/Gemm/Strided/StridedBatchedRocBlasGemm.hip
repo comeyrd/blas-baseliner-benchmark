@@ -1,6 +1,6 @@
 #include "rocblas/rocblas.h"
-#include <baseliner/registry/RegisteringMacros.hpp>
-#include <baseliner/specs/Conversions.hpp>
+#include <baseliner/Register.hpp>
+#include <baseliner/core/Conversions.hpp>
 
 #include <gpu-blas/BlasShapes.hpp>
 #include <gpu-blas/hip/Gemm/Strided/StridedBatchedRocBlasGemm.hpp>

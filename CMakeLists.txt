@@ -32,12 +32,12 @@ endif()
 
 include(FetchContent)
 FetchContent_Declare(
-  baseliner
-  GIT_REPOSITORY https://github.com/comeyrd/gpu-kernel-baseliner.git
-  GIT_TAG        develop
+  baseliner_adapters
+  GIT_REPOSITORY https://github.com/comeyrd/baseliner-adapter.git
+  GIT_TAG        main
 )
 
-FetchContent_MakeAvailable(baseliner)
+FetchContent_MakeAvailable(baseliner_adapters)
 include(${baseliner_SOURCE_DIR}/cmake/utils.cmake)
 
 

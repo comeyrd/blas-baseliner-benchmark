@@ -1,8 +1,8 @@
 
 
 #include "cublas_v2.h"
-#include <baseliner/registry/RegisteringMacros.hpp>
-#include <baseliner/specs/Conversions.hpp>
+#include <baseliner/Register.hpp>
+#include <baseliner/core/Conversions.hpp>
 #include <gpu-blas/BlasShapes.hpp>
 #include <gpu-blas/cuda/CudaBlasWorkload.hpp>
 #include <gpu-blas/cuda/Gemm/Regular/RegularCuBlasGemm.hpp>

@@ -1,6 +1,6 @@
 #ifndef BLAS_BASELINER_BLASSHAPES_HPP
 #define BLAS_BASELINER_BLASSHAPES_HPP
-#include <baseliner/specs/Options.hpp>
+#include <baseliner/core/Options.hpp>
 #include <functional>
 #include <gpu-blas/Buffers.hpp>
 #include <gpu-blas/Random.hpp>

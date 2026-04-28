@@ -1,6 +1,6 @@
 #include "CublasHelper.hpp"
-#include "baseliner/specs/Error.hpp"
 #include "cublas_v2.h"
+#include <baseliner/core/Error.hpp>
 #include <iostream>
 #include <ostream>
 #include <stdexcept>

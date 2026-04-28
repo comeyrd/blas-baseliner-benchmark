@@ -1,7 +1,7 @@
 #ifndef BLAS_BASELINER_HIP_TYPES_HPP
 #define BLAS_BASELINER_HIP_TYPES_HPP
-#include <baseliner/specs/AxeSweeping.hpp>
-#include <baseliner/specs/Conversions.hpp>
+#include <baseliner/core/AxeSweeping.hpp>
+#include <baseliner/core/Conversions.hpp>
 #include <gpu-blas/Random.hpp>
 #include <gpu-blas/Types.hpp>
 #include <hip/hip_runtime.h>

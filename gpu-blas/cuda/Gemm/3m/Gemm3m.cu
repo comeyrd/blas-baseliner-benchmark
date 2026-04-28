@@ -1,4 +1,4 @@
-#include <baseliner/registry/RegisteringMacros.hpp>
+#include <baseliner/Register.hpp>
 #include <gpu-blas/BlasShapes.hpp>
 #include <gpu-blas/cuda/Gemm/3m/CudaBlasGemm3m.hpp>
 namespace GpuBlas {

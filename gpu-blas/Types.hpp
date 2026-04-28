@@ -1,6 +1,6 @@
 #ifndef BLAS_BASELINER_TYPES_HPP
 #define BLAS_BASELINER_TYPES_HPP
-#include "baseliner/specs/Conversions.hpp"
+#include "baseliner/core/Conversions.hpp"
 #include <complex>
 #include <string>
 namespace GpuBlas::Types {
