@@ -1,9 +1,7 @@
 #ifndef BLAS_BASELINER_HIPBLASWORKLOAD_HPP
 #define BLAS_BASELINER_HIPBLASWORKLOAD_HPP
 
-#include <gpu-blas/IBatchedBlasWorkload.hpp>
 #include <gpu-blas/IBlasWorkload.hpp>
-#include <gpu-blas/IStridedBatchedBlasWorkload.hpp>
 #include <gpu-blas/hip/HipMemoryBackend.hpp>
 #include <gpu-blas/hip/RocBlasHelper.hpp>
 
