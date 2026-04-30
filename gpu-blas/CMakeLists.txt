@@ -7,12 +7,19 @@ elseif(HAS_HIP)
     add_subdirectory(hip)
 endif()
 
- add_executable(baseliner-blas ${BLAS_SOURCES})
+ add_executable(baseliner-blas)
  target_link_libraries(baseliner-blas PUBLIC baseliner_adapters::baseliner ${BLAS_LIBRARIES})
  target_link_libraries(baseliner-blas PRIVATE blas_sources)
  target_include_directories(baseliner-blas PRIVATE 
      "${CMAKE_CURRENT_SOURCE_DIR}/.."
  )
+ add_executable(minimal-blas)
+ target_link_libraries(minimal-blas PUBLIC baseliner_adapters::minimal ${BLAS_LIBRARIES})
+ target_link_libraries(minimal-blas PRIVATE blas_sources)
+ target_include_directories(minimal-blas PRIVATE 
+     "${CMAKE_CURRENT_SOURCE_DIR}/.."
+ )
+ 
 if(HAS_CUDA)
     add_executable(nvbench-blas)
     target_link_libraries(nvbench-blas PUBLIC baseliner_adapters::nvbench nvbench::main ${BLAS_LIBRARIES})
