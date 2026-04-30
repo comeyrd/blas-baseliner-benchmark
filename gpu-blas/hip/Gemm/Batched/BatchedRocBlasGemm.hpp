@@ -54,10 +54,10 @@ namespace GpuBlas {
       this->add_option("Gemm", "transA", "The Operation to apply on A", transA);
       this->add_option("Gemm", "transB", "The Operation to apply on B", transB);
     }
-    virtual std::monostate run_workload(std::shared_ptr<typename backend::stream_t> stream) override {
+    virtual std::monostate run(typename backend::stream_t stream) override {
       using T = typename ShapeT::TypeConfigT::InputT;
       auto gemm_func = BatchedGemmSelector<T, DimType>::get();
-      CHECK_ROCBLAS(rocblas_set_stream(this->m_handle, *stream));
+      CHECK_ROCBLAS(rocblas_set_stream(this->m_handle, stream));
       CHECK_ROCBLAS(gemm_func(this->m_handle, transA, transB, this->m_dims.m, this->m_dims.n, this->m_dims.k,
                               &this->m_args.alpha, this->in_device_array(ShapeT::Inputs::A), this->m_dims.m,
                               this->in_device_array(ShapeT::Inputs::B), this->m_dims.k, &this->m_args.beta,

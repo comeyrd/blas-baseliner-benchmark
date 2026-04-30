@@ -1,9 +1,7 @@
 #ifndef BLAS_BASELINER_CUDABLASWORKLOAD_HPP
 #define BLAS_BASELINER_CUDABLASWORKLOAD_HPP
 
-#include <gpu-blas/IBatchedBlasWorkload.hpp>
 #include <gpu-blas/IBlasWorkload.hpp>
-#include <gpu-blas/IStridedBatchedBlasWorkload.hpp>
 #include <gpu-blas/cuda/CublasHelper.hpp>
 #include <gpu-blas/cuda/CudaMemoryBackend.hpp>
 

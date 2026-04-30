@@ -21,7 +21,8 @@ namespace GpuBlas::Validation {
 
   template <typename ShapeT>
   bool gemm_spot_check(const Buffers<ShapeT> &buffers, const typename ShapeT::DimsT &dims,
-                       const typename ShapeT::ArgsT &args, float &mean_error, size_t samples = 128) {
+                       const typename ShapeT::ArgsT &args, float &mean_error, const size_t &batch_size,
+                       size_t samples = 128) {
 
     using InputT = typename ShapeT::InputT;
     using RefT = typename GpuBlas::Types::ReferenceType<InputT>::type;
@@ -40,24 +41,30 @@ namespace GpuBlas::Validation {
     std::mt19937 rng(123);
     std::uniform_int_distribution<size_t> dist_m(0, m - 1);
     std::uniform_int_distribution<size_t> dist_n(0, n - 1);
+    std::uniform_int_distribution<size_t> dist_b(0, std::max<size_t>(1, batch_size) - 1);
+
     double error{0};
     for (size_t s = 0; s < samples; ++s) {
-
+      size_t b_idx = dist_b(rng);
       size_t i = dist_m(rng);
       size_t j = dist_n(rng);
+
+      size_t offset_a = b_idx * m * k;
+      size_t offset_b = b_idx * k * n;
+      size_t offset_c = b_idx * m * n;
 
       RefT dot = RefT{0};
 
       for (size_t kk = 0; kk < k; ++kk) {
-        RefT a = GpuBlas::Types::to_reference_type(A[i + kk * m]);
-        RefT b = GpuBlas::Types::to_reference_type(B[kk + j * k]);
+        RefT a = GpuBlas::Types::to_reference_type(A[offset_a + i + kk * m]);
+        RefT b = GpuBlas::Types::to_reference_type(B[offset_b + kk + j * k]);
         dot += a * b;
       }
 
       RefT alpha = GpuBlas::Types::to_reference_type(args.alpha);
       RefT beta = GpuBlas::Types::to_reference_type(args.beta);
 
-      RefT c_ref = GpuBlas::Types::to_reference_type(C[i + j * m]);
+      RefT c_ref = GpuBlas::Types::to_reference_type(C[offset_c + i + j * m]);
 
       RefT expected = alpha * dot; // C is set to 0
       RefT got = c_ref;
@@ -73,5 +80,4 @@ namespace GpuBlas::Validation {
     }
     return true;
   }
-
 } // namespace GpuBlas::Validation

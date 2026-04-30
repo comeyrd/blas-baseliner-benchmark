@@ -9,21 +9,21 @@ namespace GpuBlas {
     void free(void *ptr) override {
       CHECK_CUDA(cudaFree(ptr));
     };
-    void memcpy_to_device(void *dst, const void *src, size_t bytes, std::shared_ptr<stream_t> &stream) override {
-      CHECK_CUDA(cudaMemcpyAsync(dst, src, bytes, cudaMemcpyHostToDevice, *stream));
+    void memcpy_to_device(void *dst, const void *src, size_t bytes, stream_t stream) override {
+      CHECK_CUDA(cudaMemcpyAsync(dst, src, bytes, cudaMemcpyHostToDevice, stream));
     };
-    void memcpy_to_host(void *dst, const void *src, size_t bytes, std::shared_ptr<stream_t> &stream) override {
-      CHECK_CUDA(cudaMemcpyAsync(dst, src, bytes, cudaMemcpyDeviceToHost, *stream));
+    void memcpy_to_host(void *dst, const void *src, size_t bytes, stream_t stream) override {
+      CHECK_CUDA(cudaMemcpyAsync(dst, src, bytes, cudaMemcpyDeviceToHost, stream));
     };
-    void memset(void *ptr, int value, size_t bytes, std::shared_ptr<stream_t> &stream) override {
-      CHECK_CUDA(cudaMemsetAsync(ptr, value, bytes, *stream));
+    void memset(void *ptr, int value, size_t bytes, stream_t stream) override {
+      CHECK_CUDA(cudaMemsetAsync(ptr, value, bytes, stream));
     };
     CudaMemoryBackend() = default;
     ~CudaMemoryBackend() = default;
 
   protected:
-    void _malloc(void **ptr, size_t bytes, std::shared_ptr<stream_t> &stream) override {
-      CHECK_CUDA(cudaMallocAsync(ptr, bytes, *stream));
+    void _malloc(void **ptr, size_t bytes, stream_t stream) override {
+      CHECK_CUDA(cudaMallocAsync(ptr, bytes, stream));
     };
   };
 } // namespace GpuBlas

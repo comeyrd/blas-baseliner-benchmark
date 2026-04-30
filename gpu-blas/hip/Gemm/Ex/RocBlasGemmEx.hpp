@@ -15,7 +15,7 @@ namespace GpuBlas {
     auto specialization() -> std::string override {
       return RocBlasGemm<TypeConfigT, DimType>::specialization() + "ex";
     }
-    virtual std::monostate run_workload(std::shared_ptr<typename backend::stream_t> stream) override {
+    virtual std::monostate run(typename backend::stream_t stream) override {
       using Config = typename ShapeT::TypeConfigT;
       using InputT = typename Config::InputT;
       using ComputeT = typename Config::ComputeT;
@@ -26,7 +26,7 @@ namespace GpuBlas {
       rocblas_datatype cType = RocblasTypeTraits<OutputT>::type;
       rocblas_datatype computeType = RocblasTypeTraits<ComputeT>::type;
 
-      CHECK_ROCBLAS(rocblas_set_stream(this->m_handle, *stream));
+      CHECK_ROCBLAS(rocblas_set_stream(this->m_handle, stream));
 
       if constexpr (std::is_same_v<DimType, int>) {
         CHECK_ROCBLAS(rocblas_gemm_ex(this->m_handle, this->transA, this->transB, this->m_dims.m, this->m_dims.n,

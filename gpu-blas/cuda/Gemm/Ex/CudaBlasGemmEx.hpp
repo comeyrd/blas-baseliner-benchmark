@@ -13,7 +13,7 @@ namespace GpuBlas {
     using Base = CuBlasWorkload<ShapeT>;
     using backend = typename Base::backend;
 
-    virtual std::monostate run_workload(std::shared_ptr<typename backend::stream_t> stream) override {
+    virtual std::monostate run(typename backend::stream_t stream) override {
       using Config = typename ShapeT::TypeConfigT;
       using InputT = typename Config::InputT;
       using ComputeT = typename Config::ComputeT;
@@ -25,7 +25,7 @@ namespace GpuBlas {
       cudaDataType_t cType = CudaTypeTraits<OutputT>::type;
       cublasComputeType_t computeType = CublasComputeTraits<ComputeT, ComputePolicyT>::type;
 
-      CHECK_CUBLAS(cublasSetStream(this->m_handle, *stream));
+      CHECK_CUBLAS(cublasSetStream(this->m_handle, stream));
       if constexpr (std::is_same_v<DimType, int>) {
         CHECK_CUBLAS(cublasGemmEx(this->m_handle, this->transA, this->transB, this->m_dims.m, this->m_dims.n,
                                   this->m_dims.k, &this->m_args.alpha, this->m_buffers.in_device(ShapeT::Inputs::A),

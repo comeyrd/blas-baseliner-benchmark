@@ -53,13 +53,13 @@ namespace GpuBlas {
     using ShapeT = Shapes::GemmShape<TypeConfigT, DimType>;
     using Base = RocBlasWorkload<ShapeT>;
     using backend = typename Base::backend;
-    virtual std::monostate run_workload(std::shared_ptr<typename backend::stream_t> stream) override {
+    virtual std::monostate run(typename backend::stream_t stream) override {
       using T = typename ShapeT::TypeConfigT::InputT;
       auto gemm_func = GemmSelector<T, DimType>::get();
       DimType lda = (this->transA == rocblas_operation_none) ? this->m_dims.m : this->m_dims.k;
       DimType ldb = (this->transB == rocblas_operation_none) ? this->m_dims.k : this->m_dims.n;
       DimType ldc = this->m_dims.m;
-      CHECK_ROCBLAS(rocblas_set_stream(this->m_handle, *stream));
+      CHECK_ROCBLAS(rocblas_set_stream(this->m_handle, stream));
       CHECK_ROCBLAS(gemm_func(this->m_handle, this->transA, this->transB, this->m_dims.m, this->m_dims.n,
                               this->m_dims.k, &this->m_args.alpha, this->m_buffers.in_device(ShapeT::Inputs::A), lda,
                               this->m_buffers.in_device(ShapeT::Inputs::B), ldb, &this->m_args.beta,

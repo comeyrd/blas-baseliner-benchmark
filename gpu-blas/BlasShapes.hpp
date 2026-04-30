@@ -13,19 +13,30 @@ namespace GpuBlas {
     // StandardGemm
     template <typename T>
     struct GemmDims : public Baseliner::IOption {
-      T m = 512;
-      T n = 512;
-      T k = 512;
-
+      T m = 256;
+      T n = 256;
+      T k = 256;
+      size_t B = 64;
       GemmDims() = default;
-      GemmDims(T m_, T n_, T k_)
+      GemmDims(T m_, T n_, T k_, size_t B_)
           : m(m_),
             n(n_),
-            k(k_) {};
+            k(k_),
+            B(B_) {};
+      GemmDims &operator=(const GemmDims &other) {
+        if (this != &other) {
+          m = other.m;
+          n = other.n;
+          k = other.k;
+          B = other.B;
+        }
+        return *this;
+      }
       void register_options() override {
         this->add_option("GemmDims", "m", "Rows of A and C", m);
         this->add_option("GemmDims", "k", "Cols of A / rows of B", k);
         this->add_option("GemmDims", "n", "Cols of B and C", n);
+        this->add_option("GemmDims", "alignment_block", "To a multiple of what the dimensions should snap to?", B);
       }
     };
 
@@ -64,14 +75,22 @@ namespace GpuBlas {
       static constexpr size_t output_counts = 1;
       static constexpr std::array<Random::FillPolicy, 1> output_fill_policies = {Random::FillPolicy::Zero};
 
-      static void scale(DimsT &dims, size_t work_size) {
-        double s = std::pow(static_cast<double>(work_size), 1.0 / 3.0);
-        auto snap64 = [](double val) -> size_t {
-          size_t v = static_cast<size_t>(val);
-          return std::max<size_t>(64, (v / 64) * 64);
+      static void scale(DimsT &dims, size_t work_size, const size_t &batch_count) {
+        size_t safe_batch = std::max<size_t>(1, batch_count);
+
+        double target_ratio = static_cast<double>(work_size) / (safe_batch * Types::TypeOperations<InputT>::factor);
+        double s = std::pow(target_ratio, 1.0 / 3.0);
+
+        auto snap = [&](double val) -> size_t {
+          size_t b = std::max<size_t>(1, dims.B);
+          size_t v_aligned = static_cast<size_t>(std::ceil(val / b)) * b;
+          return std::max<size_t>(b, v_aligned);
         };
-        dims = DimsT(snap64(dims.m * s), snap64(dims.n * s), snap64(dims.k * s));
-      };
+
+        dims.m = snap(dims.m * s);
+        dims.n = snap(dims.n * s);
+        dims.k = snap(dims.k * s);
+      }
 
       static std::array<size_t, 2> input_buffer_sizes(const DimsT &d) {
         return {{static_cast<size_t>(d.m) * d.k, static_cast<size_t>(d.k) * d.n}};
@@ -81,21 +100,21 @@ namespace GpuBlas {
         return {{static_cast<size_t>(d.m) * d.n}};
       }
 
-      static size_t flop_count(const DimsT &d) {
-        return 2ULL * d.m * d.n * d.k;
+      static size_t flop_count(const DimsT &d, const size_t &batch_size) {
+        return 2ULL * d.m * d.n * d.k * batch_size * Types::TypeOperations<InputT>::factor;
       }
-      static size_t byte_count(const DimsT &d) {
-        return (d.m * d.k + d.k * d.n) * sizeof(InputT) // A + B
-               + (d.m * d.n) * sizeof(OutputT);         // C
+      static size_t byte_count(const DimsT &d, const size_t &batch_size) {
+        return (d.m * d.k + d.k * d.n * batch_size) * sizeof(InputT) // A + B
+               + (d.m * d.n * batch_size) * sizeof(OutputT);         // C
       }
       static bool validate(const Buffers<GemmShape> &buffers, const DimsT &dims, const ArgsT &args, float &mean_error,
-                           size_t samples = 1) {
+                           const size_t &batch_size, size_t samples = 1) {
 
         using Shape = GemmShape<TypeConfigT, DimTypes>;
 
         bool ok = true;
-
-        ok &= GpuBlas::Validation::gemm_spot_check<Shape>(buffers, dims, args, mean_error, samples);
+        std::cout << "Validating\n";
+        ok &= GpuBlas::Validation::gemm_spot_check<Shape>(buffers, dims, args, mean_error, batch_size, samples);
 
         return ok;
       }

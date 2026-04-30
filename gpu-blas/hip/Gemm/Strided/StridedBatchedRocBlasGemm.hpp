@@ -61,11 +61,11 @@ namespace GpuBlas {
       this->add_option("Gemm", "transB", "The Operation to apply on B", transB);
     }
 
-    virtual std::monostate run_workload(std::shared_ptr<typename backend::stream_t> stream) override {
+    virtual std::monostate run(typename backend::stream_t stream) override {
       using T = typename ShapeT::TypeConfigT::InputT;
       auto gemm_func = StridedBatchedGemmSelector<T, DimType>::get();
 
-      CHECK_ROCBLAS(rocblas_set_stream(this->m_handle, *stream));
+      CHECK_ROCBLAS(rocblas_set_stream(this->m_handle, stream));
 
       // Cast strides to DimType to match the selected API signature (int vs int64_t)
       DimType strideA = static_cast<DimType>(this->get_stride_in(ShapeT::Inputs::A));
