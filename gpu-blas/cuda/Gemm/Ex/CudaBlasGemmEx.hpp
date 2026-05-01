@@ -12,7 +12,9 @@ namespace GpuBlas {
     using ShapeT = Shapes::GemmShape<TypeConfigT, DimType>;
     using Base = CuBlasWorkload<ShapeT>;
     using backend = typename Base::backend;
-
+    auto specialization() -> std::string override {
+      return CublasGemm<TypeConfigT, DimType>::specialization() + "_ex";
+    }
     virtual std::monostate run(typename backend::stream_t stream) override {
       using Config = typename ShapeT::TypeConfigT;
       using InputT = typename Config::InputT;
@@ -31,23 +33,23 @@ namespace GpuBlas {
                                   this->m_dims.k, &this->m_args.alpha, this->m_buffers.in_device(ShapeT::Inputs::A),
                                   aType, this->m_dims.m, this->m_buffers.in_device(ShapeT::Inputs::B), bType,
                                   this->m_dims.k, &this->m_args.beta, this->m_buffers.out_device(ShapeT::Outputs::C),
-                                  cType, this->m_dims.m, computeType, this->algo));
+                                  cType, this->m_dims.m, computeType, this->m_algo));
       } else if constexpr (std::is_same_v<DimType, std::int64_t>) {
         CHECK_CUBLAS(cublasGemmEx_64(this->m_handle, this->transA, this->transB, this->m_dims.m, this->m_dims.n,
                                      this->m_dims.k, &this->m_args.alpha, this->m_buffers.in_device(ShapeT::Inputs::A),
                                      aType, this->m_dims.m, this->m_buffers.in_device(ShapeT::Inputs::B), bType,
                                      this->m_dims.k, &this->m_args.beta, this->m_buffers.out_device(ShapeT::Outputs::C),
-                                     cType, this->m_dims.m, computeType, this->algo));
+                                     cType, this->m_dims.m, computeType, this->m_algo));
       }
       return {};
     }
 
     void register_options() override {
       CublasGemm<TypeConfigT, DimType>::register_options();
-      this->add_option("GemmEx", "algo", "What algo should the GemmEx Use ?", algo);
+      this->add_option("GemmEx", "algo", "What algo should the GemmEx Use ?", m_algo);
     }
 
   protected:
-    cublasGemmAlgo_t algo;
+    cublasGemmAlgo_t m_algo;
   };
 } // namespace GpuBlas

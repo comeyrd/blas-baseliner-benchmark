@@ -99,11 +99,11 @@ namespace GpuBlas {
     }
 
     void free() override {
-      for (size_t i = 0; i < I_; ++i){
+      for (size_t i = 0; i < I_; ++i) {
         m_buffers.input_host[i].clear();
         m_buffers.input_host[i].shrink_to_fit();
       }
-      for (size_t i = 0; i < O_; ++i){
+      for (size_t i = 0; i < O_; ++i) {
         m_buffers.output_host[i].clear();
         m_buffers.output_host[i].shrink_to_fit();
       }

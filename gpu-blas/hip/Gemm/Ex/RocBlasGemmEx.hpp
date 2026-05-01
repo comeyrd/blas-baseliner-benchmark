@@ -35,29 +35,29 @@ namespace GpuBlas {
                                       this->m_dims.k, &this->m_args.beta,
                                       this->m_buffers.out_device(ShapeT::Outputs::C), cType, this->m_dims.m,
                                       this->m_buffers.out_device(ShapeT::Outputs::C), cType, this->m_dims.m,
-                                      computeType, this->algo, this->solution_index, this->flags));
+                                      computeType, this->m_algo, this->m_solution_index, this->m_flags));
       } else if constexpr (std::is_same_v<DimType, std::int64_t>) {
-        CHECK_ROCBLAS(rocblas_gemm_ex_64(this->m_handle, this->transA, this->transB, this->m_dims.m, this->m_dims.n,
-                                         this->m_dims.k, &this->m_args.alpha,
-                                         this->m_buffers.in_device(ShapeT::Inputs::A), aType, this->m_dims.m,
-                                         this->m_buffers.in_device(ShapeT::Inputs::B), bType, this->m_dims.k,
-                                         &this->m_args.beta, this->m_buffers.out_device(ShapeT::Outputs::C), cType,
-                                         this->m_dims.m, this->m_buffers.out_device(ShapeT::Outputs::C), cType,
-                                         this->m_dims.m, computeType, this->algo, this->solution_index, this->flags));
+        CHECK_ROCBLAS(
+            rocblas_gemm_ex_64(this->m_handle, this->transA, this->transB, this->m_dims.m, this->m_dims.n,
+                               this->m_dims.k, &this->m_args.alpha, this->m_buffers.in_device(ShapeT::Inputs::A), aType,
+                               this->m_dims.m, this->m_buffers.in_device(ShapeT::Inputs::B), bType, this->m_dims.k,
+                               &this->m_args.beta, this->m_buffers.out_device(ShapeT::Outputs::C), cType,
+                               this->m_dims.m, this->m_buffers.out_device(ShapeT::Outputs::C), cType, this->m_dims.m,
+                               computeType, this->m_algo, this->m_solution_index, this->m_flags));
       }
       return {};
     }
 
     void register_options() override {
       RocBlasGemm<TypeConfigT, DimType>::register_options();
-      this->add_option("GemmEx", "algo", "What algo should the GemmEx Use ?", algo);
-      this->add_option("GemmEx", "solution_index", "What solution to choose?", solution_index);
-      this->add_option("GemmEx", "gemm_flags", "Gemm Flags", flags);
+      this->add_option("GemmEx", "algo", "What algo should the GemmEx Use ?", m_algo);
+      this->add_option("GemmEx", "solution_index", "What solution to choose?", m_solution_index);
+      this->add_option("GemmEx", "gemm_flags", "Gemm Flags", m_flags);
     }
 
   protected:
-    rocblas_gemm_algo algo{rocblas_gemm_algo_standard};
-    int32_t solution_index{0};
-    uint32_t flags{0};
+    rocblas_gemm_algo m_algo{rocblas_gemm_algo_standard};
+    int32_t m_solution_index{0};
+    uint32_t m_flags{0};
   };
 } // namespace GpuBlas

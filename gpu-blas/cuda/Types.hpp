@@ -49,7 +49,6 @@ namespace GpuBlas {
   struct Fast16FMath {};
   struct FastBF16Math {};
   struct FastTF32Math {};
-  struct EmulatedBF16x9Math {};
 
   template <typename TypeT, typename PolicyT>
   struct CublasComputeTraits;
@@ -116,6 +115,22 @@ namespace GpuBlas {
     static constexpr cublasComputeType_t type = CUBLAS_COMPUTE_64F_PEDANTIC;
   };
   namespace Types {
+    template <>
+    struct PolicyName<PedanticMath> {
+      static constexpr const char *value = "_pedantic";
+    };
+    template <>
+    struct PolicyName<FastTF32Math> {
+      static constexpr const char *value = "_fast32";
+    };
+    template <>
+    struct PolicyName<Fast16FMath> {
+      static constexpr const char *value = "_fast16";
+    };
+    template <>
+    struct PolicyName<FastBF16Math> {
+      static constexpr const char *value = "_fastbf16";
+    };
     template <>
     struct TypeOperations<cuComplex> {
       static constexpr size_t factor = 4;

@@ -36,6 +36,9 @@ namespace GpuBlas {
     using ShapeT = Shapes::GemmShape<TypeConfigT, DimType>;
     using Base = CuBlasWorkload<ShapeT>;
     using backend = typename Base::backend;
+    auto specialization() -> std::string override {
+      return CublasGemm<TypeConfigT, DimType>::specialization() + "_3m";
+    }
     virtual std::monostate run(typename backend::stream_t stream) override {
       using T = typename ShapeT::TypeConfigT::InputT;
       auto gemm_func = Gemm3mSelector<T, DimType>::get();

@@ -1,5 +1,5 @@
-# add_subdirectory(3m)
+add_subdirectory(3m)
 add_subdirectory(Batched)
 add_subdirectory(Ex)
 add_subdirectory(Regular)
-# add_subdirectory(Strided)
+add_subdirectory(Strided)
