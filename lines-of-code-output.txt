@@ -1,0 +1,61 @@
+
++--------------------------------------------------------------------+
+|  baseliner-blas — Implementation Effort                            |
++--------------------------------------------------------------------+
+
+  Total source LOC                          2810
+  Total build LOC (CMakeLists.txt)            54
+  Backends supported                           2  (hip, cuda)
+  Shape kinds defined (BlasShapes.hpp)         1  (GemmShape)
+  Workloads registered (total)               100
+
+  ── Top-level structure (gpu-blas/) ─────────────────────────────
+    Common headers           614
+    BlasShapes.hpp           124
+    Backends (combined)     2072
+    Build files               54
+    ───────────────────   ──────
+    TOTAL                   2864
+
+  ── Per backend ─────────────────────────────────────────────────
+    hip               905
+    cuda             1167
+    ────────────   ──────
+    All backends     2072
+
+  ── Per shape (summed across backends) ──────────────────────────
+    Gemm  (5 specs — hip: 488, cuda: 541)     1029
+
+  ── Detailed breakdown ──────────────────────────────────────────
+
+  hip/  —  905 LOC, 50 workloads
+    backend-common headers . . . . . . . . . .   417 LOC
+    Gemm/   (488 LOC)
+      shape-common headers . . . . . . . . .    22 LOC
+      Regular/                hpp:  70  impl:  33  workloads: 10  total:  103
+      Batched/                hpp:  72  impl:  31  workloads: 10  total:  103
+      Strided/                hpp:  88  impl:  33  workloads: 10  total:  121
+      Ex/                     hpp:  62  impl:  77  workloads: 20  total:  139
+
+  cuda/  —  1167 LOC, 50 workloads
+    backend-common headers . . . . . . . . . .   626 LOC
+    Gemm/   (541 LOC)
+      shape-common headers . . . . . . . . .    22 LOC
+      Regular/                hpp:  67  impl:  34  workloads: 10  total:  101
+      Batched/                hpp:  71  impl:  31  workloads: 10  total:  102
+      Strided/                hpp:  87  impl:  33  workloads: 10  total:  120
+      Ex/                     hpp:  54  impl:  70  workloads: 16  total:  124
+      3m/                     hpp:  53  impl:  19  workloads:  4  total:   72
+
+  ── Paper numbers ───────────────────────────────────────────────
+  Total source LOC . . . . . . . . . . . . . . . 2810
+  Cross-backend shared LOC (gpu-blas/*) . . . .  738  (26% of source)
+  Backend-specific LOC . . . . . . . . . . . . . 2072  (74% of source) 1036.0 per backend  (37% of source)
+  Shape kinds (struct templates) . . . . . . . . . 1
+  LOC per Shape  . . . . . . . . . . . . . . . . . 124.0
+  Workloads registered . . . . . . . . . . . . . . 100
+  Specializations across all backends  . . . . . . 9
+  Avg LOC per specialization . . . . . . . . . . . 109.4
+  Avg LOC per registration site (.cu/.hip) . . . . 40.1
+  Avg LOC per workload (Total LOC / nb_workloads). 28.1
+

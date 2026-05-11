@@ -1,0 +1,395 @@
+{
+  "baseliner_version": "0.9.0",
+  "presets": {
+    "cuda": {
+      "default": {
+        "description": "Default preset",
+        "options": {
+          "Backend": {
+            "max_clock_value": {
+              "description": "-1 means locking to the base clock, else is locking to a specific frequency",
+              "value": "-1"
+            },
+            "min_clock_value": {
+              "description": "-1 means locking to the base clock, else is locking to a specific frequency",
+              "value": "-1"
+            },
+            "lock_clock": {
+              "description": "If the clocks should be locked",
+              "value": "0"
+            },
+            "device": {
+              "description": "The device number to run on",
+              "value": "3"
+            }
+          }
+        }
+      }
+    },
+    "StoppingCriterion": {
+      "default": {
+        "description": "Default preset",
+        "options": {
+          "StoppingCriterion": {
+            "max_nb_repetition": {
+              "description": "Maximum number of repetitions",
+              "value": "5"
+            },
+            "batch_size": {
+              "description": "Numbers of rerun to wait before reevaluating stopping criterion",
+              "value": "1"
+            }
+          }
+        }
+      }
+    },
+    "EntropyStoppingCriterion": {
+      "default": {
+        "description": "Default preset",
+        "options": {
+          "EntropySC": {
+            "min_samples": {
+              "description": "Minimum samples before checking entropy",
+              "value": "10"
+            },
+            "min_r2": {
+              "description": "Minimum R-squared for regression stability",
+              "value": "0.360000"
+            },
+            "max_angle": {
+              "description": "Maximum allowed entropy slope angle (deg)",
+              "value": "0.048000"
+            }
+          },
+          "StoppingCriterion": {
+            "max_nb_repetition": {
+              "description": "Maximum number of repetitions",
+              "value": "2000"
+            },
+            "batch_size": {
+              "description": "Numbers of rerun to wait before reevaluating stopping criterion",
+              "value": "1"
+            }
+          }
+        }
+      }
+    },
+    "VariationStoppingCriterion": {
+      "default": {
+        "description": "Default preset",
+        "options": {
+          "VariationSC": {
+            "min_duration_ms": {
+              "description": "Minimum duration before stopping (ms)",
+              "value": "1000.000000"
+            },
+            "noise_tolerance": {
+              "description": "Noise tolerance in percent",
+              "value": "1.000000"
+            }
+          },
+          "StoppingCriterion": {
+            "max_nb_repetition": {
+              "description": "Maximum number of repetitions",
+              "value": "2000"
+            },
+            "batch_size": {
+              "description": "Numbers of rerun to wait before reevaluating stopping criterion",
+              "value": "1"
+            }
+          }
+        }
+      }
+    },
+    "ConfidenceIntervalMedianSC": {
+      "default": {
+        "description": "Default preset",
+        "options": {
+          "ConfidenceIntervalSC": {
+            "relative_error_th": {
+              "description": "The threshold at which it will consider converged",
+              "value": "0.001000"
+            },
+            "precision": {
+              "description": "The aimed precision (ms)",
+              "value": "0.001000"
+            }
+          },
+          "StoppingCriterion": {
+            "max_nb_repetition": {
+              "description": "Maximum number of repetitions",
+              "value": "2000"
+            },
+            "batch_size": {
+              "description": "Numbers of rerun to wait before reevaluating stopping criterion",
+              "value": "50"
+            }
+          }
+        }
+      }
+    },
+    "Benchmark": {
+      "default": {
+        "description": "Default preset",
+        "options": {
+          "Benchmark": {
+            "validate_workload": {
+              "description": "If you want the workload results to be validated",
+              "value": "0"
+            },
+            "max_gpu_temp": {
+              "description": "If warm_cool, the minimum accepted temperature before warming up the GPU",
+              "value": "50.000000"
+            },
+            "warm_cool_timeout": {
+              "description": "How long the benchmark warms or cool before throwing",
+              "value": "3"
+            },
+            "minimal_batch_duration": {
+              "description": "If dynamic batch size is set tu true, how long a batch should minimaly be",
+              "value": "10.000000"
+            },
+            "min_gpu_temp": {
+              "description": "If warm_cool, the minimum accepted temperature before cooling down the GPU",
+              "value": "60.000000"
+            },
+            "batch_size": {
+              "description": "The size of the batch",
+              "value": "25"
+            },
+            "warmup": {
+              "description": "Having a warmup run",
+              "value": "1"
+            },
+            "flush": {
+              "description": "Enables the flushing of the L2 cache",
+              "value": "1"
+            },
+            "block_queue_size": {
+              "description": "The max size of the blocking queue",
+              "value": "64"
+            },
+            "dynamic_batch": {
+              "description": "If the batch size is dynamic",
+              "value": "1"
+            },
+            "warm_cool": {
+              "description": "Does the Benchmark actively warm or cool the GPU",
+              "value": "0"
+            },
+            "block_duration": {
+              "description": "Duration of the blocking kernel (in ms)",
+              "value": "1000.000000"
+            },
+            "block": {
+              "description": "Using a blocking kernel",
+              "value": "0"
+            }
+          }
+        }
+      }
+    }
+  },
+  "stats_presets": {
+    "default": {
+      "description": "Default preset",
+      "stat_names": ["Median"],
+      "stat_options": {}
+    }
+  },
+  "recipes": {
+    "default": {
+      "description": "Default Recipe",
+      "benchmark": {
+        "impl": "Benchmark",
+        "preset": "default"
+      },
+      "stopping": {
+        "impl": "VariationStoppingCriterion",
+        "preset": "default"
+      },
+      "stats": {
+        "preset": "default"
+      },
+      "sweep": {
+        "strategy": "FullGrid",
+        "axes": [
+          {
+            "interface": "Workload",
+            "option": "work_size",
+            "hint": {
+              "policy": "PowersOfTwo",
+              "min": "1",
+              "max": "4096",
+              "step": "1",
+              "enumerated": []
+            }
+          }
+        ]
+      }
+    }
+  },
+  "campaigns": [
+    {
+      "name": "default",
+      "recipe": "default",
+      "workloads": [
+        {
+          "impl": "hgemm",
+          "preset": "default"
+        },
+        {
+          "impl": "cgemm",
+          "preset": "default"
+        },
+        {
+          "impl": "sgemm_64",
+          "preset": "default"
+        },
+        {
+          "impl": "dgemm_64",
+          "preset": "default"
+        },
+        {
+          "impl": "sgemm",
+          "preset": "default"
+        },
+        {
+          "impl": "zgemm_c64_acc",
+          "preset": "default"
+        },
+        {
+          "impl": "cgemm_64",
+          "preset": "default"
+        },
+        {
+          "impl": "dgemm_f64_acc_pedantic",
+          "preset": "default"
+        },
+        {
+          "impl": "batchedcgemm",
+          "preset": "default"
+        },
+        {
+          "impl": "hgemm_64",
+          "preset": "default"
+        },
+        {
+          "impl": "bfgemm_f32_acc",
+          "preset": "default"
+        },
+        {
+          "impl": "batchedsgemm_64",
+          "preset": "default"
+        },
+        {
+          "impl": "batchedcgemm_64",
+          "preset": "default"
+        },
+        {
+          "impl": "hgemm_h16_acc_pedantic",
+          "preset": "default"
+        },
+        {
+          "impl": "zgemm",
+          "preset": "default"
+        },
+        {
+          "impl": "igemm_i32_acc_64",
+          "preset": "default"
+        },
+        {
+          "impl": "batchedsgemm",
+          "preset": "default"
+        },
+        {
+          "impl": "igemm_i32_acc",
+          "preset": "default"
+        },
+        {
+          "impl": "batcheddgemm_64",
+          "preset": "default"
+        },
+        {
+          "impl": "batchedzgemm_64",
+          "preset": "default"
+        },
+        {
+          "impl": "cgemm_c32_acc",
+          "preset": "default"
+        },
+        {
+          "impl": "batchedhgemm_64",
+          "preset": "default"
+        },
+        {
+          "impl": "batchedzgemm",
+          "preset": "default"
+        },
+        {
+          "impl": "bfgemm_f32_acc_64",
+          "preset": "default"
+        },
+        {
+          "impl": "hgemm_h16_acc",
+          "preset": "default"
+        },
+        {
+          "impl": "batcheddgemm",
+          "preset": "default"
+        },
+        {
+          "impl": "hgemm_h16_acc_64",
+          "preset": "default"
+        },
+        {
+          "impl": "bfgemm_f32_out_f32_acc",
+          "preset": "default"
+        },
+        {
+          "impl": "igemm_f32_out_f32_acc",
+          "preset": "default"
+        },
+        {
+          "impl": "sgemm_f32_acc",
+          "preset": "default"
+        },
+        {
+          "impl": "dgemm",
+          "preset": "default"
+        },
+        {
+          "impl": "sgemm_f32_fast_tf32",
+          "preset": "default"
+        },
+        {
+          "impl": "batchedhgemm",
+          "preset": "default"
+        },
+        {
+          "impl": "sgemm_f32_fast_16f",
+          "preset": "default"
+        },
+        {
+          "impl": "zgemm_64",
+          "preset": "default"
+        },
+        {
+          "impl": "dgemm_f64_acc",
+          "preset": "default"
+        }
+      ],
+      "backends": [
+        {
+          "impl": "cuda",
+          "preset": "default"
+        },
+        {
+          "impl": "hip",
+          "preset": "default"
+        }
+      ],
+      "on_incompatible": "Skip"
+    }
+  ]
+}

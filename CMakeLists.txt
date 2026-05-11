@@ -34,7 +34,7 @@ include(FetchContent)
 FetchContent_Declare(
   baseliner_adapters
   GIT_REPOSITORY https://github.com/comeyrd/baseliner-adapter.git
-  GIT_TAG        main
+  GIT_TAG        v1.0
 )
 
 FetchContent_MakeAvailable(baseliner_adapters)

@@ -1531,168 +1531,6 @@
         }
       }
     },
-    "EntropyStoppingCriterion": {
-      "default": {
-        "description": "Default preset",
-        "options": {
-          "EntropySC": {
-            "min_samples": {
-              "description": "Minimum samples before checking entropy",
-              "value": "10"
-            },
-            "min_r2": {
-              "description": "Minimum R-squared for regression stability",
-              "value": "0.360000"
-            },
-            "max_angle": {
-              "description": "Maximum allowed entropy slope angle (deg)",
-              "value": "0.048000"
-            }
-          },
-          "StoppingCriterion": {
-            "max_nb_repetition": {
-              "description": "Maximum number of repetitions",
-              "value": "2000"
-            },
-            "batch_size": {
-              "description": "Numbers of rerun to wait before reevaluating stopping criterion",
-              "value": "1"
-            }
-          }
-        }
-      }
-    },
-    "batchedsgemm": {
-      "default": {
-        "description": "Default preset",
-        "options": {
-          "GemmArgs": {
-            "beta": {
-              "description": "Scaling factor for C",
-              "value": "0.000000"
-            },
-            "alpha": {
-              "description": "Scaling factor for A*B",
-              "value": "1.000000"
-            }
-          },
-          "GemmDims": {
-            "n": {
-              "description": "Cols of B and C",
-              "value": "512"
-            },
-            "k": {
-              "description": "Cols of A / rows of B",
-              "value": "512"
-            },
-            "m": {
-              "description": "Rows of A and C",
-              "value": "512"
-            }
-          },
-          "Batched": {
-            "batch_count": {
-              "description": "Number of batches",
-              "value": "5"
-            }
-          },
-          "Gemm": {
-            "transB": {
-              "description": "The Operation to apply on B",
-              "value": "CUBLAS_OP_N"
-            },
-            "transA": {
-              "description": "The Operation to apply on A",
-              "value": "CUBLAS_OP_N"
-            }
-          },
-          "Workload": {
-            "seed": {
-              "description": "The seed used for the generation of input data",
-              "value": "333"
-            },
-            "work_size": {
-              "description": "The work size to apply, 1 = 32MFlop & 1 = 1MB",
-              "value": "10"
-            }
-          }
-        }
-      }
-    },
-    "igemm_i32_acc": {
-      "default": {
-        "description": "Default preset",
-        "options": {
-          "GemmArgs": {
-            "beta": {
-              "description": "Scaling factor for C",
-              "value": "0"
-            },
-            "alpha": {
-              "description": "Scaling factor for A*B",
-              "value": "1"
-            }
-          },
-          "GemmDims": {
-            "n": {
-              "description": "Cols of B and C",
-              "value": "512"
-            },
-            "k": {
-              "description": "Cols of A / rows of B",
-              "value": "512"
-            },
-            "m": {
-              "description": "Rows of A and C",
-              "value": "512"
-            }
-          },
-          "GemmEx": {
-            "algo": {
-              "description": "What algo should the GemmEx Use ?",
-              "value": "CUBLAS_GEMM_ALGO0"
-            }
-          },
-          "Gemm": {
-            "transB": {
-              "description": "The Operation to apply on B",
-              "value": "CUBLAS_OP_N"
-            },
-            "transA": {
-              "description": "The Operation to apply on A",
-              "value": "CUBLAS_OP_N"
-            }
-          },
-          "Workload": {
-            "seed": {
-              "description": "The seed used for the generation of input data",
-              "value": "333"
-            },
-            "work_size": {
-              "description": "The work size to apply, 1 = 32MFlop & 1 = 1MB",
-              "value": "10"
-            }
-          }
-        }
-      }
-    },
-    "StoppingCriterion": {
-      "default": {
-        "description": "Default preset",
-        "options": {
-          "StoppingCriterion": {
-            "max_nb_repetition": {
-              "description": "Maximum number of repetitions",
-              "value": "500"
-            },
-            "batch_size": {
-              "description": "Numbers of rerun to wait before reevaluating stopping criterion",
-              "value": "1"
-            }
-          }
-        }
-      }
-    },
     "cuda": {
       "default": {
         "description": "Default preset",
@@ -1713,6 +1551,23 @@
             "device": {
               "description": "The device number to run on",
               "value": "3"
+            }
+          }
+        }
+      }
+    },
+    "StoppingCriterion": {
+      "default": {
+        "description": "Default preset",
+        "options": {
+          "StoppingCriterion": {
+            "max_nb_repetition": {
+              "description": "Maximum number of repetitions",
+              "value": "500"
+            },
+            "batch_size": {
+              "description": "Numbers of rerun to wait before reevaluating stopping criterion",
+              "value": "1"
             }
           }
         }
@@ -1826,18 +1681,22 @@
         }
       }
     },
-    "VariationStoppingCriterion": {
+    "EntropyStoppingCriterion": {
       "default": {
         "description": "Default preset",
         "options": {
-          "VariationSC": {
-            "min_duration_ms": {
-              "description": "Minimum duration before stopping (ms)",
-              "value": "1000.000000"
+          "EntropySC": {
+            "min_samples": {
+              "description": "Minimum samples before checking entropy",
+              "value": "10"
             },
-            "noise_tolerance": {
-              "description": "Noise tolerance in percent",
-              "value": "1.000000"
+            "min_r2": {
+              "description": "Minimum R-squared for regression stability",
+              "value": "0.360000"
+            },
+            "max_angle": {
+              "description": "Maximum allowed entropy slope angle (deg)",
+              "value": "0.048000"
             }
           },
           "StoppingCriterion": {
@@ -2000,7 +1859,7 @@
             },
             "dynamic_batch": {
               "description": "If the batch size is dynamic",
-              "value": "0"
+              "value": "1"
             },
             "warm_cool": {
               "description": "Does the Benchmark actively warm or cool the GPU",
@@ -2012,7 +1871,148 @@
             },
             "block": {
               "description": "Using a blocking kernel",
+              "value": "1"
+            }
+          }
+        }
+      }
+    },
+    "VariationStoppingCriterion": {
+      "default": {
+        "description": "Default preset",
+        "options": {
+          "VariationSC": {
+            "min_duration_ms": {
+              "description": "Minimum duration before stopping (ms)",
+              "value": "1000.000000"
+            },
+            "noise_tolerance": {
+              "description": "Noise tolerance in percent",
+              "value": "1.000000"
+            }
+          },
+          "StoppingCriterion": {
+            "max_nb_repetition": {
+              "description": "Maximum number of repetitions",
+              "value": "2000"
+            },
+            "batch_size": {
+              "description": "Numbers of rerun to wait before reevaluating stopping criterion",
+              "value": "1"
+            }
+          }
+        }
+      }
+    },
+    "batchedsgemm": {
+      "default": {
+        "description": "Default preset",
+        "options": {
+          "GemmArgs": {
+            "beta": {
+              "description": "Scaling factor for C",
+              "value": "0.000000"
+            },
+            "alpha": {
+              "description": "Scaling factor for A*B",
+              "value": "1.000000"
+            }
+          },
+          "GemmDims": {
+            "n": {
+              "description": "Cols of B and C",
+              "value": "512"
+            },
+            "k": {
+              "description": "Cols of A / rows of B",
+              "value": "512"
+            },
+            "m": {
+              "description": "Rows of A and C",
+              "value": "512"
+            }
+          },
+          "Batched": {
+            "batch_count": {
+              "description": "Number of batches",
+              "value": "5"
+            }
+          },
+          "Gemm": {
+            "transB": {
+              "description": "The Operation to apply on B",
+              "value": "CUBLAS_OP_N"
+            },
+            "transA": {
+              "description": "The Operation to apply on A",
+              "value": "CUBLAS_OP_N"
+            }
+          },
+          "Workload": {
+            "seed": {
+              "description": "The seed used for the generation of input data",
+              "value": "333"
+            },
+            "work_size": {
+              "description": "The work size to apply, 1 = 32MFlop & 1 = 1MB",
+              "value": "10"
+            }
+          }
+        }
+      }
+    },
+    "igemm_i32_acc": {
+      "default": {
+        "description": "Default preset",
+        "options": {
+          "GemmArgs": {
+            "beta": {
+              "description": "Scaling factor for C",
               "value": "0"
+            },
+            "alpha": {
+              "description": "Scaling factor for A*B",
+              "value": "1"
+            }
+          },
+          "GemmDims": {
+            "n": {
+              "description": "Cols of B and C",
+              "value": "512"
+            },
+            "k": {
+              "description": "Cols of A / rows of B",
+              "value": "512"
+            },
+            "m": {
+              "description": "Rows of A and C",
+              "value": "512"
+            }
+          },
+          "GemmEx": {
+            "algo": {
+              "description": "What algo should the GemmEx Use ?",
+              "value": "CUBLAS_GEMM_ALGO0"
+            }
+          },
+          "Gemm": {
+            "transB": {
+              "description": "The Operation to apply on B",
+              "value": "CUBLAS_OP_N"
+            },
+            "transA": {
+              "description": "The Operation to apply on A",
+              "value": "CUBLAS_OP_N"
+            }
+          },
+          "Workload": {
+            "seed": {
+              "description": "The seed used for the generation of input data",
+              "value": "333"
+            },
+            "work_size": {
+              "description": "The work size to apply, 1 = 32MFlop & 1 = 1MB",
+              "value": "10"
             }
           }
         }
@@ -2955,14 +2955,7 @@
   "stats_presets": {
     "default": {
       "description": "Default preset",
-      "stat_names": [
-        "Mean",
-        "HarmonicMean",
-        "ClockFrequencyVector",
-        "DeviceTemperatureVector",
-        "DevicePowerUtilizationVector",
-        "WithoutOutliers"
-      ],
+      "stat_names": ["Median"],
       "stat_options": {}
     }
   },
@@ -2974,11 +2967,27 @@
         "preset": "default"
       },
       "stopping": {
-        "impl": "StoppingCriterion",
+        "impl": "VariationStoppingCriterion",
         "preset": "default"
       },
       "stats": {
         "preset": "default"
+      },
+      "sweep": {
+        "strategy": "FullGrid",
+        "axes": [
+          {
+            "interface": "Workload",
+            "option": "work_size",
+            "hint": {
+              "policy": "PowersOfTwo",
+              "min": "1",
+              "max": "8",
+              "step": "1",
+              "enumerated": []
+            }
+          }
+        ]
       }
     }
   },
@@ -2988,10 +2997,29 @@
       "recipe": "default",
       "workloads": [
         {
+          "impl": "stridedbatchedzgemm",
+          "preset": "default"
+        },
+        {
+          "impl": "stridedbatchedcgemm",
+          "preset": "default"
+        },
+        {
+          "impl": "stridedbatcheddgemm",
+          "preset": "default"
+        },
+        {
+          "impl": "stridedbatchedsgemm",
+          "preset": "default"
+        },
+        {
           "impl": "cgemm",
           "preset": "default"
         },
-
+        {
+          "impl": "stridedbatchedcgemm_64",
+          "preset": "default"
+        },
         {
           "impl": "sgemm_64",
           "preset": "default"
@@ -3016,7 +3044,14 @@
           "impl": "dgemm_f64_acc_pedantic",
           "preset": "default"
         },
-
+        {
+          "impl": "stridedbatchedzgemm_64",
+          "preset": "default"
+        },
+        {
+          "impl": "stridedbatchedsgemm_64",
+          "preset": "default"
+        },
         {
           "impl": "zgemm_64",
           "preset": "default"
@@ -3038,6 +3073,14 @@
           "preset": "default"
         },
         {
+          "impl": "stridedbatchedhgemm",
+          "preset": "default"
+        },
+        {
+          "impl": "batchedsgemm_64",
+          "preset": "default"
+        },
+        {
           "impl": "Zgemm3m",
           "preset": "default"
         },
@@ -3050,11 +3093,19 @@
           "preset": "default"
         },
         {
-          "impl": "hgemm_h16_acc_64",
+          "impl": "stridedbatchedhgemm_64",
           "preset": "default"
         },
         {
-          "impl": "igemm_i32_acc",
+          "impl": "stridedbatcheddgemm_64",
+          "preset": "default"
+        },
+        {
+          "impl": "batcheddgemm",
+          "preset": "default"
+        },
+        {
+          "impl": "hgemm_h16_acc_64",
           "preset": "default"
         },
         {
@@ -3074,6 +3125,22 @@
           "preset": "default"
         },
         {
+          "impl": "batchedsgemm",
+          "preset": "default"
+        },
+        {
+          "impl": "igemm_i32_acc",
+          "preset": "default"
+        },
+        {
+          "impl": "batchedcgemm",
+          "preset": "default"
+        },
+        {
+          "impl": "batchedcgemm_64",
+          "preset": "default"
+        },
+        {
           "impl": "hgemm_h16_acc_pedantic",
           "preset": "default"
         },
@@ -3086,11 +3153,31 @@
           "preset": "default"
         },
         {
+          "impl": "batcheddgemm_64",
+          "preset": "default"
+        },
+        {
+          "impl": "batchedzgemm_64",
+          "preset": "default"
+        },
+        {
           "impl": "sgemm_f32_fast_16f",
           "preset": "default"
         },
         {
+          "impl": "batchedhgemm",
+          "preset": "default"
+        },
+        {
           "impl": "cgemm_c32_acc",
+          "preset": "default"
+        },
+        {
+          "impl": "batchedhgemm_64",
+          "preset": "default"
+        },
+        {
+          "impl": "batchedzgemm",
           "preset": "default"
         },
         {
